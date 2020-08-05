@@ -223,7 +223,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-08-05 11:23:20 / 修改时间：16:34:14" itemprop="dateCreated datePublished" datetime="2020-08-05T11:23:20+08:00">2020-08-05</time>
+              <time title="创建时间：2020-08-05 11:23:20 / 修改时间：22:18:18" itemprop="dateCreated datePublished" datetime="2020-08-05T11:23:20+08:00">2020-08-05</time>
             </span>
 
           
@@ -251,7 +251,8 @@
 <p>​        代码如下</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ddex1dez = @(t,y,z)[y(<span class="number">1</span>)*(<span class="number">1</span>+<span class="number">0.1</span>*<span class="built_in">sin</span>(t)<span class="number">-0.1</span>*Z(<span class="number">1</span>,<span class="number">1</span>)-y(<span class="number">2</span>)/(<span class="number">1</span>+y(<span class="number">1</span>)));</span><br><span class="line">y(<span class="number">2</span>)*((<span class="number">2</span>+<span class="built_in">sin</span>(t))*<span class="number">10</span>^(<span class="number">-5</span>)+<span class="number">9</span>*Z(<span class="number">1</span>,<span class="number">2</span>)/(<span class="number">1</span>+Z(<span class="number">1</span>,<span class="number">2</span>))-Z(<span class="number">2</span>,<span class="number">1</span>))];</span><br><span class="line">sol = dde23(ddex1dez,[<span class="number">0.1</span>,<span class="number">0.3</span>],[<span class="number">2</span>,<span class="number">2</span>],[<span class="number">0</span>,<span class="number">50</span>]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line"><span class="built_in">plot</span>(sol.x,sol.y(<span class="number">1</span>,:))</span><br><span class="line"><span class="built_in">hold</span> on</span><br><span class="line"><span class="built_in">plot</span>(sol.x,sol.y(<span class="number">2</span>,:),<span class="string">&#x27;--&#x27;</span>)</span><br><span class="line"><span class="built_in">hold</span> off</span><br><span class="line"></span><br><span class="line">title(<span class="string">&#x27;时滞微分方程组&#x27;</span>);</span><br><span class="line">xlabel(<span class="string">&#x27;time t&#x27;</span>);</span><br><span class="line">ylabel(<span class="string">&#x27;solution y&#x27;</span>);</span><br><span class="line"><span class="built_in">legend</span>(<span class="string">&#x27;x1&#x27;</span>,<span class="string">&#x27;x2&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
-<p>​        结果为<br>(c)    代码解析<br>(1)</p>
+<p>​        结果为</p>
+<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/a01.jpg"><br>(c)    代码解析<br>(1)</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ddex1dez = @(t,y,z)[y(<span class="number">1</span>)*(<span class="number">1</span>+<span class="number">0.1</span>*<span class="built_in">sin</span>(t)<span class="number">-0.1</span>*Z(<span class="number">1</span>,<span class="number">1</span>)-y(<span class="number">2</span>)/(<span class="number">1</span>+y(<span class="number">1</span>)));</span><br><span class="line">y(<span class="number">2</span>)*((<span class="number">2</span>+<span class="built_in">sin</span>(t))*<span class="number">10</span>^(<span class="number">-5</span>)+<span class="number">9</span>*Z(<span class="number">1</span>,<span class="number">2</span>)/(<span class="number">1</span>+Z(<span class="number">1</span>,<span class="number">2</span>))-Z(<span class="number">2</span>,<span class="number">1</span>))];</span><br></pre></td></tr></table></figure>
 
 <p>​        这里y(1),y(2)代表方程的解，Z(1,1)代表时滞项x1(t-0.1)，Z中的第一个1代表是y(1)中的时滞，Z中的第二个1代表sol中代表时滞的列表中的第一项，即0.1，于是Z(1,1)代表方程中的x1(t-0.1)，同理Z(2,1)代表方程中的x2(t-0.1)<br>(2)</p>
@@ -276,7 +277,7 @@
 <p>​        其中odefun为整理后的待求解方程右侧，tspan为自变量区间，y0为初值。<br>(b)<br>(1)    示例1<br>​        求解<br>$$<br>\frac{dy}{dt}=2t<br>$$<br>​        时间区间为[0,5]，初值条件y0=0。<br>​        代码如下</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tspan = [<span class="number">0</span> <span class="number">5</span>];</span><br><span class="line">y0 = <span class="number">0</span>;</span><br><span class="line">[t,y] = ode45(@(t,y) <span class="number">2</span>*t, tspan, y0);</span><br><span class="line"></span><br><span class="line"><span class="built_in">plot</span>(t,y,<span class="string">&#x27;-o&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>​        结果为</p>
+<p>​        结果为<br><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/a02.jpg"></p>
 <p>(2)    示例2    利用转化思想求解二阶微分方程<br>        对于函数y(t),求解方程<br>$$<br>\frac{d^2y}{dt^2}=\frac{A}{B}ty<br>$$<br>​        自变量区间[0,5]，初值y(0)=0，y’(0)=0.01，A，B为常量，可预定义为1，2。<br>​        解答：<br>​        首先，令y’=y2，重新整理方程得<br>$$<br>\frac{dy_1}{dt}=y_2<br>$$</p>
 <p>$$<br>\frac{dy_2}{dt}=\frac{A}{B}ty_1<br>$$</p>
 <p>​        代码示例：<br>​        首先，写一个odefun.m</p>
@@ -285,7 +286,7 @@
 <p>​        然后写画图代码</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A = <span class="number">1</span>;</span><br><span class="line">B = <span class="number">2</span>;</span><br><span class="line">tspan = [<span class="number">0</span>,<span class="number">5</span>];</span><br><span class="line">y0 = [<span class="number">0</span>,<span class="number">0.01</span>];</span><br><span class="line">[t,y] = ode45(@(t,y) odefun(t,y,A,B),tspan,y0);</span><br><span class="line"></span><br><span class="line"><span class="built_in">plot</span>(t,y(:,<span class="number">1</span>),<span class="string">&#x27;-o&#x27;</span>,t,y(:,<span class="number">2</span>),<span class="string">&#x27;-.&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>​        这里注意，解在y中以列向量形式保存。<br>​        结果为</p>
+<p>​        这里注意，解在y中以列向量形式保存。<br>​        结果为<br><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/a03.jpg"></p>
 <h1 id="四-利用ode15s求解刚性常微分方程"><a href="#四-利用ode15s求解刚性常微分方程" class="headerlink" title="四. 利用ode15s求解刚性常微分方程"></a>四. 利用ode15s求解刚性常微分方程</h1><p>​        “三”中的例子将ode45改成ode15s后同样可运行出相同结果（单纯看图的话)</p>
 <p>​        odefun.m为</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dydt</span> = <span class="title">odefun</span><span class="params">(t,y,A,B)</span></span></span><br><span class="line">dydt = <span class="built_in">zeros</span>(<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">dydt(<span class="number">1</span>) = y(<span class="number">2</span>);</span><br><span class="line">dydt(<span class="number">2</span>) = (A/B)*t.*y(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
@@ -356,7 +357,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><p>陈敏伟</p>
-<p><a href="mailto:&#109;&#x77;&#99;&#104;&#101;&#110;&#x6e;&#106;&#117;&#x40;&#x66;&#111;&#120;&#109;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;">&#109;&#x77;&#99;&#104;&#101;&#110;&#x6e;&#106;&#117;&#x40;&#x66;&#111;&#120;&#109;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a></p>
+<p><a href="mailto:&#x6d;&#x77;&#x63;&#x68;&#101;&#x6e;&#110;&#x6a;&#x75;&#64;&#102;&#x6f;&#120;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;">&#x6d;&#x77;&#x63;&#x68;&#101;&#x6e;&#110;&#x6a;&#x75;&#64;&#102;&#x6f;&#120;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a></p>
 <p>籍贯: 江苏 南通       </p>
 <p>SteamID: AltriaChen</p>
 <p>意向岗位: 通信算法、软件测试    </p>
