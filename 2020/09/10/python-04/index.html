@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="Python 学习笔记 (零四) 篇，如题，本篇将介绍 Python 中的类和对象，属性和方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python学习笔记(零四)：类和对象·属性和方法">
+<meta property="og:url" content="http://yoursite.com/2020/09/10/python-04/index.html">
+<meta property="og:site_name" content="Cross Code">
+<meta property="og:description" content="Python 学习笔记 (零四) 篇，如题，本篇将介绍 Python 中的类和对象，属性和方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-09T16:04:53.000Z">
+<meta property="article:modified_time" content="2020-09-09T16:07:22.311Z">
+<meta property="article:author" content="Minwei Chen">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/10/python-04/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Python学习笔记(零四)：类和对象·属性和方法 | Cross Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/js/my_js/clicklove.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cross Code</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is only one heroism in the world: to see the world as it is and to love it</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%AE%80%E4%BB%8B"><span class="nav-text">一. 定义与简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="nav-text">(A) 类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%AE%80%E4%BB%8B"><span class="nav-text">(a) 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text">(b) 类和对象的代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E7%B1%BB%E7%9A%84%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-text">(B) 类的属性和方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text">(a) 属性和方法的代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(b) 实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F"><span class="nav-text">(C) 私有变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Tips"><span class="nav-text">(D) Tips</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E7%88%B6%E7%B1%BB%E5%92%8C%E5%AD%90%E7%B1%BB"><span class="nav-text">二. 父类和子类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%AE%80%E4%BB%8B"><span class="nav-text">(A) 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E5%9C%A8%E5%AD%90%E7%B1%BB%E4%B8%AD%E5%A2%9E%E5%8A%A0%E6%96%B9%E6%B3%95"><span class="nav-text">(B) 在子类中增加方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%B0%83%E7%94%A8%E6%9C%AA%E7%BB%91%E5%AE%9A%E7%9A%84%E7%88%B6%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-text">(a) 调用未绑定的父类属性和方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BD%BF%E7%94%A8-super-%E5%87%BD%E6%95%B0"><span class="nav-text">(b) 使用 super( ) 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-text">(1) 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3"><span class="nav-text">(2) 官方文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(3) 实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="nav-text">(C) 多重继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B-1"><span class="nav-text">(b) 实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E7%BB%84%E5%90%88"><span class="nav-text">三. 组合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E4%BB%BB%E5%8A%A1%E5%AE%9E%E4%BE%8B"><span class="nav-text">(A) 任务实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95"><span class="nav-text">四. 相关方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-issubclass"><span class="nav-text">(A) issubclass( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-isinstance"><span class="nav-text">(B) isinstance( )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95-1"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E8%BE%A8%E6%9E%90"><span class="nav-text">(b) 辨析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-hasattr"><span class="nav-text">(C) hasattr( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-getattr"><span class="nav-text">(D) getattr( )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95-2"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B-2"><span class="nav-text">(b) 实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#E-setattr"><span class="nav-text">(E) setattr( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#F-delattr"><span class="nav-text">(F) delattr( )</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94-property-%E6%96%B9%E6%B3%95"><span class="nav-text">五. property( ) 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%AE%80%E4%BB%8B%E5%92%8C%E8%AF%AD%E6%B3%95"><span class="nav-text">(A) 简介和语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(B) 实例</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Minwei Chen"
+      src="/images/tuoqi.jpg">
+  <p class="site-author-name" itemprop="name">Minwei Chen</p>
+  <div class="site-description" itemprop="description">Cross the surface, get to the reality. Welcome to Cross Code!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AltriaChen" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AltriaChen" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mwchennju@foxmail.com" title="E-Mail → mailto:mwchennju@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/10/python-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tuoqi.jpg">
+      <meta itemprop="name" content="Minwei Chen">
+      <meta itemprop="description" content="Cross the surface, get to the reality. Welcome to Cross Code!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cross Code">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python学习笔记(零四)：类和对象·属性和方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-10 00:04:53 / 修改时间：00:07:22" itemprop="dateCreated datePublished" datetime="2020-09-10T00:04:53+08:00">2020-09-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">Python笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Python 学习笔记 (零四) 篇，如题，本篇将介绍 Python 中的类和对象，属性和方法。</p>
+<a id="more"></a>
+
+<h1 id="一-定义与简介"><a href="#一-定义与简介" class="headerlink" title="一. 定义与简介"></a>一. 定义与简介</h1><h2 id="A-类和对象"><a href="#A-类和对象" class="headerlink" title="(A) 类和对象"></a>(A) 类和对象</h2><h3 id="a-简介"><a href="#a-简介" class="headerlink" title="(a) 简介"></a>(a) 简介</h3><p>类是对客观世界中事物的抽象，而对象是类实例化后的实体。<br>类 (class)：简单来说就是某一类事物，它们具有相同的属性，例如猫有各种颜色，各种颜色就属于属性(也被叫做变量)。<br>对象 (object)：黑猫，白猫这些都是对象，这个对象就是类的实例 (instance)。对象/实例只有一种作用，即属性引用。<br>对象内存空间里只存储对象的属性，而不存储方法和静态属性，方法和静态属性存储在类的内存空间中，这样多个对象可以共享类中的资源，便于节省内存。</p>
+<h3 id="b-类和对象的代码实现"><a href="#b-类和对象的代码实现" class="headerlink" title="(b) 类和对象的代码实现"></a>(b) 类和对象的代码实现</h3><p>Python 中一般用 class 关键字定义一个类，类名的首字母一般要大写(这是约定俗成的良好编程习惯)<br>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyList</span>(<span class="params">list</span>):</span>  <span class="comment">#定义名为MyList的类，继承list(列表)的属性和方法</span></span><br><span class="line">    <span class="keyword">pass</span>             <span class="comment">#pass是个占位符</span></span><br><span class="line">list2=MyList()       <span class="comment">#把类实例化，生成一个实例对象，赋值给变量list2</span></span><br><span class="line">list2.append(<span class="number">5</span>)      <span class="comment">#由于类MyList继承了list，因而也可以使用append方法</span></span><br><span class="line">list2.append(<span class="number">2</span>)</span><br><span class="line">print(list2)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">5</span>, <span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="B-类的属性和方法"><a href="#B-类的属性和方法" class="headerlink" title="(B) 类的属性和方法"></a>(B) 类的属性和方法</h2><h3 id="a-属性和方法的代码实现"><a href="#a-属性和方法的代码实现" class="headerlink" title="(a) 属性和方法的代码实现"></a>(a) 属性和方法的代码实现</h3><p>Python 中使用以下语句定义类的属性和方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 类名:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,传入参数</span>)</span></span><br><span class="line">    self.属性名=传入参数</span><br><span class="line">    <span class="function"><span class="keyword">def</span> 方法名(<span class="params">self</span>):</span></span><br><span class="line">        方法的具体语句</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-实例"><a href="#b-实例" class="headerlink" title="(b) 实例"></a>(b) 实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ball</span>:</span>                                          <span class="comment">#定义了类Ball</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,A</span>):</span>                         </span><br><span class="line">        self.name=A                                  <span class="comment">#定义了属性name，并把传入的A赋值给name</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kick</span>(<span class="params">self</span>):</span>                                  <span class="comment">#定义了方法kick</span></span><br><span class="line">        print(<span class="string">&#x27;我叫%s，该死的，谁踢我···&#x27;</span>%self.name)</span><br><span class="line"></span><br><span class="line">a=Ball(<span class="string">&#x27;球A&#x27;</span>)    <span class="comment">#生成类Ball的实例化对象，并赋给a,这里会自动调用init方法，把&#x27;球A&#x27;赋给属性name</span></span><br><span class="line">a.kick()         <span class="comment">#实例化对象a调用方法kick</span></span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我叫球A，该死的，谁踢我···</span><br></pre></td></tr></table></figure>
+
+<h2 id="C-私有变量"><a href="#C-私有变量" class="headerlink" title="(C) 私有变量"></a>(C) 私有变量</h2><p>在 Python 中定义私有变量只需要在变量名或函数名前加上“__”两个下划线，那么这个函数或变量就会为私有的了。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></span><br><span class="line">    __name=<span class="string">&#x27;小甲鱼&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，以下语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p=Person()</span><br><span class="line">p.__name</span><br></pre></td></tr></table></figure>
+
+<p>是没有结果的。<br>要想输出 __name，必须在函数内部访问，即：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>:</span></span><br><span class="line">    __name=<span class="string">&#x27;小甲鱼&#x27;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getName</span>(<span class="params">self</span>):</span></span><br><span class="line">      <span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line">p=Person()</span><br><span class="line">print(p.getName())</span><br></pre></td></tr></table></figure>
+
+<p>结果为，小甲鱼<br>注，其实 Python 是自动把私有变量改了名，改成了“_类名__变量名”的形式，例如上例中，执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p._Person__name</span><br></pre></td></tr></table></figure>
+
+<p>即可访问到 ”小甲鱼“。</p>
+<h2 id="D-Tips"><a href="#D-Tips" class="headerlink" title="(D) Tips"></a>(D) Tips</h2><p>(1) OO = Object Oriented (面向对象)<br>(2) 在 Python 类中规定，函数的第一个参数是实例对象本身，并且约定俗成，把其名字写为 self。其作用相当于 java 中的 this，表示当前类的对象，可以调用当前类中的属性和方法。<br>(3) __init__(self) 方法，称为“构造方法”。 init 方法的魔力体现在只要实例化一个对象的时候，那么这个方法就会在创建对象的时候自动调用。</p>
+<h1 id="二-父类和子类"><a href="#二-父类和子类" class="headerlink" title="二. 父类和子类"></a>二. 父类和子类</h1><p>Python 中，子类会继承父类的属性和方法。</p>
+<h2 id="A-简介"><a href="#A-简介" class="headerlink" title="(A) 简介"></a>(A) 简介</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span>:</span>                         <span class="comment">#定义父类</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hello</span>(<span class="params">self</span>):</span>                  <span class="comment">#定义父类的方法hello</span></span><br><span class="line">        print(<span class="string">&#x27;正在调用父类的方法···&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span>(<span class="params">Parent</span>):</span>                  <span class="comment">#定义子类</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">c=Child()      <span class="comment">#生成子类的实例化对象</span></span><br><span class="line">c.hello()      <span class="comment">#由于子类继承父类的属性和方法，可调用方法hello</span></span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">正在调用父类的方法···</span><br></pre></td></tr></table></figure>
+
+<h2 id="B-在子类中增加方法"><a href="#B-在子类中增加方法" class="headerlink" title="(B) 在子类中增加方法"></a>(B) 在子类中增加方法</h2><p>如果子类中定义了与父类同名的属性或方法，则会自动覆盖父类对应的属性或方法。注意只是在子类实例中覆盖，父类不受影响。<br>由此当子类中需要增加方法，而重写 __init__( ) 等函数时，为弥补覆盖造成的影响，可以采用：</p>
+<ul>
+<li><p>调用未绑定的父类属性和方法</p>
+</li>
+<li><p>使用 super 函数</p>
+</li>
+</ul>
+<h3 id="a-调用未绑定的父类属性和方法"><a href="#a-调用未绑定的父类属性和方法" class="headerlink" title="(a) 调用未绑定的父类属性和方法"></a>(a) 调用未绑定的父类属性和方法</h3><p>调用未绑定(用类名来引用)的父类属性和方法，语法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 子类名(<span class="params">父类名</span>)</span></span><br><span class="line"><span class="class">    <span class="title">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        父类名.__init__(self,传入参数)</span><br><span class="line">        self.新增属性名=传入参数</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random <span class="keyword">as</span> r</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fish</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.x=r.randint(<span class="number">0</span>,<span class="number">10</span>)</span><br><span class="line">        self.y=r.randint(<span class="number">0</span>,<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.x-=<span class="number">1</span></span><br><span class="line">        print(<span class="string">&#x27;我的位置是：&#x27;</span>,self.x,self.y)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Goldfish</span>(<span class="params">Fish</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shark</span>(<span class="params">Fish</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        Fish.__init__(self)   <span class="comment"># 这里开始就是调用未绑定的父类属性和方法</span></span><br><span class="line">        self.hungry=<span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.hungry:</span><br><span class="line">            print(<span class="string">&#x27;吃货的梦想就是天天有的吃^_^&#x27;</span>)</span><br><span class="line">            self.hungry=<span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&#x27;太撑了，吃不下了！&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-使用-super-函数"><a href="#b-使用-super-函数" class="headerlink" title="(b) 使用 super( ) 函数"></a>(b) 使用 super( ) 函数</h3><h4 id="1-简介"><a href="#1-简介" class="headerlink" title="(1) 简介"></a>(1) 简介</h4><p>super( ) 函数是用于调用父类(超类)的一个方法。<br>super 是用来解决多重继承问题的，直接用类名调用父类方法在使用单继承的时候没问题，但是如果使用多重继承，会涉及到查找顺序 (MRO)、重复调用(钻石继承)等种种问题。</p>
+<h4 id="2-官方文档"><a href="#2-官方文档" class="headerlink" title="(2) 官方文档"></a>(2) 官方文档</h4><p>super(type[, object-or-type])<br>Return the superclass of type. If the second argument is omitted the super object returned is unbound. If the second argument is an object, isinstance(obj, type) must be true. If the second argument is a type, issubclass(type2, type) must be true. super() only works for new-style classes.<br>A typical use for calling a cooperative superclass method is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>(<span class="params">B</span>):</span></span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">meth</span>(<span class="params">self, arg</span>):</span></span><br><span class="line">         super(C, self).meth(arg)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-实例"><a href="#3-实例" class="headerlink" title="(3) 实例"></a>(3) 实例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shark</span>(<span class="params">Fish</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.hungry=<span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="C-多重继承"><a href="#C-多重继承" class="headerlink" title="(C) 多重继承"></a>(C) 多重继承</h2><p>除了从一个父类继承外，Python允许从多个父类继承，称为多重继承。</p>
+<h3 id="a-语法"><a href="#a-语法" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DerivedClassName</span>(<span class="params">Base1,Base2,Base3</span>):</span></span><br><span class="line">    ......</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-实例-1"><a href="#b-实例-1" class="headerlink" title="(b) 实例"></a>(b) 实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base1</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foo1</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;我是foo1，我为Base1代言···&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base2</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foo2</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;我是foo2，我为Base2代言···&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>(<span class="params">Base1, Base2</span>):</span>  <span class="comment">#这里便是多重继承的方法</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">c = C()</span><br><span class="line">c.foo1()</span><br><span class="line">c.foo2()</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我是foo1，我为Base1代言···</span><br><span class="line">我是foo2，我为Base2代言···</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-组合"><a href="#三-组合" class="headerlink" title="三. 组合"></a>三. 组合</h1><h2 id="A-任务实例"><a href="#A-任务实例" class="headerlink" title="(A) 任务实例"></a>(A) 任务实例</h2><p>任务：现在要求定义一个类，叫水池，水池里要有乌龟和鱼。<br>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Turtle</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        self.num=x</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fish</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        self.num=x</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pool</span>:</span>                      <span class="comment">#这里开始组合</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,x,y</span>):</span></span><br><span class="line">        self.turtle=Turtle(x)    <span class="comment">#把类Turtle的实例化放到Pool的属性turtle中</span></span><br><span class="line">        self.fish=Fish(y)        <span class="comment">#把类Fish的实例化放到Pool的属性fish中</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">print_num</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&#x27;水池里总共有乌龟%d只，小鱼%d条！&#x27;</span>%(self.turtle.num,self.fish.num))</span><br><span class="line"></span><br><span class="line">pool=Pool(<span class="number">1</span>,<span class="number">10</span>)</span><br><span class="line">pool.print_num()</span><br></pre></td></tr></table></figure>
+
+<p>结果为，水池里总共有乌龟1只，小鱼10条！</p>
+<p>注，其实组合就是把类和实例化放到一个新类里面。<br>小 Tips ：</p>
+<ul>
+<li><p>不要试图在一个类里边定义出所有能想到的特性和方法，应该利用继承和组合机制来进行拓展。</p>
+</li>
+<li><p>注意用不同的词性命名，如属性名用名词，方法名用动词。</p>
+</li>
+<li><p>Python 严格要求方法需要有实例才能被调用，这种限制其实就是 Python 所谓的绑定概念。</p>
+</li>
+</ul>
+<h1 id="四-相关方法"><a href="#四-相关方法" class="headerlink" title="四. 相关方法"></a>四. 相关方法</h1><h2 id="A-issubclass"><a href="#A-issubclass" class="headerlink" title="(A) issubclass( )"></a>(A) issubclass( )</h2><p>语法为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">issubclass(class, classinfo)</span><br></pre></td></tr></table></figure>
+
+<p>issubclass( ) 方法用于判断参数 class 是否是类型参数 classinfo 的子类。<br>如果 class 是 classinfo 的子类返回 True，否则返回 False。</p>
+<h2 id="B-isinstance"><a href="#B-isinstance" class="headerlink" title="(B) isinstance( )"></a>(B) isinstance( )</h2><h3 id="a-语法-1"><a href="#a-语法-1" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">isinstance(object, classinfo)</span><br></pre></td></tr></table></figure>
+
+<p>object – 实例对象<br>classinfo – 可以是直接或间接类名、基本类型或者由它们组成的元组<br>如果对象的类型与参数二的类型 (classinfo) 相同则返回 True，否则返回 False</p>
+<h3 id="b-辨析"><a href="#b-辨析" class="headerlink" title="(b) 辨析"></a>(b) 辨析</h3><p>isinstance( ) 函数来判断一个对象是否是一个已知的类型，类似 type( )。<br>isinstance( ) 与 type( ) 区别：<br>type( ) 不会认为子类是一种父类类型，不考虑继承关系。<br>isinstance( ) 会认为子类是一种父类类型，考虑继承关系。<br>如果要判断两个类型是否相同推荐使用 isinstance( )。</p>
+<h2 id="C-hasattr"><a href="#C-hasattr" class="headerlink" title="(C) hasattr( )"></a>(C) hasattr( )</h2><p>hasattr( ) 函数用于判断对象是否包含对应的属性。语法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hasattr(object, name)</span><br></pre></td></tr></table></figure>
+
+<p>object – 对象<br>name – 字符串，属性名   # 注意，要用字符串，属性名上要加引号<br>如果对象有该属性返回 True，否则返回 False</p>
+<h2 id="D-getattr"><a href="#D-getattr" class="headerlink" title="(D) getattr( )"></a>(D) getattr( )</h2><h3 id="a-语法-2"><a href="#a-语法-2" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><p>getattr( ) 函数用于返回一个对象属性值。语法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getattr(object, name[, default])</span><br></pre></td></tr></table></figure>
+
+<p>object – 对象<br>name – 字符串，对象属性<br>default – 默认返回值，如果不提供该参数，在没有对应属性时，将触发 AttributeErro</p>
+<h3 id="b-实例-2"><a href="#b-实例-2" class="headerlink" title="(b) 实例"></a>(b) 实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>(<span class="params">object</span>):</span></span><br><span class="line">     bar = <span class="number">1</span></span><br><span class="line">a = A()</span><br><span class="line">getattr(a, ‘bar’)   <span class="comment"># 获取属性bar的值</span></span><br></pre></td></tr></table></figure>
+
+<p>结果为，1</p>
+<h2 id="E-setattr"><a href="#E-setattr" class="headerlink" title="(E) setattr( )"></a>(E) setattr( )</h2><p>setattr( ) 函数用于设置属性值，该属性不一定是存在的。语法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setattr(object, name, value)</span><br></pre></td></tr></table></figure>
+
+<p>object – 对象<br>name – 字符串，对象属性<br>value – 属性值</p>
+<h2 id="F-delattr"><a href="#F-delattr" class="headerlink" title="(F) delattr( )"></a>(F) delattr( )</h2><p>delattr 函数用于删除属性，delattr(x, ‘foobar’) 相等于 del x.foobar。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delattr(object, name)</span><br></pre></td></tr></table></figure>
+
+<p>object – 对象<br>name – 字符串，对象属性</p>
+<h1 id="五-property-方法"><a href="#五-property-方法" class="headerlink" title="五. property( ) 方法"></a>五. property( ) 方法</h1><h2 id="A-简介和语法"><a href="#A-简介和语法" class="headerlink" title="(A) 简介和语法"></a>(A) 简介和语法</h2><p>property( ) 函数是用来规范化访问类的属性和修改类属性的值的一种方法。语法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">property(fget=<span class="literal">None</span>,fset=<span class="literal">None</span>,fdel=<span class="literal">None</span>,doc=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<p>fget – 获取属性值的方法<br>fset – 设置属性值的方法<br>fdel – 删除属性值的方法<br>doc – 属性描述信息</p>
+<h2 id="B-实例"><a href="#B-实例" class="headerlink" title="(B) 实例"></a>(B) 实例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,size=<span class="number">10</span></span>):</span></span><br><span class="line">           self.size=size</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getSize</span>(<span class="params">self</span>):</span></span><br><span class="line">           <span class="keyword">return</span> self.size</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setSize</span>(<span class="params">self,value</span>):</span></span><br><span class="line">           self.size=value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delSize</span>(<span class="params">self</span>):</span></span><br><span class="line">           <span class="keyword">del</span> self.size</span><br><span class="line">    x=property(getSize,setSize,delSize)</span><br><span class="line"></span><br><span class="line">c1=C()</span><br><span class="line">print(c1.x)</span><br></pre></td></tr></table></figure>
+
+<p>结果为，10<br>注，使用 property( ) 方法后，c1 是 C 的实例化对象，那么有：<br>c1.x 等价于 c1.getSize( )；c1.x=12 等价于 c1.setSize(12)；del c1.x 等价于 c1.delSize( )。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/04/python-03/" rel="prev" title="Python学习笔记(零三)：文件·模块·检测异常">
+      <i class="fa fa-chevron-left"></i> Python学习笔记(零三)：文件·模块·检测异常
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minwei Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
