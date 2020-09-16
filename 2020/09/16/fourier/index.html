@@ -37,9 +37,9 @@
 <meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1006.jpg">
 <meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1007.jpg">
 <meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1008.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1009.jpg">
+<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1009a.jpg">
 <meta property="article:published_time" content="2020-09-16T06:38:07.000Z">
-<meta property="article:modified_time" content="2020-09-16T06:39:14.231Z">
+<meta property="article:modified_time" content="2020-09-16T07:21:11.086Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="Matlab">
 <meta name="twitter:card" content="summary">
@@ -293,7 +293,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-09-16 14:38:07 / 修改时间：14:39:14" itemprop="dateCreated datePublished" datetime="2020-09-16T14:38:07+08:00">2020-09-16</time>
+              <time title="创建时间：2020-09-16 14:38:07 / 修改时间：15:21:11" itemprop="dateCreated datePublished" datetime="2020-09-16T14:38:07+08:00">2020-09-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -407,8 +407,7 @@
 <p>结果为<br><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1007.jpg"></p>
 <h1 id="四-关于傅里叶变换的深层思考"><a href="#四-关于傅里叶变换的深层思考" class="headerlink" title="四. 关于傅里叶变换的深层思考"></a>四. 关于傅里叶变换的深层思考</h1><h2 id="A-非周期，周期与连续，离散"><a href="#A-非周期，周期与连续，离散" class="headerlink" title="(A) 非周期，周期与连续，离散"></a>(A) 非周期，周期与连续，离散</h2><p>傅里叶变化过程中，在频域和时域，非周期和周期、连续和离散问题。</p>
 <p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1008.jpg"></p>
-<h2 id="B-离散傅里叶变换中的对称性"><a href="#B-离散傅里叶变换中的对称性" class="headerlink" title="(B) 离散傅里叶变换中的对称性"></a>(B) 离散傅里叶变换中的对称性</h2><p>由欧拉公式<br>$$<br>e^{ix}=cosx+isinx<br>$$<br>设信号在复数域，即<br>$$<br>x_n=A_n+iB_n<br>$$<br>则离散傅里叶变换公式<br>$$<br>X[k]=\sum_{n=0}^{N-1}x_ne^{-i2\pi kn/N}<br>$$<br>可改写为<br>$$<br>X[k]=\sum_{n=0}^{N-1}[(A_ncos(2\pi kn/N)+B_nsin(2\pi kn/N))+i(B_ncos(2\pi kn/N)-A_nsin(2\pi kn/N))]<br>$$<br>说明离散傅里叶变换中具有这样的对称性：<br>时域信号的实部对应频谱为偶对称实部和奇对称虚部，<br>时域信号的虚部对应频谱为奇对称实部和偶对称虚部，<br>时域信号包含实部和虚部时，频谱是两者的叠加。</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1009.jpg"></p>
+<h2 id="B-离散傅里叶变换中的对称性"><a href="#B-离散傅里叶变换中的对称性" class="headerlink" title="(B) 离散傅里叶变换中的对称性"></a>(B) 离散傅里叶变换中的对称性</h2><p>由欧拉公式<br>$$<br>e^{ix}=cosx+isinx<br>$$<br>设信号在复数域，即<br>$$<br>x_n=A_n+iB_n<br>$$<br>则离散傅里叶变换公式<br>$$<br>X[k]=\sum_{n=0}^{N-1}x_ne^{-i2\pi kn/N}<br>$$<br>可改写为<br>$$<br>X[k]=\sum_{n=0}^{N-1}[(A_ncos(2\pi kn/N)+B_nsin(2\pi kn/N))+i(B_ncos(2\pi kn/N)-A_nsin(2\pi kn/N))]<br>$$<br>说明离散傅里叶变换中具有这样的对称性：<br>时域信号的实部对应频谱为偶对称实部和奇对称虚部，<br>时域信号的虚部对应频谱为奇对称实部和偶对称虚部，<br>时域信号包含实部和虚部时，频谱是两者的叠加。<br><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A1009a.jpg"></p>
 
     </div>
 
