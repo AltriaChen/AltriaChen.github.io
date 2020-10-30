@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="从本篇起，将进入数据结构和算法的学习篇章。本篇是该系列第一篇，将从较为宏观的角度介绍数据结构、算法、复杂度的概念，并以两数和为例与算法第一次接触。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法(零一)：数据结构·算法·复杂度">
+<meta property="og:url" content="http://yoursite.com/2020/10/30/data-structure-01/index.html">
+<meta property="og:site_name" content="Cross Code">
+<meta property="og:description" content="从本篇起，将进入数据结构和算法的学习篇章。本篇是该系列第一篇，将从较为宏观的角度介绍数据结构、算法、复杂度的概念，并以两数和为例与算法第一次接触。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-30T02:13:20.000Z">
+<meta property="article:modified_time" content="2020-10-30T02:15:39.346Z">
+<meta property="article:author" content="Minwei Chen">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/30/data-structure-01/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据结构和算法(零一)：数据结构·算法·复杂度 | Cross Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/js/my_js/clicklove.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cross Code</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is only one heroism in the world: to see the world as it is and to love it</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">一. 数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%AE%80%E4%BB%8B"><span class="nav-text">(A) 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84%E5%92%8C%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="nav-text">(B) 逻辑结构和物理结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%9B%9B%E7%A7%8D%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="nav-text">(a) 四种逻辑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="nav-text">(b) 物理结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E7%AE%97%E6%B3%95"><span class="nav-text">二. 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%AE%80%E4%BB%8B-1"><span class="nav-text">(A) 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E7%9A%84%E8%A6%81%E6%B1%82"><span class="nav-text">(B) 算法设计的要求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">三. 复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%AE%97%E6%B3%95%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">(A) 算法时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%AE%9A%E4%B9%89"><span class="nav-text">(a) 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%8E%A8%E5%AF%BC%E5%A4%A7O%E9%98%B6%E6%96%B9%E6%B3%95"><span class="nav-text">(b) 推导大O阶方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">(c) 常见的时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E6%9C%80%E5%9D%8F%E6%83%85%E5%86%B5%E4%B8%8E%E5%B9%B3%E5%9D%87%E6%83%85%E5%86%B5"><span class="nav-text">(d) 最坏情况与平均情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E7%AE%97%E6%B3%95%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">(B) 算法空间复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E5%AE%9E%E4%BE%8B%EF%BC%9A%E4%B8%A4%E6%95%B0%E5%92%8C"><span class="nav-text">四. 实例：两数和</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E9%81%8D%E5%8E%86"><span class="nav-text">(A) 方法一：遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">(a) 思路及复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-Python-%E5%AE%9E%E7%8E%B0"><span class="nav-text">(b) Python 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E9%81%8D%E5%8E%86%E7%9A%84%E6%94%B9%E8%BF%9B-%E5%8F%AA%E8%AE%BF%E9%97%AE%E4%B9%8B%E5%89%8D%E6%88%96%E4%B9%8B%E5%90%8E"><span class="nav-text">(B) 方法二：遍历的改进-只访问之前或之后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%80%9D%E8%B7%AF"><span class="nav-text">(a) 思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-Python-%E5%AE%9E%E7%8E%B0-1"><span class="nav-text">(b) Python 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%9A%E4%B8%A4%E9%81%8D%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-text">(C) 方法三：两遍哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%A4%8D%E6%9D%82%E5%BA%A6-1"><span class="nav-text">(a) 思路及复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-Python-%E5%AE%9E%E7%8E%B0-2"><span class="nav-text">(b) Python 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%9A%E4%B8%80%E9%81%8D%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-text">(D) 优化算法：一遍哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%80%9D%E8%B7%AF-1"><span class="nav-text">(a) 思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-Python-%E5%AE%9E%E7%8E%B0-3"><span class="nav-text">(b) Python 实现</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Minwei Chen"
+      src="/images/tuoqi.jpg">
+  <p class="site-author-name" itemprop="name">Minwei Chen</p>
+  <div class="site-description" itemprop="description">Cross the surface, get to the reality. Welcome to Cross Code!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AltriaChen" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AltriaChen" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mwchennju@foxmail.com" title="E-Mail → mailto:mwchennju@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/30/data-structure-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tuoqi.jpg">
+      <meta itemprop="name" content="Minwei Chen">
+      <meta itemprop="description" content="Cross the surface, get to the reality. Welcome to Cross Code!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cross Code">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构和算法(零一)：数据结构·算法·复杂度
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-30 10:13:20 / 修改时间：10:15:39" itemprop="dateCreated datePublished" datetime="2020-10-30T10:13:20+08:00">2020-10-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>从本篇起，将进入数据结构和算法的学习篇章。本篇是该系列第一篇，将从较为宏观的角度介绍数据结构、算法、复杂度的概念，并以两数和为例与算法第一次接触。</p>
+<a id="more"></a>
+
+<h1 id="一-数据结构"><a href="#一-数据结构" class="headerlink" title="一. 数据结构"></a>一. 数据结构</h1><h2 id="A-简介"><a href="#A-简介" class="headerlink" title="(A) 简介"></a>(A) 简介</h2><p>(1) 数据结构是一门研究非数值计算的程序设计问题中的操作对象，以及它们之间的关系和操作等相关问题的学科。</p>
+<ul>
+<li>程序设计 = 数据结构 + 算法</li>
+<li>再简单的来说数据结构就是关系，没错，就是数据元素相互之间存在的一种或多种特定关系的集合。</li>
+</ul>
+<p>(2) 传统上，我们把数据结构分为逻辑结构和物理结构。<br>逻辑结构：是指数据对象中数据元素之间的相互关系，也是我们今后最需要关注和讨论的问题。<br>物理结构：是指数据的逻辑结构在计算机中的存储形式。</p>
+<h2 id="B-逻辑结构和物理结构"><a href="#B-逻辑结构和物理结构" class="headerlink" title="(B) 逻辑结构和物理结构"></a>(B) 逻辑结构和物理结构</h2><h3 id="a-四种逻辑结构"><a href="#a-四种逻辑结构" class="headerlink" title="(a) 四种逻辑结构"></a>(a) 四种逻辑结构</h3><p>集合结构：集合结构中的数据元素除了同属于一个集合外，它们之间没有其他不三不四的关系。<br>线性结构：线性结构中的数据元素之间是一对一的关系。<br>树形结构：树形结构中的数据元素之间存在一种一对多的层次关系。<br>图形结构：图形结构的数据元素是多对多的关系。</p>
+<h3 id="b-物理结构"><a href="#b-物理结构" class="headerlink" title="(b) 物理结构"></a>(b) 物理结构</h3><p>物理结构实际上研究的是如何把数据元素存储到计算机的存储器中。存储器主要是针对内存而言的，像硬盘、软盘、光盘等外部存储器的数据组织通常用文件结构来描述。<br>数据元素的存储结构形式有两种：顺序存储和链式存储。<br>(1) 顺序存储结构：是把数据元素存放在地址连续的存储单元里，其数据间的逻辑关系和物理关系是一致的。<br>(2) 链式存储结构：是把数据元素存放在任意的存储单元里，这里存储单元可以是连续的，也可以是不连续的。很显然，这样说的话链式存储结构的数据元素存储关系并不能反映其逻辑关系，因此需要用一个指针存放数据元素的地址，这样子通过地址就可以找到相关联数据元素的位置。</p>
+<h1 id="二-算法"><a href="#二-算法" class="headerlink" title="二. 算法"></a>二. 算法</h1><h2 id="A-简介-1"><a href="#A-简介-1" class="headerlink" title="(A) 简介"></a>(A) 简介</h2><p>算法是解决特定问题求解步骤的描述，在计算机中表现为指令的有限序列，并且每条指令表示一个或多个操作。<br>算法具有五个基本特征：输入、输出、有穷性、确定性和可行性。</p>
+<ul>
+<li>输入<br>– 算法具有零个或多个输入。</li>
+<li>输出<br>– 算法具有一个或多个输出。<br>– 算法是一定要有输出的。输出的形式可以是打印形式输出，也可以是返回一个值或多个值等。</li>
+<li>有穷性<br>– 指算法在执行有限的步骤之后，自动结束而不会出现无限循环，并且每一个步骤在可接受的时间内完成。</li>
+<li>确定性<br>– 算法的每一个步骤都具有确定的含义，不会出现二义性。<br>– 算法在一定条件下，只有一条执行路径，相同的输入只能有唯一的输出结果。<br>– 算法的每个步骤都应该被精确定义而无歧义。</li>
+<li>可行性<br>– 算法的每一步都必须是可行的，也就是说，每一步都能够通过执行有限次数完成。</li>
+</ul>
+<h2 id="B-算法设计的要求"><a href="#B-算法设计的要求" class="headerlink" title="(B) 算法设计的要求"></a>(B) 算法设计的要求</h2><ul>
+<li><p>正确性<br>– 算法的正确性是指算法至少应该具有输入、输出和加工处理无歧义性、能正确反映问题的需求、能够得到问题的正确答案。<br>– 大体分为以下四个层次：</p>
+<ol>
+<li>算法程序没有语法错误。</li>
+<li>算法程序对于合法输入能够产生满足要求的输出。</li>
+<li>算法程序对于非法输入能够产生满足规格的说明。</li>
+<li>算法程序对于故意刁难的测试输入都有满足要求的输出结果。</li>
+</ol>
+</li>
+<li><p>可读性<br>– 算法设计另一目的是为了便于阅读、理解和交流。<br>– 我们写代码的目的，一方面是为了让计算机执行，但还有一个重要的目的是为了便于他人阅读和自己日后阅读修改。</p>
+</li>
+<li><p>健全性<br>– 当输入数据不合法时，算法也能做出相关处理，而不是产生异常、崩溃或莫名其妙的结果。</p>
+</li>
+<li><p>时间效率高和存储量低<br>– 生活中，每个男人都希望找一个贤惠的老婆，她们温柔又体贴，美丽又大方，还会做着一手的好菜。<br>– 好算法就犹如好老婆，应该具备时间效率高和存储量低的特点。所以在设计算法的时候我们应该尽量思考这两方面的问题。</p>
+</li>
+</ul>
+<h1 id="三-复杂度"><a href="#三-复杂度" class="headerlink" title="三. 复杂度"></a>三. 复杂度</h1><h2 id="A-算法时间复杂度"><a href="#A-算法时间复杂度" class="headerlink" title="(A) 算法时间复杂度"></a>(A) 算法时间复杂度</h2><h3 id="a-定义"><a href="#a-定义" class="headerlink" title="(a) 定义"></a>(a) 定义</h3><ul>
+<li>算法时间复杂度的定义：在进行算法分析时，语句总的执行次数 T(n) 是关于问题规模 n 的函数，进而分析 T(n) 随 n 的变化情况并确定 T(n) 的数量级。算法的时间复杂度，也就是算法的时间量度，记作：T(n) = O(f(n))。它表示随问题规模 n 的增大，算法执行时间的增长率和 f(n) 的增长率相同，称作算法的渐近时间复杂度，简称为时间复杂度。其中 f(n) 是问题规模 n 的某个函数。</li>
+<li>这样用大写 O( ) 来体现算法时间复杂度的记法，我们称之为大O记法。</li>
+<li>一般情况下，随着输入规模 n 的增大，T(n) 增长最慢的算法为最优算法。</li>
+</ul>
+<h3 id="b-推导大O阶方法"><a href="#b-推导大O阶方法" class="headerlink" title="(b) 推导大O阶方法"></a>(b) 推导大O阶方法</h3><ul>
+<li>那么如何分析一个算法的时间复杂度呢？即如何推导大O阶呢？我们给大家整理了以下攻略：<br>– 用常数 1 取代运行时间中的所有加法常数。<br>– 在修改后的运行次数函数中，只保留最高阶项。<br>– 如果最高阶项存在且不是 1，则去除与这个项相乘的常数。<br>– 得到的最后结果就是大O阶。</li>
+</ul>
+<h3 id="c-常见的时间复杂度"><a href="#c-常见的时间复杂度" class="headerlink" title="(c) 常见的时间复杂度"></a>(c) 常见的时间复杂度</h3><ul>
+<li>常用的时间复杂度所耗费的时间从小到大依次是：O(1) &lt; O(logn) &lt; O(n) &lt; O(nlogn) &lt; O(n^2) &lt; O(n^3) &lt; O(2^n) &lt; O(n!) &lt; O(n^n)</li>
+<li>像 O(n^3) 之后的这些，由于 n 值的增大都会使得结果大得难以想象，我们没必要去讨论它们。</li>
+</ul>
+<h3 id="d-最坏情况与平均情况"><a href="#d-最坏情况与平均情况" class="headerlink" title="(d) 最坏情况与平均情况"></a>(d) 最坏情况与平均情况</h3><ul>
+<li>我们查找一个有 n 个随机数字数组中的某个数字，最好的情况是第一个数字就是，那么算法的时间复杂度为 O(1)，但也有可能这个数字就在最后一个位置，那么时间复杂度为 O(n)。</li>
+<li>平均运行时间是期望的运行时间。</li>
+<li>最坏运行时间是一种保证。在应用中，这是一种最重要的需求，通常除非特别指定，我们提到的运行时间都是最坏情况的运行时间。</li>
+</ul>
+<h2 id="B-算法空间复杂度"><a href="#B-算法空间复杂度" class="headerlink" title="(B) 算法空间复杂度"></a>(B) 算法空间复杂度</h2><ul>
+<li>算法的空间复杂度通过计算算法所需的存储空间实现，算法的空间复杂度的计算公式记作：<br>S(n) = O(f(n))，其中，n 为问题的规模，f(n) 为语句关于 n 所占存储空间的函数。</li>
+<li>通常，我们都是用“时间复杂度”来指运行时间的需求，是用“空间复杂度”指空间需求。</li>
+<li>当直接要让我们求“复杂度”时，通常指的是时间复杂度。</li>
+<li>显然对时间复杂度的追求更是属于算法的潮流！</li>
+</ul>
+<h1 id="四-实例：两数和"><a href="#四-实例：两数和" class="headerlink" title="四. 实例：两数和"></a>四. 实例：两数和</h1><p>下面我们以 Leetcode 的题目：两数和，来初次体会数据结构、算法、复杂度。<br>(A) 题目描述：给定一个整数数组 nums 和一个目标值 target ，请你在该数组中找出和为目标值的那两个整数，并返回他们的数组下标。<br>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。<br>(B) 示例：<br>给定 nums = [2, 7, 11, 15] ，target = 9<br>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+<h2 id="A-方法一：遍历"><a href="#A-方法一：遍历" class="headerlink" title="(A) 方法一：遍历"></a>(A) 方法一：遍历</h2><h3 id="a-思路及复杂度"><a href="#a-思路及复杂度" class="headerlink" title="(a) 思路及复杂度"></a>(a) 思路及复杂度</h3><p>思路：遍历每个元素 x，并查找是否存在一个值与 target - x 相等的目标元素。<br>复杂度：<br>(1) 时间复杂度：O(n<sup>2</sup>)<br>对于每个元素，我们试图通过遍历数组的其余部分来寻找它所对应的目标元素，这将耗费 O(n) 的时间。因此时间复杂度为 O(n<sup>2</sup>)。<br>(2) 空间复杂度：O(1)。</p>
+<h3 id="b-Python-实现"><a href="#b-Python-实现" class="headerlink" title="(b) Python 实现"></a>(b) Python 实现</h3> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span>(<span class="params">self, nums: list, target: int</span>) -&gt; list:</span>   <span class="comment">#这里指明了输入输出的变量类型</span></span><br><span class="line">            lens = len(nums)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(lens):</span><br><span class="line">                num1 = nums[i]</span><br><span class="line">                num2 = target - num1</span><br><span class="line">                <span class="keyword">if</span> num2 <span class="keyword">in</span> nums:</span><br><span class="line">                    <span class="keyword">if</span> num1 == num2 <span class="keyword">and</span> <span class="keyword">not</span> nums.count(num1) &gt; <span class="number">1</span>:</span><br><span class="line">                        <span class="keyword">continue</span>    <span class="comment">#跳出该次循环</span></span><br><span class="line">                    <span class="keyword">return</span> [i, nums.index(num2)]</span><br><span class="line"></span><br><span class="line">number = [<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">5</span>]</span><br><span class="line">target = <span class="number">9</span></span><br><span class="line">a = Solution()    <span class="comment">#注意要先生成类的实例对象，否则报错</span></span><br><span class="line">print(a.twoSum(number, target))</span><br></pre></td></tr></table></figure>
+
+<p>代码注释：<br>(1) <code>def twoSum(self, nums: list, target: int) -&gt; list:</code><br>这里指明了输入输出的变量类型。self 是定义类的方法时默认的变量，nums 和 target 是传入参数，分别为列表和整型变量，输出为列表。<br>(2) <code>count()</code> 计算参数在列表中出现的次数。<br>(3) <code>continue</code>，在语句块执行过程中终止当前循环，跳出该次循环，执行下一次循环。</p>
+<h2 id="B-方法二：遍历的改进-只访问之前或之后"><a href="#B-方法二：遍历的改进-只访问之前或之后" class="headerlink" title="(B) 方法二：遍历的改进-只访问之前或之后"></a>(B) 方法二：遍历的改进-只访问之前或之后</h2><h3 id="a-思路"><a href="#a-思路" class="headerlink" title="(a) 思路"></a>(a) 思路</h3><p>解题思路是在方法一的基础上，优化解法。num2 的查找并不需要每次从 nums 查找一遍，只需要从 num1 位置之前或之后查找即可。但为了方便 index 这里选择从 num1 位置之前查找。<br>注：既然结果必然成对出现，就不必要在 num1 位置之前或之后查两次。</p>
+<h3 id="b-Python-实现-1"><a href="#b-Python-实现-1" class="headerlink" title="(b) Python 实现"></a>(b) Python 实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoSum</span>(<span class="params">nums, target</span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, len(nums)):</span><br><span class="line">        temp = nums[:i]</span><br><span class="line">        num1 = target - nums[i]</span><br><span class="line">        <span class="keyword">if</span> num1 <span class="keyword">in</span> temp:</span><br><span class="line">            j = temp.index(num1)</span><br><span class="line">            <span class="keyword">return</span> [j, i]</span><br><span class="line"></span><br><span class="line">print(twoSum([<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">19</span>], <span class="number">9</span>))</span><br></pre></td></tr></table></figure>
+
+<p>代码注释：<br>(1) 列表分片<br><code>a = member[1:3]</code> 含义是从列表 member 中提出第 2-3 个元素，注意是左闭右开区间。<br><code>member=[:3]</code> 表示从前 3 个元素，<br><code>member=[1:]</code> 表示从第 2 个到最后，<br><code>member=[:]</code> 表示原列表拷贝。</p>
+<h2 id="C-方法三：两遍哈希表"><a href="#C-方法三：两遍哈希表" class="headerlink" title="(C) 方法三：两遍哈希表"></a>(C) 方法三：两遍哈希表</h2><h3 id="a-思路及复杂度-1"><a href="#a-思路及复杂度-1" class="headerlink" title="(a) 思路及复杂度"></a>(a) 思路及复杂度</h3><p>思路：为了对运行时间复杂度进行优化，我们需要一种更有效的方法来检查数组中是否存在目标元素。如果存在，我们需要找出它的索引，于是想到使用哈希表保持数组中的每个元素与其索引相互对应。<br>通过以空间换取速度的方式，我们可以将查找时间从 O(n) 降低到 O(1)。哈希表正是为此目的而构建的，它支持以近似恒定的时间进行快速查找。这里用“近似”来描述，是因为一旦出现冲突，查找用时可能会退化到 O(n)。但只要你仔细地挑选哈希函数，在哈希表中进行查找的用时应当被摊销为 O(1)。<br>一个简单的实现使用了两次迭代。在第一次迭代中，我们将每个元素的值和它的索引添加到表中。然后，在第二次迭代中，我们将检查每个元素所对应的目标元素 target - nums[i] 是否存在于表中。注意，该目标元素不能是 nums[i] 本身！</p>
+<p>复杂度：<br>(1) 时间复杂度：O(n)<br>我们把包含有 n 个元素的列表遍历两次。由于哈希表将查找时间缩短到 O(1) ，所以时间复杂度为 O(n)。<br>(2) 空间复杂度：O(n)<br>所需的额外空间取决于哈希表中存储的元素数量，该表中存储了 n 个元素。</p>
+<h3 id="b-Python-实现-2"><a href="#b-Python-实现-2" class="headerlink" title="(b) Python 实现"></a>(b) Python 实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoSum</span>(<span class="params">nums, target</span>):</span></span><br><span class="line">    hashmap=&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> ind, num <span class="keyword">in</span> enumerate(nums):  <span class="comment">#ind对应索引,num对应元素</span></span><br><span class="line">        hashmap[num] = ind            <span class="comment">#number作为键,ind作为值</span></span><br><span class="line">    <span class="keyword">for</span> i, num <span class="keyword">in</span> enumerate(nums):</span><br><span class="line">        j = hashmap.get(target - num) <span class="comment">#get方法返回指定键的值</span></span><br><span class="line">        <span class="keyword">if</span> j <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> i!=j:</span><br><span class="line">            <span class="keyword">return</span> [i,j]</span><br><span class="line"></span><br><span class="line">print(twoSum([<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">19</span>], <span class="number">9</span>))</span><br></pre></td></tr></table></figure>
+
+<p>代码注释：<br>(1) <code>enumerate()</code> 枚举，得到序列中元素的索引值与该元素的组合构成的列表。字典的 get( ) 函数返回指定键的值，如果值不在字典中返回默认值。<br>(2) <code>for ind, num in enumerate(nums)</code> 执行此句后，ind 对应 nums[] 的索引，num 对应 nums[] 的元素。<br>(3) <code>hashmap=&#123;&#125;, hashmap[num] = ind</code> ，这两句意思是生成字典，以 num 为键，ind 为值。</p>
+<h2 id="D-优化算法：一遍哈希表"><a href="#D-优化算法：一遍哈希表" class="headerlink" title="(D) 优化算法：一遍哈希表"></a>(D) 优化算法：一遍哈希表</h2><h3 id="a-思路-1"><a href="#a-思路-1" class="headerlink" title="(a) 思路"></a>(a) 思路</h3><p>类似方法二，num2 不需要在整个 dict 中去查找。可以在 num1 之前的 dict 中查找，因此就只需要一次循环可解决。</p>
+<h3 id="b-Python-实现-3"><a href="#b-Python-实现-3" class="headerlink" title="(b) Python 实现"></a>(b) Python 实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">twoSum</span>(<span class="params">nums, target</span>):</span></span><br><span class="line">    dct = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i, n <span class="keyword">in</span> enumerate(nums):</span><br><span class="line">        <span class="keyword">if</span> target - n <span class="keyword">in</span> dct:</span><br><span class="line">            <span class="keyword">return</span> [dct[target - n], i]</span><br><span class="line">        dct[n] = i  <span class="comment">#这句不能放在if语句之前，解决list中有重复值或target-num=num的情况</span></span><br><span class="line"></span><br><span class="line">print(twoSum([<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">19</span>], <span class="number">9</span>))</span><br></pre></td></tr></table></figure>
+
+<p>代码注释：<br>(1) <code>dct[target - n]</code> 返回键 target - n 对应的值。<br>(2) <code>dct[n] = i</code> 这句不能放在 if 语句之前，解决 list 中有重复值或 target-num=num 的情况。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/26/python-09/" rel="prev" title="Python学习笔记(零九)：Tkinter的简单实例(零二)">
+      <i class="fa fa-chevron-left"></i> Python学习笔记(零九)：Tkinter的简单实例(零二)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minwei Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
