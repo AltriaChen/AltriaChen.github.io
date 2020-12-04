@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="本篇介绍的是查找算法。内容包括顺序查找，有序表查找算法，线性索引查找，散列表查找。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构和算法(零九)：查找算法">
+<meta property="og:url" content="http://yoursite.com/2020/12/04/data-structure-09/index.html">
+<meta property="og:site_name" content="Cross Code">
+<meta property="og:description" content="本篇介绍的是查找算法。内容包括顺序查找，有序表查找算法，线性索引查找，散列表查找。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-04T01:20:18.000Z">
+<meta property="article:modified_time" content="2020-12-04T01:22:18.330Z">
+<meta property="article:author" content="Minwei Chen">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/12/04/data-structure-09/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据结构和算法(零九)：查找算法 | Cross Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/js/my_js/clicklove.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cross Code</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is only one heroism in the world: to see the world as it is and to love it</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E7%AE%80%E4%BB%8B"><span class="nav-text">一. 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">(A) 相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E9%A1%BA%E5%BA%8F%E6%9F%A5%E6%89%BE"><span class="nav-text">(B) 顺序查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF"><span class="nav-text">(a) 算法思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81%E6%80%9D%E8%B7%AF"><span class="nav-text">(b) 代码思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%A1%88"><span class="nav-text">(1) 基本方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88"><span class="nav-text">(2) 优化方案</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E6%9C%89%E5%BA%8F%E8%A1%A8%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95"><span class="nav-text">二. 有序表查找算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-text">(A) 二分查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF-1"><span class="nav-text">(a) 算法思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text">(b) 代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%8F%92%E5%80%BC%E6%9F%A5%E6%89%BE"><span class="nav-text">(B) 插值查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%9F%A5%E6%89%BE"><span class="nav-text">(C) 斐波那契查找</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E7%BA%BF%E6%80%A7%E7%B4%A2%E5%BC%95%E6%9F%A5%E6%89%BE"><span class="nav-text">三. 线性索引查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5-1"><span class="nav-text">(A) 相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%A8%A0%E5%AF%86%E7%B4%A2%E5%BC%95"><span class="nav-text">(a) 稠密索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%88%86%E5%9D%97%E7%B4%A2%E5%BC%95"><span class="nav-text">(b) 分块索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95"><span class="nav-text">(c) 倒排索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E5%88%86%E5%9D%97%E7%B4%A2%E5%BC%95%E4%BB%A3%E7%A0%81%E6%80%9D%E8%B7%AF"><span class="nav-text">(B) 分块索引代码思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E6%95%A3%E5%88%97%E8%A1%A8%E6%9F%A5%E6%89%BE"><span class="nav-text">四. 散列表查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-text">(A) 散列函数的构造方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%9B%B4%E6%8E%A5%E5%AE%9A%E5%9D%80%E6%B3%95"><span class="nav-text">(a) 直接定址法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%95%B0%E5%AD%97%E5%88%86%E6%9E%90%E6%B3%95"><span class="nav-text">(b) 数字分析法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%B9%B3%E6%96%B9%E5%8F%96%E4%B8%AD%E6%B3%95"><span class="nav-text">(c) 平方取中法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E6%8A%98%E5%8F%A0%E6%B3%95"><span class="nav-text">(d) 折叠法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#f-%E9%99%A4%E7%95%99%E4%BD%99%E6%95%B0%E6%B3%95"><span class="nav-text">(f) 除留余数法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E5%A4%84%E7%90%86%E6%95%A3%E5%88%97%E5%86%B2%E7%AA%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">(B) 处理散列冲突的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%BC%80%E6%94%BE%E5%AE%9A%E5%9D%80%E6%B3%95"><span class="nav-text">(a) 开放定址法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%86%8D%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0%E6%B3%95"><span class="nav-text">(b) 再散列函数法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E9%93%BE%E5%9C%B0%E5%9D%80%E6%B3%95"><span class="nav-text">(c) 链地址法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-text">(C) 算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-text">(a) 算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1"><span class="nav-text">(b) 代码实现</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Minwei Chen"
+      src="/images/tuoqi.jpg">
+  <p class="site-author-name" itemprop="name">Minwei Chen</p>
+  <div class="site-description" itemprop="description">Cross the surface, get to the reality. Welcome to Cross Code!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AltriaChen" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AltriaChen" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mwchennju@foxmail.com" title="E-Mail → mailto:mwchennju@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/04/data-structure-09/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tuoqi.jpg">
+      <meta itemprop="name" content="Minwei Chen">
+      <meta itemprop="description" content="Cross the surface, get to the reality. Welcome to Cross Code!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cross Code">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构和算法(零九)：查找算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-04 09:20:18 / 修改时间：09:22:18" itemprop="dateCreated datePublished" datetime="2020-12-04T09:20:18+08:00">2020-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本篇介绍的是查找算法。内容包括顺序查找，有序表查找算法，线性索引查找，散列表查找。</p>
+<a id="more"></a>
+
+<h1 id="一-简介"><a href="#一-简介" class="headerlink" title="一. 简介"></a>一. 简介</h1><h2 id="A-相关概念"><a href="#A-相关概念" class="headerlink" title="(A) 相关概念"></a>(A) 相关概念</h2><ul>
+<li>静态查找：数据集合稳定，不需要添加或删除元素的查找操作。<br>动态查找：数据集合在查找的过程中需要同时添加或删除元素的查找操作。</li>
+<li>(1) 对于静态查找来说，我们不妨可以用线性表结构组织数据，这样可以使用顺序查找算法，如果我们再对关键字进行排序，则可以使用折半查找算法或斐波那契查找算法等来提高查找的效率。<br>(2) 对于动态查找来说，我们则可以考虑使用二叉排序树的查找技术，另外我们还可以使用散列表结构来解决一些查找问题。</li>
+</ul>
+<h2 id="B-顺序查找"><a href="#B-顺序查找" class="headerlink" title="(B) 顺序查找"></a>(B) 顺序查找</h2><h3 id="a-算法思路"><a href="#a-算法思路" class="headerlink" title="(a) 算法思路"></a>(a) 算法思路</h3><p>顺序查找又称线性查找，是最基本的查找技术。它的查找过程是：从第一个(或者最后一个)记录开始，逐个对记录的关键字和给定值进行比对，若某个记录的关键字和给定值相等，则查找成功。如果查找了所有的记录仍然找不到与给定值相等的关键字，则查找不成功。</p>
+<h3 id="b-代码思路"><a href="#b-代码思路" class="headerlink" title="(b) 代码思路"></a>(b) 代码思路</h3><h4 id="1-基本方案"><a href="#1-基本方案" class="headerlink" title="(1) 基本方案"></a>(1) 基本方案</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//顺序查找，a为要查找的数组，n为要查找的数组的长度，key为要查找的关键字</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Sq_Search</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> n, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>( a[i]==key )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：这里 a[0] 不存储元素。</p>
+<h4 id="2-优化方案"><a href="#2-优化方案" class="headerlink" title="(2) 优化方案"></a>(2) 优化方案</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//顺序查找优化方案，a为要查找的数组，n为要查找的数组的长度，key为要查找的关键字</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Sq_Search</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> n, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = n;</span><br><span class="line">    a[<span class="number">0</span>] = key;</span><br><span class="line">    <span class="keyword">while</span>( a[i]!=key )</span><br><span class="line">    &#123;</span><br><span class="line">        i--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二-有序表查找算法"><a href="#二-有序表查找算法" class="headerlink" title="二. 有序表查找算法"></a>二. 有序表查找算法</h1><h2 id="A-二分查找"><a href="#A-二分查找" class="headerlink" title="(A) 二分查找"></a>(A) 二分查找</h2><h3 id="a-算法思路-1"><a href="#a-算法思路-1" class="headerlink" title="(a) 算法思路"></a>(a) 算法思路</h3><ul>
+<li><p>二分查找，就是一半一半地查找，不过前提是必须是一个有序的数列。</p>
+<table>
+<thead>
+<tr>
+<th>a[ ]</th>
+<th>要进行查找的数组</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>key</td>
+<td>要进行查找的数值</td>
+</tr>
+<tr>
+<td>low</td>
+<td>最小下标</td>
+</tr>
+<tr>
+<td>high</td>
+<td>最大下标</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>当 key 值小于数组中间位置的数值时，就在中间向左边的小数组中继续查找，若大于数组中间位置的数值时，就在中间往右边的小数组中继续查找。不过前提，这个数组是由小到大排列的。</p>
+</li>
+</ul>
+<h3 id="b-代码实现"><a href="#b-代码实现" class="headerlink" title="(b) 代码实现"></a>(b) 代码实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binsearch</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> key, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = low;</span><br><span class="line">    <span class="keyword">int</span> j = high;</span><br><span class="line">    <span class="keyword">int</span> mid = (low + high) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &gt; j) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (key == a[mid]) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; a[mid]) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> binsearch(a, key, mid + <span class="number">1</span> , j);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> binsearch(a, key, i, mid - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[] = &#123; <span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">12</span>,<span class="number">25</span>,<span class="number">46</span>,<span class="number">58</span>,<span class="number">62</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入你要查找的数字（找到返回下标，否则返回-1）：&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;i);</span><br><span class="line">    i = binsearch(a, i, <span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, i);</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">请输入你要查找的数字（找到返回下标，否则返回<span class="number">-1</span>）：<span class="number">7</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="B-插值查找"><a href="#B-插值查找" class="headerlink" title="(B) 插值查找"></a>(B) 插值查找</h2><ul>
+<li><p>插值查找是有序表的一种查找方式。插值查找是根据查找关键字与查找表中最大最小记录关键字比较后的查找方法。插值查找基于二分查找，将查找点的选择改进为自适应，提高查找效率。</p>
+</li>
+<li><p>代码实现</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Insert_search</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> key, <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pos, low, high;</span><br><span class="line">    low = <span class="number">0</span>,high = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(low &lt;= high)</span><br><span class="line">    &#123;</span><br><span class="line">        pos = ((key - a[low]) * (high - low )) / (a[high] - a[low]) + low;</span><br><span class="line">        <span class="keyword">if</span>(a[pos] &lt; key)</span><br><span class="line">        &#123;</span><br><span class="line">            low = pos + <span class="number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(a[pos] == key)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> pos;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            high = pos - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">13</span>] = &#123;<span class="number">5</span>,<span class="number">15</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">31</span>,<span class="number">38</span>,<span class="number">41</span>,<span class="number">45</span>,<span class="number">49</span>,<span class="number">52</span>,<span class="number">55</span>,<span class="number">57</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入要查找的数字:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;k);</span><br><span class="line">    <span class="keyword">int</span> pos = Insert_search(a,k,<span class="number">13</span>);</span><br><span class="line">    <span class="keyword">if</span>(pos != <span class="number">-1</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;在数组的第%d个位置找到元素:%d\n&quot;</span>,pos + <span class="number">1</span>,k);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;未在数组中找到元素:%d\n&quot;</span>,k);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">请输入要查找的数字:</span><br><span class="line"><span class="number">25</span></span><br><span class="line">在数组的第<span class="number">5</span>个位置找到元素:<span class="number">25</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="C-斐波那契查找"><a href="#C-斐波那契查找" class="headerlink" title="(C) 斐波那契查找"></a>(C) 斐波那契查找</h2><ul>
+<li>斐波那契查找是在二分查找的基础上根据斐波那契数列进行分割的。在斐波那契数列找一个等于或略大于查找表中元素个数的数 F[n]，将原查找表扩展为长度为 F[n] (如果要补充元素，则重复补充最后一个元素，直到满足 F[n] 个元素)，完成后进行斐波那契分割，即 F[n] 个元素分割为前半部分 F[n-1] 个元素，后半部分 F[n-2] 个元素，找出要查找的元素在哪一部分并递归，直到找到。</li>
+<li>代码实现</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 20</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fibonacci</span><span class="params">(<span class="keyword">int</span> *f)</span>    <span class="comment">//构建斐波那契序列</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; MAXSIZE; ++i)</span><br><span class="line">        f[i] = f[i - <span class="number">2</span>] + f[i - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fibonacci_search</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> key,<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>,high = n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> F[MAXSIZE];</span><br><span class="line">    fibonacci(F);</span><br><span class="line">    <span class="keyword">while</span>(n &gt; F[k] - <span class="number">1</span>) <span class="comment">//计算出n在斐波那契中的位置</span></span><br><span class="line">        ++k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n; i &lt; F[k] - <span class="number">1</span>; ++i) <span class="comment">//把数组补全，使用a[n-1]</span></span><br><span class="line">        a[i] = a[high];</span><br><span class="line">    <span class="keyword">while</span>(low &lt;= high)</span><br><span class="line">    &#123;</span><br><span class="line">        mid = low + F[k<span class="number">-1</span>] - <span class="number">1</span>;  <span class="comment">//根据斐波那契数列进行黄金分割</span></span><br><span class="line">        <span class="keyword">if</span>(a[mid] &gt; key)</span><br><span class="line">        &#123;</span><br><span class="line">            high = mid - <span class="number">1</span>;</span><br><span class="line">            k = k - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(a[mid] &lt; key)</span><br><span class="line">        &#123;</span><br><span class="line">            low = mid + <span class="number">1</span>;</span><br><span class="line">            k = k - <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(mid &lt;= high) <span class="comment">//如果为真则找到相应的位置</span></span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> a[MAXSIZE] = &#123;<span class="number">5</span>,<span class="number">15</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">31</span>,<span class="number">38</span>,<span class="number">41</span>,<span class="number">45</span>,<span class="number">49</span>,<span class="number">52</span>,<span class="number">55</span>,<span class="number">57</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入要查找的数字:\n&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;k);</span><br><span class="line">    <span class="keyword">int</span> pos = fibonacci_search(a,k,<span class="number">13</span>);</span><br><span class="line">    <span class="keyword">if</span>(pos != <span class="number">-1</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;在数组的第%d个位置找到元素:%d\n&quot;</span>,pos + <span class="number">1</span>,k);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;未在数组中找到元素:%d\n&quot;</span>,k);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">请输入要查找的数字:</span><br><span class="line"><span class="number">31</span></span><br><span class="line">在数组的第<span class="number">6</span>个位置找到元素:<span class="number">31</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="三-线性索引查找"><a href="#三-线性索引查找" class="headerlink" title="三. 线性索引查找"></a>三. 线性索引查找</h1><h2 id="A-相关概念-1"><a href="#A-相关概念-1" class="headerlink" title="(A) 相关概念"></a>(A) 相关概念</h2><p>索引是为了加快查找速度而设计的一种数据结构。索引就是把一个关键字与它对应的记录相关联的过程，一个索引由若干个索引项组成，每个索引项至少应包含关键字和其对应的记录在存储器中的位置等信息。</p>
+<h3 id="a-稠密索引"><a href="#a-稠密索引" class="headerlink" title="(a) 稠密索引"></a>(a) 稠密索引</h3><ul>
+<li>稠密索引是指在线性索引中，将数据集中的每个记录对应一个索引项。对于稠密索引来说，索引项一定是按照关键字有序排列。</li>
+<li>稠密索引优点是，索引项有序，故我们要查找关键字时，可以用到二分，插值，斐波那契等有序查找算法，大大提高了效率。</li>
+<li>稠密索引的缺点是，如果数据集非常大，比如几百万，那也就意味着索引也得有同样的数据集长度规模。这对于内存有限的计算机来说，可能就是需要反复去访问磁盘，查找性能反而就下降了。</li>
+</ul>
+<h3 id="b-分块索引"><a href="#b-分块索引" class="headerlink" title="(b) 分块索引"></a>(b) 分块索引</h3><ul>
+<li>稠密索引因为索引项与数据集的记录个数相同，所以空间代价很大。为了减少索引项的个数，我们可以对数据集进行分块，使其分块有序，然后对每一个块建立一个索引项，从而减少索引项的个数。<br>分块有序就是把数据集的记录分成了若干小块，并且这些小块需要满足两个条件：<ol>
+<li>块内无序：每一个块内的记录不要求有序。当然如果能够让块内有序查找就更理想，可以但没有必要。</li>
+<li>块间有序：例如，要求第二块所有记录的关键字都要大于第一块中所有记录的关键字，第三块所有记录的关键字都要大于第二块所有记录的关键字。因为只有块间有序，才有可能在查找时提高效率。</li>
+</ol>
+</li>
+</ul>
+<p>对于分块有序的数据集，将每块对应一个索引项，这种索引方法叫做分块索引。</p>
+<ul>
+<li><p>通常，我们定义的分块索引的索引项结构分三个数据项。</p>
+<ol>
+<li>最大关键码：它存储每一个块中的最大关键字，这样的好处是可以使得在它之后的下一个块中的最小关键字也能比这一块最大的关键字要大。</li>
+<li>块长：存储了块中的记录个数，以便于循环使用。</li>
+<li>块首指针：用于指向块首数据元素的指针，便于开始对这一块中记录进行遍历。</li>
+</ol>
+</li>
+<li><p>在分块索引表中查找，就是分两部分进行：</p>
+<ol>
+<li>在分块索引表中查找要查找关键字所在的块。由于分块索引表是块间有序的，因此很容易使用二分，插值等算法得到结果。</li>
+<li>根据块的首指针找到对应的块，并在块中顺序查找关键字。因为块中是无序的，因此只能顺序查找。</li>
+</ol>
+</li>
+</ul>
+<h3 id="c-倒排索引"><a href="#c-倒排索引" class="headerlink" title="(c) 倒排索引"></a>(c) 倒排索引</h3><ul>
+<li>倒排索引源于实际应用中需要根据属性的值来查找记录。这种索引表中的每一项都包括一个属性值和具有该属性值的各记录的地址。由于不是由记录来确定属性值，而是由属性值来确定记录的位置，因而称为倒排索引 (inverted index)。带有倒排索引的文件我们称为倒排索引文件，简称倒排文件 (inverted file)。</li>
+</ul>
+<h2 id="B-分块索引代码思路"><a href="#B-分块索引代码思路" class="headerlink" title="(B) 分块索引代码思路"></a>(B) 分块索引代码思路</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> DataType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> KeyType;<span class="comment">//DataType和KeyType可根据使用需求修改</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">IndexType</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    KeyType key;<span class="comment">//关键字项</span></span><br><span class="line">    <span class="keyword">int</span> Link;<span class="comment">//指针项</span></span><br><span class="line">&#125;IndexType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SeqList</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    DataType key;</span><br><span class="line">&#125;SeqList;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">IndexSeqSearch</span><span class="params">(IndexType Ls[], SeqList S[], <span class="keyword">int</span> m, <span class="keyword">int</span> n, KeyType key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//索引表Ls中顺序查找关键字为key，索引表长度为m</span></span><br><span class="line">    <span class="comment">//顺序表为R，块长为n</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= m &amp;&amp; key &gt; Ls[i].key)i++;<span class="comment">//块间查找</span></span><br><span class="line">    <span class="keyword">if</span> (i &gt; m)<span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//查找失败</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//块内顺序查找</span></span><br><span class="line">        <span class="keyword">int</span> j = Ls[i].Link;</span><br><span class="line">        <span class="keyword">while</span> (key != S[j].key &amp;&amp; j - Ls[i].Link &lt; <span class="number">2</span>)j++;</span><br><span class="line">        <span class="keyword">if</span> (key == S[j].key)<span class="keyword">return</span> j;<span class="comment">//成功</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//失败</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="四-散列表查找"><a href="#四-散列表查找" class="headerlink" title="四. 散列表查找"></a>四. 散列表查找</h1><p>散列表查找也成哈希表查找，整个散列表查找过程大致分两步：</p>
+<ol>
+<li>在存储时通过散列函数计算记录的散列地址，并按此散列地址存储该记录。</li>
+<li>当查找时，一样通过散列函数计算记录的散列地址，然后访问散列地址的记录。</li>
+</ol>
+<h2 id="A-散列函数的构造方法"><a href="#A-散列函数的构造方法" class="headerlink" title="(A) 散列函数的构造方法"></a>(A) 散列函数的构造方法</h2><h3 id="a-直接定址法"><a href="#a-直接定址法" class="headerlink" title="(a) 直接定址法"></a>(a) 直接定址法</h3><ul>
+<li>取关键字的某个线性函数值为散列地址。</li>
+</ul>
+<p>$$<br>f(key)=a*key+b<br>$$</p>
+<ul>
+<li>需要事先知道关键字的分布情况，适合查找表较小且连续的情况。</li>
+</ul>
+<h3 id="b-数字分析法"><a href="#b-数字分析法" class="headerlink" title="(b) 数字分析法"></a>(b) 数字分析法</h3><ul>
+<li>使用关键字的一部分来计算散列表存储的位置。</li>
+<li>适合处理关键字位数较大的情况。</li>
+</ul>
+<h3 id="c-平方取中法"><a href="#c-平方取中法" class="headerlink" title="(c) 平方取中法"></a>(c) 平方取中法</h3><ul>
+<li>假设关键字是 1234，那它的平方就是 1522756，再抽取中间的 3 位就是 277。</li>
+<li>适合不知道关键字的分布，而位数又不是很大的情况。</li>
+</ul>
+<h3 id="d-折叠法"><a href="#d-折叠法" class="headerlink" title="(d) 折叠法"></a>(d) 折叠法</h3><ul>
+<li>将关键字从左到右分割成位数相等的几个部分，然后将这几部分叠加求和，并按散列表表长，取后几位作为散列地址。比如关键字是 9876543210，散列表表长是三位，我们将它分成四组，987|654|321|0，然后将它们叠加求和等于 1962，再求后三位得到散列地址 962。</li>
+<li>适合事先不知道关键字的分布，关键字位数较多的情况。</li>
+</ul>
+<h3 id="f-除留余数法"><a href="#f-除留余数法" class="headerlink" title="(f) 除留余数法"></a>(f) 除留余数法</h3><ul>
+<li>此方法为最常用的构造散列函数的方法。<br>$$<br>f(key)=key\ \ mod\ \ p<br>$$</li>
+</ul>
+<h2 id="B-处理散列冲突的方法"><a href="#B-处理散列冲突的方法" class="headerlink" title="(B) 处理散列冲突的方法"></a>(B) 处理散列冲突的方法</h2><h3 id="a-开放定址法"><a href="#a-开放定址法" class="headerlink" title="(a) 开放定址法"></a>(a) 开放定址法</h3><p>开放定址法就是一旦出现了冲突，就去寻找下一个空的散列地址。只要散列地址够大，空的散列地址总会被找到。<br>$$<br>f_i(key)=[f(key)+d_i]\ \ MOD\ \ m\ \ (d_i=1,2,3,···,m-1)<br>$$</p>
+<h3 id="b-再散列函数法"><a href="#b-再散列函数法" class="headerlink" title="(b) 再散列函数法"></a>(b) 再散列函数法</h3><p>事先准备多个散列函数。<br>$$<br>f_i=RH_i(key)\ \ (i=1,2,···,k)<br>$$<br>这里的 RH<sub>i</sub> 就是不同的散列函数。</p>
+<h3 id="c-链地址法"><a href="#c-链地址法" class="headerlink" title="(c) 链地址法"></a>(c) 链地址法</h3><p>将所有通关键字的记录存储在一个单链表中，称这种表为同义词子表。在散列表中只存储所有同义词子表的头指针。</p>
+<h2 id="C-算法实现"><a href="#C-算法实现" class="headerlink" title="(C) 算法实现"></a>(C) 算法实现</h2><h3 id="a-算法流程"><a href="#a-算法流程" class="headerlink" title="(a) 算法流程"></a>(a) 算法流程</h3><ol>
+<li>首先定义一个散列表结构；</li>
+<li>对散列表进行初始化；</li>
+<li>对散列表进行插入操作；</li>
+<li>根据不同的情况选择散列函数和处理冲突的方法(这里选用的是除留余数法和开放定址法)。</li>
+</ol>
+<h3 id="b-代码实现-1"><a href="#b-代码实现-1" class="headerlink" title="(b) 代码实现"></a>(b) 代码实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span>    </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdlib.h&quot;</span>   </span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HASHSIZE 10 <span class="comment">// 定义散列表长度 </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NULLKEY -32768 </span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> *elem; <span class="comment">// 数据元素存储地址，动态分配数组 </span></span><br><span class="line">    <span class="keyword">int</span> count; <span class="comment">//  当前数据元素个数 </span></span><br><span class="line">&#125;HashTable;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">int</span> m = <span class="number">0</span>; </span><br><span class="line">          </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Init</span><span class="params">(HashTable *H)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"> </span><br><span class="line">    m = HASHSIZE;</span><br><span class="line">    H-&gt;elem = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(m * <span class="keyword">sizeof</span>(<span class="keyword">int</span>)); <span class="comment">//分配内存</span></span><br><span class="line">    H-&gt;count = m;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;m; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        H-&gt;elem[i] = NULLKEY;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Hash</span><span class="params">(<span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> k % m;<span class="comment">//除留余数法</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Insert</span><span class="params">(HashTable *H, <span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> addr = Hash(k);                      </span><br><span class="line">    <span class="keyword">while</span> (H-&gt;elem[addr] != NULLKEY)</span><br><span class="line">    &#123;</span><br><span class="line">        addr = (addr+<span class="number">1</span>) % m;<span class="comment">//开放定址法</span></span><br><span class="line">    &#125;</span><br><span class="line">    H-&gt;elem[addr] = k;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Search</span><span class="params">(HashTable *H, <span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> addr = Hash(k); <span class="comment">//求哈希地址</span></span><br><span class="line"> </span><br><span class="line">                            </span><br><span class="line">    <span class="keyword">while</span> (H-&gt;elem[addr] != k)<span class="comment">//开放定址法解决冲突</span></span><br><span class="line">    &#123;</span><br><span class="line">        addr = (addr+<span class="number">1</span>) % m;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> (H-&gt;elem[addr] == NULLKEY || addr == Hash(k))</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> addr;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Result</span><span class="params">(HashTable *H)</span><span class="comment">//散列表元素显示</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;H-&gt;count; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, H-&gt;elem[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, addr;</span><br><span class="line">    HashTable H;</span><br><span class="line">    <span class="keyword">int</span> arr[HASHSIZE] = &#123; <span class="literal">NULL</span> &#125;;</span><br><span class="line"> </span><br><span class="line">    Init(&amp;H);</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;输入关键字集合:&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;HASHSIZE; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;arr[i]);</span><br><span class="line">        Insert(&amp;H, arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    Result(&amp;H);</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;输入需要查找的元素：&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;j);</span><br><span class="line">    addr = Search(&amp;H, j);</span><br><span class="line">    <span class="keyword">if</span> (addr == <span class="number">-1</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;元素不存在\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d元素在表中的位置是:%d\n&quot;</span>, j,addr);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入关键字集合:<span class="number">1</span> <span class="number">3</span> <span class="number">6</span> <span class="number">8</span> <span class="number">12</span> <span class="number">14</span> <span class="number">16</span> <span class="number">25</span> <span class="number">28</span> <span class="number">34</span></span><br><span class="line"><span class="number">34</span> <span class="number">1</span> <span class="number">12</span> <span class="number">3</span> <span class="number">14</span> <span class="number">25</span> <span class="number">6</span> <span class="number">16</span> <span class="number">8</span> <span class="number">28</span></span><br><span class="line">输入需要查找的元素：<span class="number">34</span></span><br><span class="line"><span class="number">34</span>元素在表中的位置是:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/30/data-structure-08/" rel="prev" title="数据结构和算法(零八)：最短路径·关键路径">
+      <i class="fa fa-chevron-left"></i> 数据结构和算法(零八)：最短路径·关键路径
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minwei Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
