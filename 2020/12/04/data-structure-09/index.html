@@ -30,7 +30,7 @@
 <meta property="og:description" content="本篇介绍的是查找算法。内容包括顺序查找，有序表查找算法，线性索引查找，散列表查找。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-04T01:20:18.000Z">
-<meta property="article:modified_time" content="2020-12-04T01:22:18.330Z">
+<meta property="article:modified_time" content="2021-01-29T06:30:16.864Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
@@ -199,7 +199,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -281,10 +281,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-04 09:20:18 / 修改时间：09:22:18" itemprop="dateCreated datePublished" datetime="2020-12-04T09:20:18+08:00">2020-12-04</time>
+              <time title="创建时间：2020-12-04 09:20:18" itemprop="dateCreated datePublished" datetime="2020-12-04T09:20:18+08:00">2020-12-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-29 14:30:16" itemprop="dateModified" datetime="2021-01-29T14:30:16+08:00">2021-01-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -402,7 +408,7 @@
 </ul>
 <h2 id="B-分块索引代码思路"><a href="#B-分块索引代码思路" class="headerlink" title="(B) 分块索引代码思路"></a>(B) 分块索引代码思路</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> DataType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> KeyType;<span class="comment">//DataType和KeyType可根据使用需求修改</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">IndexType</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    KeyType key;<span class="comment">//关键字项</span></span><br><span class="line">    <span class="keyword">int</span> Link;<span class="comment">//指针项</span></span><br><span class="line">&#125;IndexType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SeqList</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    DataType key;</span><br><span class="line">&#125;SeqList;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">IndexSeqSearch</span><span class="params">(IndexType Ls[], SeqList S[], <span class="keyword">int</span> m, <span class="keyword">int</span> n, KeyType key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//索引表Ls中顺序查找关键字为key，索引表长度为m</span></span><br><span class="line">    <span class="comment">//顺序表为R，块长为n</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= m &amp;&amp; key &gt; Ls[i].key)i++;<span class="comment">//块间查找</span></span><br><span class="line">    <span class="keyword">if</span> (i &gt; m)<span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//查找失败</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//块内顺序查找</span></span><br><span class="line">        <span class="keyword">int</span> j = Ls[i].Link;</span><br><span class="line">        <span class="keyword">while</span> (key != S[j].key &amp;&amp; j - Ls[i].Link &lt; <span class="number">2</span>)j++;</span><br><span class="line">        <span class="keyword">if</span> (key == S[j].key)<span class="keyword">return</span> j;<span class="comment">//成功</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//失败</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="四-散列表查找"><a href="#四-散列表查找" class="headerlink" title="四. 散列表查找"></a>四. 散列表查找</h1><p>散列表查找也成哈希表查找，整个散列表查找过程大致分两步：</p>
+<h1 id="四-散列表查找"><a href="#四-散列表查找" class="headerlink" title="四. 散列表查找"></a>四. 散列表查找</h1><p>散列表查找也称哈希表查找，整个散列表查找过程大致分两步：</p>
 <ol>
 <li>在存储时通过散列函数计算记录的散列地址，并按此散列地址存储该记录。</li>
 <li>当查找时，一样通过散列函数计算记录的散列地址，然后访问散列地址的记录。</li>
