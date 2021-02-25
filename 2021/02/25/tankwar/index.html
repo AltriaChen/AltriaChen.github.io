@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="本篇记录的是坦克大战的项目实战。使用的图片，音乐等资源以及源代码记录在了阿伟同学 Github 仓库中，地址 https:&#x2F;&#x2F;github.com&#x2F;AltriaChen&#x2F;TankWar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目实战(零一)：坦克大战">
+<meta property="og:url" content="http://yoursite.com/2021/02/25/tankwar/index.html">
+<meta property="og:site_name" content="Cross Code">
+<meta property="og:description" content="本篇记录的是坦克大战的项目实战。使用的图片，音乐等资源以及源代码记录在了阿伟同学 Github 仓库中，地址 https:&#x2F;&#x2F;github.com&#x2F;AltriaChen&#x2F;TankWar">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3601.jpg">
+<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3602.jpg">
+<meta property="article:published_time" content="2021-02-25T08:05:48.000Z">
+<meta property="article:modified_time" content="2021-02-25T08:07:03.362Z">
+<meta property="article:author" content="Minwei Chen">
+<meta property="article:tag" content="项目实战">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3601.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2021/02/25/tankwar/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>项目实战(零一)：坦克大战 | Cross Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/js/my_js/clicklove.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cross Code</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is only one heroism in the world: to see the world as it is and to love it</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-text">一. 源代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-main-py"><span class="nav-text">(A) main.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-settings-py"><span class="nav-text">(B) settings.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-sprites-py"><span class="nav-text">(C) sprites.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-tank-war-py"><span class="nav-text">(D) tank_war.py</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="nav-text">(二) 项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE"><span class="nav-text">(A) 运行截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6"><span class="nav-text">(B) 项目文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-Tips"><span class="nav-text">三. Tips</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-pygame-sprite-Sprite"><span class="nav-text">(A) pygame.sprite.Sprite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-pygame-sprite-Group"><span class="nav-text">(B) pygame.sprite.Group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-super-%E5%87%BD%E6%95%B0"><span class="nav-text">(C) super( ) 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%A6%82%E8%BF%B0"><span class="nav-text">(a) 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E8%AF%AD%E6%B3%95"><span class="nav-text">(b) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(c) 实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-staticmethod-%E5%87%BD%E6%95%B0"><span class="nav-text">(D) staticmethod( ) 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%A6%82%E8%BF%B0-1"><span class="nav-text">(a) 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(b) 实例</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Minwei Chen"
+      src="/images/tuoqi.jpg">
+  <p class="site-author-name" itemprop="name">Minwei Chen</p>
+  <div class="site-description" itemprop="description">Cross the surface, get to the reality. Welcome to Cross Code!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AltriaChen" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AltriaChen" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mwchennju@foxmail.com" title="E-Mail → mailto:mwchennju@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/25/tankwar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tuoqi.jpg">
+      <meta itemprop="name" content="Minwei Chen">
+      <meta itemprop="description" content="Cross the surface, get to the reality. Welcome to Cross Code!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cross Code">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          项目实战(零一)：坦克大战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-25 16:05:48 / 修改时间：16:07:03" itemprop="dateCreated datePublished" datetime="2021-02-25T16:05:48+08:00">2021-02-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本篇记录的是坦克大战的项目实战。使用的图片，音乐等资源以及源代码记录在了阿伟同学 Github 仓库中，地址 <a target="_blank" rel="noopener" href="https://github.com/AltriaChen/TankWar">https://github.com/AltriaChen/TankWar</a></p>
+<a id="more"></a>
+
+<h1 id="一-源代码"><a href="#一-源代码" class="headerlink" title="一. 源代码"></a>一. 源代码</h1><h2 id="A-main-py"><a href="#A-main-py" class="headerlink" title="(A) main.py"></a>(A) main.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Thanks to  Zack</span></span><br><span class="line"><span class="comment"># Time  2021/02/04</span></span><br><span class="line"><span class="comment"># Development tool  Pycharm 2020</span></span><br><span class="line"><span class="comment"># Environment  Python 3.8.3</span></span><br><span class="line"><span class="comment"># Module  pygame</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tank_war <span class="keyword">import</span> TankWar</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    tankWar = TankWar()</span><br><span class="line">    tankWar.run_game()</span><br></pre></td></tr></table></figure>
+
+<h2 id="B-settings-py"><a href="#B-settings-py" class="headerlink" title="(B) settings.py"></a>(B) settings.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> pygame <span class="keyword">import</span> Rect</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Settings</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 游戏设置</span></span><br><span class="line">    FPS = <span class="number">60</span>    <span class="comment"># 游戏帧率</span></span><br><span class="line">    GAME_NAME = <span class="string">&quot;坦克大战&quot;</span>  <span class="comment"># 游戏标题</span></span><br><span class="line">    BOX_SIZE = <span class="number">50</span>   <span class="comment"># 单位屏幕大小</span></span><br><span class="line">    BOX_RECT = Rect(<span class="number">0</span>, <span class="number">0</span>, BOX_SIZE, BOX_SIZE)   <span class="comment"># 单位屏幕矩形</span></span><br><span class="line">    SCREEN_RECT = Rect(<span class="number">0</span>, <span class="number">0</span>, BOX_SIZE * <span class="number">19</span>, BOX_SIZE * <span class="number">13</span>)  <span class="comment"># 屏幕矩形</span></span><br><span class="line">    SCREEN_COLOR = (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)    <span class="comment"># 屏幕颜色</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 通用变量</span></span><br><span class="line">    LEFT = <span class="number">0</span></span><br><span class="line">    RIGHT = <span class="number">1</span></span><br><span class="line">    UP = <span class="number">2</span></span><br><span class="line">    DOWN = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 地图</span></span><br><span class="line">    MAP_ONE = [</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, ],</span><br><span class="line">        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, ],</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 音频</span></span><br><span class="line">    BOOM_MUSIC = <span class="string">&quot;resources/musics/boom.wav&quot;</span></span><br><span class="line">    FIRE_MUSIC = <span class="string">&quot;resources/musics/fire.wav&quot;</span></span><br><span class="line">    HIT_MUSIC = <span class="string">&quot;resources/musics/hit.wav&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 坦克类型</span></span><br><span class="line">    HERO = <span class="number">0</span></span><br><span class="line">    ENEMY = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 我方坦克</span></span><br><span class="line">    HERO_IMAGE_NAME = <span class="string">&quot;./resources/images/hero/hero1U.gif&quot;</span></span><br><span class="line">    HERO_IMAGES = &#123;</span><br><span class="line">        LEFT: <span class="string">&quot;./resources/images/hero/hero1L.gif&quot;</span>,</span><br><span class="line">        RIGHT: <span class="string">&quot;./resources/images/hero/hero1R.gif&quot;</span>,</span><br><span class="line">        UP: <span class="string">&quot;./resources/images/hero/hero1U.gif&quot;</span>,</span><br><span class="line">        DOWN: <span class="string">&quot;./resources/images/hero/hero1D.gif&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    HERO_SPEED = <span class="number">2</span></span><br><span class="line">    BOSS_IMAGE = <span class="string">&quot;./resources/images/5.png&quot;</span></span><br><span class="line">    <span class="comment"># 我方老家</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 敌方坦克</span></span><br><span class="line">    ENEMY_IMAGES = &#123;</span><br><span class="line">        LEFT: <span class="string">&quot;./resources/images/enemy/enemy2L.gif&quot;</span>,</span><br><span class="line">        RIGHT: <span class="string">&quot;./resources/images/enemy/enemy2R.gif&quot;</span>,</span><br><span class="line">        UP: <span class="string">&quot;./resources/images/enemy/enemy2U.gif&quot;</span>,</span><br><span class="line">        DOWN: <span class="string">&quot;./resources/images/enemy/enemy2D.gif&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    ENEMY_COUNT = <span class="number">5</span></span><br><span class="line">    ENEMY_SPEED = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 子弹</span></span><br><span class="line">    BULLET_IMAGE_NAME = <span class="string">&quot;./resources/images/bullet/bullet.png&quot;</span></span><br><span class="line">    BULLET_RECT = Rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">5</span>)</span><br><span class="line">    BULLET_SPEED = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 0表示空白、1表示红墙、2表示铁墙、3表示草、4表示海、5表示鸟</span></span><br><span class="line">    RED_WALL = <span class="number">1</span></span><br><span class="line">    IRON_WALL = <span class="number">2</span></span><br><span class="line">    WEED_WALL = <span class="number">3</span></span><br><span class="line">    BOSS_WALL = <span class="number">5</span></span><br><span class="line">    WALLS = [</span><br><span class="line">        <span class="string">f&quot;resources/images/walls/<span class="subst">&#123;file&#125;</span>&quot;</span> \</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(<span class="string">&quot;resources/images/walls/&quot;</span>)</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 爆炸的图片</span></span><br><span class="line">    BOOMS = [</span><br><span class="line">        <span class="string">&quot;resources/images/boom/&quot;</span> + file \</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(<span class="string">&quot;resources/images/boom&quot;</span>)</span><br><span class="line">    ]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="C-sprites-py"><a href="#C-sprites-py" class="headerlink" title="(C) sprites.py"></a>(C) sprites.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">from</span> settings <span class="keyword">import</span> Settings</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseSprite</span>(<span class="params">pygame.sprite.Sprite</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    BaseSprite类，游戏中所有变化物体的底层父类</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, image_name, screen</span>):</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.screen = screen</span><br><span class="line">        self.direction = <span class="literal">None</span></span><br><span class="line">        self.speed = <span class="literal">None</span></span><br><span class="line">        self.image = pygame.image.load(image_name)</span><br><span class="line">        self.rect = self.image.get_rect()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 根据方向移动</span></span><br><span class="line">        <span class="keyword">if</span> self.direction == Settings.LEFT:</span><br><span class="line">            self.rect.x -= self.speed</span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.RIGHT:</span><br><span class="line">            self.rect.x += self.speed</span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.UP:</span><br><span class="line">            self.rect.y -= self.speed</span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.DOWN:</span><br><span class="line">            self.rect.y += self.speed</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bullet</span>(<span class="params">BaseSprite</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, image_name, screen</span>):</span></span><br><span class="line">        super().__init__(image_name, screen)</span><br><span class="line">        self.speed = Settings.BULLET_SPEED</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TankSprite</span>(<span class="params">BaseSprite</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    ImageSprite类，BaseSprite的子类，所有带图片的精灵的父类</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, image_name, screen</span>):</span></span><br><span class="line">        super().__init__(image_name, screen)</span><br><span class="line">        self.type = <span class="literal">None</span></span><br><span class="line">        self.bullets = pygame.sprite.Group()</span><br><span class="line">        self.is_alive = <span class="literal">True</span></span><br><span class="line">        self.is_moving = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">shot</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        射击类，坦克调用该类发射子弹</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 把消失的子弹移除</span></span><br><span class="line">        self.__remove_sprites()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_alive:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> len(self.bullets) &gt;= <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> self.type == Settings.HERO:</span><br><span class="line">            pygame.mixer.music.load(Settings.FIRE_MUSIC)</span><br><span class="line">            pygame.mixer.music.play()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 发射子弹</span></span><br><span class="line">        bullet = Bullet(Settings.BULLET_IMAGE_NAME, self.screen)</span><br><span class="line">        bullet.direction = self.direction</span><br><span class="line">        <span class="keyword">if</span> self.direction == Settings.LEFT:</span><br><span class="line">            bullet.rect.right = self.rect.left</span><br><span class="line">            bullet.rect.centery = self.rect.centery</span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.RIGHT:</span><br><span class="line">            bullet.rect.left = self.rect.right</span><br><span class="line">            bullet.rect.centery = self.rect.centery</span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.UP:</span><br><span class="line">            bullet.rect.bottom = self.rect.top</span><br><span class="line">            bullet.rect.centerx = self.rect.centerx</span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.DOWN:</span><br><span class="line">            bullet.rect.top = self.rect.bottom</span><br><span class="line">            bullet.rect.centerx = self.rect.centerx</span><br><span class="line">        self.bullets.add(bullet)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move_out_wall</span>(<span class="params">self, wall</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.direction == Settings.LEFT:</span><br><span class="line">            self.rect.left = wall.rect.right + <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.RIGHT:</span><br><span class="line">            self.rect.right = wall.rect.left - <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.UP:</span><br><span class="line">            self.rect.top = wall.rect.bottom + <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.DOWN:</span><br><span class="line">            self.rect.bottom = wall.rect.top - <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__remove_sprites</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        移除无用的子弹</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> bullet <span class="keyword">in</span> self.bullets:</span><br><span class="line">            <span class="keyword">if</span> bullet.rect.bottom &lt;= <span class="number">0</span> <span class="keyword">or</span> \</span><br><span class="line">                    bullet.rect.top &gt;= Settings.SCREEN_RECT.bottom <span class="keyword">or</span> \</span><br><span class="line">                    bullet.rect.right &lt;= <span class="number">0</span> <span class="keyword">or</span> \</span><br><span class="line">                    bullet.rect.left &gt;= Settings.SCREEN_RECT.right:</span><br><span class="line">                self.bullets.remove(bullet)</span><br><span class="line">                bullet.kill()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_alive:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        super(TankSprite, self).update()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">boom</span>(<span class="params">self</span>):</span></span><br><span class="line">        pygame.mixer.music.load(Settings.BOOM_MUSIC)</span><br><span class="line">        pygame.mixer.music.play()</span><br><span class="line">        <span class="keyword">for</span> boom <span class="keyword">in</span> Settings.BOOMS:</span><br><span class="line">            self.image = pygame.image.load(boom)</span><br><span class="line">            time.sleep(<span class="number">0.05</span>)</span><br><span class="line">            self.screen.blit(self.image, self.rect)</span><br><span class="line">        pygame.mixer.music.stop()</span><br><span class="line">        super(TankSprite, self).kill()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kill</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.is_alive = <span class="literal">False</span></span><br><span class="line">        t = Thread(target=self.boom)</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hero</span>(<span class="params">TankSprite</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, image_name, screen</span>):</span></span><br><span class="line">        super(Hero, self).__init__(image_name, screen)</span><br><span class="line">        self.type = Settings.HERO</span><br><span class="line">        self.speed = Settings.HERO_SPEED</span><br><span class="line">        self.direction = Settings.UP</span><br><span class="line">        self.is_hit_wall = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化英雄的位置</span></span><br><span class="line">        self.rect.centerx = Settings.SCREEN_RECT.centerx - Settings.BOX_RECT.width * <span class="number">2</span></span><br><span class="line">        self.rect.bottom = Settings.SCREEN_RECT.bottom</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__turn</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.image = pygame.image.load(Settings.HERO_IMAGES.get(self.direction))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hit_wall</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.direction == Settings.LEFT <span class="keyword">and</span> self.rect.left &lt;= <span class="number">0</span> <span class="keyword">or</span> \</span><br><span class="line">                self.direction == Settings.RIGHT <span class="keyword">and</span> self.rect.right &gt;= Settings.SCREEN_RECT.right <span class="keyword">or</span> \</span><br><span class="line">                self.direction == Settings.UP <span class="keyword">and</span> self.rect.top &lt;= <span class="number">0</span> <span class="keyword">or</span> \</span><br><span class="line">                self.direction == Settings.DOWN <span class="keyword">and</span> self.rect.bottom &gt;= Settings.SCREEN_RECT.bottom:</span><br><span class="line">            self.is_hit_wall = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_hit_wall:</span><br><span class="line">            super().update()</span><br><span class="line">            self.__turn()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kill</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.is_alive = <span class="literal">False</span></span><br><span class="line">        self.boom()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Enemy</span>(<span class="params">TankSprite</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, image_name, screen</span>):</span></span><br><span class="line">        super().__init__(image_name, screen)</span><br><span class="line">        self.is_hit_wall = <span class="literal">False</span></span><br><span class="line">        self.type = Settings.ENEMY</span><br><span class="line">        self.speed = Settings.ENEMY_SPEED</span><br><span class="line">        self.direction = random.randint(<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">        self.terminal = float(random.randint(<span class="number">40</span>*<span class="number">2</span>, <span class="number">40</span>*<span class="number">8</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">random_turn</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 随机转向</span></span><br><span class="line">        self.is_hit_wall = <span class="literal">False</span></span><br><span class="line">        directions = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>)]</span><br><span class="line">        directions.remove(self.direction)</span><br><span class="line">        self.direction = directions[random.randint(<span class="number">0</span>, <span class="number">2</span>)]</span><br><span class="line">        self.terminal = float(random.randint(<span class="number">40</span>*<span class="number">2</span>, <span class="number">40</span>*<span class="number">8</span>))</span><br><span class="line">        self.image = pygame.image.load(Settings.ENEMY_IMAGES.get(self.direction))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">random_shot</span>(<span class="params">self</span>):</span></span><br><span class="line">        shot_flag = random.choice([<span class="literal">True</span>] + [<span class="literal">False</span>]*<span class="number">59</span>)</span><br><span class="line">        <span class="keyword">if</span> shot_flag:</span><br><span class="line">            super().shot()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hit_wall_turn</span>(<span class="params">self</span>):</span></span><br><span class="line">        turn = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> self.direction == Settings.LEFT <span class="keyword">and</span> self.rect.left &lt;= <span class="number">0</span>:</span><br><span class="line">            turn = <span class="literal">True</span></span><br><span class="line">            self.rect.left = <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.RIGHT <span class="keyword">and</span> self.rect.right &gt;= Settings.SCREEN_RECT.right<span class="number">-1</span>:</span><br><span class="line">            turn = <span class="literal">True</span></span><br><span class="line">            self.rect.right = Settings.SCREEN_RECT.right<span class="number">-2</span></span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.UP <span class="keyword">and</span> self.rect.top &lt;= <span class="number">0</span>:</span><br><span class="line">            turn = <span class="literal">True</span></span><br><span class="line">            self.rect.top = <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> self.direction == Settings.DOWN <span class="keyword">and</span> self.rect.bottom &gt;= Settings.SCREEN_RECT.bottom<span class="number">-1</span>:</span><br><span class="line">            turn = <span class="literal">True</span></span><br><span class="line">            self.rect.bottom = Settings.SCREEN_RECT.bottom<span class="number">-2</span></span><br><span class="line">        <span class="keyword">if</span> turn:</span><br><span class="line">            self.random_turn()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.random_shot()</span><br><span class="line">        <span class="keyword">if</span> self.terminal &lt;= <span class="number">0</span>:</span><br><span class="line">            self.random_turn()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            super().update()</span><br><span class="line">            <span class="comment"># 碰墙掉头</span></span><br><span class="line">            self.terminal -= self.speed</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wall</span>(<span class="params">BaseSprite</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, image_name, screen</span>):</span></span><br><span class="line">        super().__init__(image_name, screen)</span><br><span class="line">        self.type = <span class="literal">None</span></span><br><span class="line">        self.life = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">boom</span>(<span class="params">self</span>):</span></span><br><span class="line">        pygame.mixer.music.load(Settings.BOOM_MUSIC)</span><br><span class="line">        pygame.mixer.music.play()</span><br><span class="line">        <span class="keyword">for</span> boom <span class="keyword">in</span> Settings.BOOMS:</span><br><span class="line">            self.image = pygame.image.load(boom)</span><br><span class="line">            time.sleep(<span class="number">0.07</span>)</span><br><span class="line">            self.screen.blit(self.image, self.rect)</span><br><span class="line">        pygame.mixer.music.stop()</span><br><span class="line">        super().kill()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kill</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.life -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.life:</span><br><span class="line">            t = Thread(target=self.boom)</span><br><span class="line">            t.start()</span><br></pre></td></tr></table></figure>
+
+<h2 id="D-tank-war-py"><a href="#D-tank-war-py" class="headerlink" title="(D) tank_war.py"></a>(D) tank_war.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="keyword">from</span> sprites <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TankWar</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.screen = pygame.display.set_mode(Settings.SCREEN_RECT.size)</span><br><span class="line">        self.clock = pygame.time.Clock()</span><br><span class="line">        self.game_still = <span class="literal">True</span></span><br><span class="line">        self.hero = <span class="literal">None</span></span><br><span class="line">        self.enemies = <span class="literal">None</span></span><br><span class="line">        self.enemy_bullets = <span class="literal">None</span></span><br><span class="line">        self.walls = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init_game</span>():</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        初始化游戏的一些设置</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        pygame.init()   <span class="comment"># 初始化pygame模块</span></span><br><span class="line">        pygame.display.set_caption(Settings.GAME_NAME)  <span class="comment"># 设置窗口标题</span></span><br><span class="line">        pygame.mixer.init()    <span class="comment"># 初始化音频模块</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__create_sprite</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.hero = Hero(Settings.HERO_IMAGE_NAME, self.screen)</span><br><span class="line">        self.enemies = pygame.sprite.Group()</span><br><span class="line">        self.enemy_bullets = pygame.sprite.Group()</span><br><span class="line">        self.walls = pygame.sprite.Group()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(Settings.ENEMY_COUNT):</span><br><span class="line">            direction = random.randint(<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">            enemy = Enemy(Settings.ENEMY_IMAGES[direction], self.screen)</span><br><span class="line">            enemy.direction = direction</span><br><span class="line">            self.enemies.add(enemy)</span><br><span class="line">        self.__draw_map()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__draw_map</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        绘制地图</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(len(Settings.MAP_ONE)):</span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> range(len(Settings.MAP_ONE[y])):</span><br><span class="line">                <span class="keyword">if</span> Settings.MAP_ONE[y][x] == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                wall = Wall(Settings.WALLS[Settings.MAP_ONE[y][x]], self.screen)</span><br><span class="line">                wall.rect.x = x*Settings.BOX_SIZE</span><br><span class="line">                wall.rect.y = y*Settings.BOX_SIZE</span><br><span class="line">                <span class="keyword">if</span> Settings.MAP_ONE[y][x] == Settings.RED_WALL:</span><br><span class="line">                    wall.type = Settings.RED_WALL</span><br><span class="line">                <span class="keyword">elif</span> Settings.MAP_ONE[y][x] == Settings.IRON_WALL:</span><br><span class="line">                    wall.type = Settings.IRON_WALL</span><br><span class="line">                <span class="keyword">elif</span> Settings.MAP_ONE[y][x] == Settings.WEED_WALL:</span><br><span class="line">                    wall.type = Settings.WEED_WALL</span><br><span class="line">                <span class="keyword">elif</span> Settings.MAP_ONE[y][x] == Settings.BOSS_WALL:</span><br><span class="line">                    wall.type = Settings.BOSS_WALL</span><br><span class="line">                    wall.life = <span class="number">1</span></span><br><span class="line">                self.walls.add(wall)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__check_keydown</span>(<span class="params">self, event</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;检查按下按钮的事件&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> event.key == pygame.K_LEFT:</span><br><span class="line">            <span class="comment"># 按下左键</span></span><br><span class="line">            self.hero.direction = Settings.LEFT</span><br><span class="line">            self.hero.is_moving = <span class="literal">True</span></span><br><span class="line">            self.hero.is_hit_wall = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> event.key == pygame.K_RIGHT:</span><br><span class="line">            <span class="comment"># 按下右键</span></span><br><span class="line">            self.hero.direction = Settings.RIGHT</span><br><span class="line">            self.hero.is_moving = <span class="literal">True</span></span><br><span class="line">            self.hero.is_hit_wall = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> event.key == pygame.K_UP:</span><br><span class="line">            <span class="comment"># 按下上键</span></span><br><span class="line">            self.hero.direction = Settings.UP</span><br><span class="line">            self.hero.is_moving = <span class="literal">True</span></span><br><span class="line">            self.hero.is_hit_wall = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> event.key == pygame.K_DOWN:</span><br><span class="line">            <span class="comment"># 按下下键</span></span><br><span class="line">            self.hero.direction = Settings.DOWN</span><br><span class="line">            self.hero.is_moving = <span class="literal">True</span></span><br><span class="line">            self.hero.is_hit_wall = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> event.key == pygame.K_SPACE:</span><br><span class="line">            <span class="comment"># 坦克发子弹</span></span><br><span class="line">            self.hero.shot()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__check_keyup</span>(<span class="params">self, event</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;检查松开按钮的事件&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> event.key == pygame.K_LEFT:</span><br><span class="line">            <span class="comment"># 松开左键</span></span><br><span class="line">            self.hero.direction = Settings.LEFT</span><br><span class="line">            self.hero.is_moving = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> event.key == pygame.K_RIGHT:</span><br><span class="line">            <span class="comment"># 松开右键</span></span><br><span class="line">            self.hero.direction = Settings.RIGHT</span><br><span class="line">            self.hero.is_moving = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> event.key == pygame.K_UP:</span><br><span class="line">            <span class="comment"># 松开上键</span></span><br><span class="line">            self.hero.direction = Settings.UP</span><br><span class="line">            self.hero.is_moving = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> event.key == pygame.K_DOWN:</span><br><span class="line">            <span class="comment"># 松开下键</span></span><br><span class="line">            self.hero.direction = Settings.DOWN</span><br><span class="line">            self.hero.is_moving = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__event_handler</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():</span><br><span class="line">            <span class="comment"># 判断是否是退出游戏</span></span><br><span class="line">            <span class="keyword">if</span> event.type == pygame.QUIT:</span><br><span class="line">                TankWar.__game_over()</span><br><span class="line">            <span class="keyword">elif</span> event.type == pygame.KEYDOWN:</span><br><span class="line">                TankWar.__check_keydown(self, event)</span><br><span class="line">            <span class="keyword">elif</span> event.type == pygame.KEYUP:</span><br><span class="line">                TankWar.__check_keyup(self, event)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__check_collide</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 保证坦克不移出屏幕</span></span><br><span class="line">        self.hero.hit_wall()</span><br><span class="line">        <span class="keyword">for</span> enemy <span class="keyword">in</span> self.enemies:</span><br><span class="line">            enemy.hit_wall_turn()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 子弹击中墙</span></span><br><span class="line">        <span class="keyword">for</span> wall <span class="keyword">in</span> self.walls:</span><br><span class="line">            <span class="comment"># 我方英雄子弹击中墙</span></span><br><span class="line">            <span class="keyword">for</span> bullet <span class="keyword">in</span> self.hero.bullets:</span><br><span class="line">                <span class="keyword">if</span> pygame.sprite.collide_rect(wall, bullet):</span><br><span class="line">                    <span class="keyword">if</span> wall.type == Settings.RED_WALL:</span><br><span class="line">                        wall.kill()</span><br><span class="line">                        bullet.kill()</span><br><span class="line">                    <span class="keyword">elif</span> wall.type == Settings.BOSS_WALL:</span><br><span class="line">                        self.game_still = <span class="literal">False</span></span><br><span class="line">                    <span class="keyword">elif</span> wall.type == Settings.IRON_WALL:</span><br><span class="line">                        bullet.kill()</span><br><span class="line">            <span class="comment"># 敌方英雄子弹击中墙</span></span><br><span class="line">            <span class="keyword">for</span> enemy <span class="keyword">in</span> self.enemies:</span><br><span class="line">                <span class="keyword">for</span> bullet <span class="keyword">in</span> enemy.bullets:</span><br><span class="line">                    <span class="keyword">if</span> pygame.sprite.collide_rect(wall, bullet):</span><br><span class="line">                        <span class="keyword">if</span> wall.type == Settings.RED_WALL:</span><br><span class="line">                            wall.kill()</span><br><span class="line">                            bullet.kill()</span><br><span class="line">                        <span class="keyword">elif</span> wall.type == Settings.BOSS_WALL:</span><br><span class="line">                            self.game_still = <span class="literal">False</span></span><br><span class="line">                        <span class="keyword">elif</span> wall.type == Settings.IRON_WALL:</span><br><span class="line">                            bullet.kill()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 我方坦克撞墙</span></span><br><span class="line">            <span class="keyword">if</span> pygame.sprite.collide_rect(self.hero, wall):</span><br><span class="line">                <span class="comment"># 不可穿越墙</span></span><br><span class="line">                <span class="keyword">if</span> wall.type == Settings.RED_WALL <span class="keyword">or</span> wall.type == Settings.IRON_WALL <span class="keyword">or</span> wall.type == Settings.BOSS_WALL:</span><br><span class="line">                    self.hero.is_hit_wall = <span class="literal">True</span></span><br><span class="line">                    <span class="comment"># 移出墙内</span></span><br><span class="line">                    self.hero.move_out_wall(wall)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 敌方坦克撞墙</span></span><br><span class="line">            <span class="keyword">for</span> enemy <span class="keyword">in</span> self.enemies:</span><br><span class="line">                <span class="keyword">if</span> pygame.sprite.collide_rect(wall, enemy):</span><br><span class="line">                    <span class="keyword">if</span> wall.type == Settings.RED_WALL <span class="keyword">or</span> wall.type == Settings.IRON_WALL <span class="keyword">or</span> wall.type == Settings.BOSS_WALL:</span><br><span class="line">                        enemy.move_out_wall(wall)</span><br><span class="line">                        enemy.random_turn()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 子弹击中、敌方坦克碰撞、敌我坦克碰撞</span></span><br><span class="line">        pygame.sprite.groupcollide(self.hero.bullets, self.enemies, <span class="literal">True</span>, <span class="literal">True</span>)</span><br><span class="line">        <span class="comment"># 敌方子弹击中我方</span></span><br><span class="line">        <span class="keyword">for</span> enemy <span class="keyword">in</span> self.enemies:</span><br><span class="line">            <span class="keyword">for</span> bullet <span class="keyword">in</span> enemy.bullets:</span><br><span class="line">                <span class="keyword">if</span> pygame.sprite.collide_rect(bullet, self.hero):</span><br><span class="line">                    bullet.kill()</span><br><span class="line">                    self.hero.kill()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__update_sprites</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.hero.is_moving:</span><br><span class="line">            self.hero.update()</span><br><span class="line">        self.walls.update()</span><br><span class="line">        self.hero.bullets.update()</span><br><span class="line">        self.enemies.update()</span><br><span class="line">        <span class="keyword">for</span> enemy <span class="keyword">in</span> self.enemies:</span><br><span class="line">            enemy.bullets.update()</span><br><span class="line">            enemy.bullets.draw(self.screen)</span><br><span class="line">        self.enemies.draw(self.screen)</span><br><span class="line">        self.hero.bullets.draw(self.screen)</span><br><span class="line">        self.screen.blit(self.hero.image, self.hero.rect)</span><br><span class="line">        self.walls.draw(self.screen)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_game</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.__init_game()</span><br><span class="line">        self.__create_sprite()</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span> <span class="keyword">and</span> self.hero.is_alive <span class="keyword">and</span> self.game_still:</span><br><span class="line">            self.screen.fill(Settings.SCREEN_COLOR)</span><br><span class="line">            <span class="comment"># 1、设置刷新帧率</span></span><br><span class="line">            self.clock.tick(Settings.FPS)</span><br><span class="line">            <span class="comment"># 2、事件监听</span></span><br><span class="line">            self.__event_handler()</span><br><span class="line">            <span class="comment"># 3、碰撞监测</span></span><br><span class="line">            self.__check_collide()</span><br><span class="line">            <span class="comment"># 4、更新/绘制精灵/经理组</span></span><br><span class="line">            self.__update_sprites()</span><br><span class="line">            <span class="comment"># 5、更新显示</span></span><br><span class="line">            pygame.display.update()</span><br><span class="line">        self.__game_over()</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__game_over</span>():</span></span><br><span class="line">        pygame.quit()</span><br><span class="line">        exit()</span><br></pre></td></tr></table></figure>
+
+<h1 id="二-项目介绍"><a href="#二-项目介绍" class="headerlink" title="(二) 项目介绍"></a>(二) 项目介绍</h1><h2 id="A-运行截图"><a href="#A-运行截图" class="headerlink" title="(A) 运行截图"></a>(A) 运行截图</h2><p>我们主程序入口在 main.py 文件，在安装好 pygame 模块后就能直接运行。下面是运行截图：</p>
+<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3601.jpg"></p>
+<h2 id="B-项目文件"><a href="#B-项目文件" class="headerlink" title="(B) 项目文件"></a>(B) 项目文件</h2><p>下面是项目目录：<br><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3602.jpg"></p>
+<ul>
+<li><p>resources<br>其中 resources 是资源文件。音频，图片等都在 resources 目录。</p>
+</li>
+<li><p>main.py<br>main.py 是项目的主入口，代码很短：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tank_war <span class="keyword">import</span> TankWar</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    tankWar = TankWar()</span><br><span class="line">    tankWar.run_game()</span><br></pre></td></tr></table></figure>
+
+<p>我们直接创建了 TankWar 的实例，然后调用 run_game( ) 方法运行游戏。</p>
+</li>
+<li><p>settings.py<br>settings.py 中定义了一些设置信息，包括子弹的数量，子弹的速度，坦克的速度，地图信息，图片信息等。我们可以通过修改 settings.py 来调整游戏的相关设置。</p>
+</li>
+<li><p>sprites.py<br>在 pygame 中提供了一个 sprite 类用于创建有图像的物体。而 sprites 中定义的都是 sprite 的子类，因此也都是有图片的类。其中包括坦克基类，英雄类(我方坦克)，敌人类(敌人坦克)，子弹类，墙类等。<br>而各个类中定义了各自的行为，例如：坦克类有发射子弹的行为，移动的行为，爆炸的行为等。</p>
+</li>
+<li><p>tank_war.py<br>tank_war.py 中写了我们坦克大战游戏主体的模块，里面的 TankWar 类定义了游戏主体的一切行为。包括初始化屏幕，初始化 pygame 模块，创建敌方坦克，绘制地图，检测碰撞，监听事件等。 </p>
+</li>
+</ul>
+<h1 id="三-Tips"><a href="#三-Tips" class="headerlink" title="三. Tips"></a>三. Tips</h1><h2 id="A-pygame-sprite-Sprite"><a href="#A-pygame-sprite-Sprite" class="headerlink" title="(A) pygame.sprite.Sprite"></a>(A) pygame.sprite.Sprite</h2><ul>
+<li>pygame.sprite.Sprite 是可见游戏对象的简单基类。有以下这些常用方法：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>pygame.sprite.Sprite.update</th>
+<th>控制精灵行为的方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pygame.sprite.Sprite.add</td>
+<td>将精灵添加到组中</td>
+</tr>
+<tr>
+<td>pygame.sprite.Sprite.remove</td>
+<td>从组中删除精灵</td>
+</tr>
+<tr>
+<td>pygame.sprite.Sprite.kill</td>
+<td>从所有组中删除 Sprite</td>
+</tr>
+<tr>
+<td>pygame.sprite.Sprite.alive</td>
+<td>精灵属于任何组的检测</td>
+</tr>
+<tr>
+<td>pygame.sprite.Sprite.groups</td>
+<td>包含此 Sprite 的组列表</td>
+</tr>
+</tbody></table>
+<ul>
+<li>可见游戏对象的基类。派生类将覆盖 Sprite.update( ) 并分配 Sprite.image 和 Sprite.rect 属性。初始值设定项可以接受要添加的任意数量的 Group 实例。<br>在对 Sprite 进行子类化时，请务必在 Sprite 添加到 Groups 之前调用基本初始值设定项。例如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Block</span>(<span class="params">pygame.sprite.Sprite</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#构建函数 传入颜色和它的 x,y 坐标</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, color, width, height</span>):</span></span><br><span class="line"></span><br><span class="line">       <span class="comment">#调用父类（Sprite）的构建函数</span></span><br><span class="line">       pygame.sprite.Sprite.__init__(self)</span><br><span class="line"></span><br><span class="line">       <span class="comment">#创建一个图像，用某个颜色填充</span></span><br><span class="line">       <span class="comment">#这也可以是从磁盘加载的图像</span></span><br><span class="line">       self.image = pygame.Surface([width, height])</span><br><span class="line">       self.image.fill(color)</span><br><span class="line"></span><br><span class="line">       <span class="comment">#获取具有图像尺寸的矩形对象</span></span><br><span class="line">       <span class="comment">#通过设置rect.x和rect.y的值来更新该对象的位置</span></span><br><span class="line">       self.rect = self.image.get_rect()</span><br></pre></td></tr></table></figure>
+
+<h2 id="B-pygame-sprite-Group"><a href="#B-pygame-sprite-Group" class="headerlink" title="(B) pygame.sprite.Group"></a>(B) pygame.sprite.Group</h2><ul>
+<li>pygame.sprite.Group 是用于保存和管理多个 Sprite 对象的容器类。有以下这些常用方法：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>pygame.sprite.Group.sprites</th>
+<th>此组包含的 Sprite 列表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pygame.sprite.Group.copy</td>
+<td>复制组</td>
+</tr>
+<tr>
+<td>pygame.sprite.Group.add</td>
+<td>将 Sprite 添加到此组</td>
+</tr>
+<tr>
+<td>pygame.sprite.Group.remove</td>
+<td>从组中删除 Sprite</td>
+</tr>
+<tr>
+<td>pygame.sprite.Group.has</td>
+<td>测试一个 Group 是否包含 Sprite</td>
+</tr>
+<tr>
+<td>pygame.sprite.Group.update</td>
+<td>在包含的 Sprite 上调用 update 方法</td>
+</tr>
+<tr>
+<td>pygame.sprite.Group.draw</td>
+<td>blit Sprite 的图像</td>
+</tr>
+<tr>
+<td>pygame.sprite.Group.clear</td>
+<td>在 Sprites 上绘制背景</td>
+</tr>
+<tr>
+<td>pygame.sprite.Group.empty</td>
+<td>删除所有 Sprite</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Sprite 对象的简单容器。可以继承此类以创建具有更多特定行为的容器。构造函数将任意数量的 Sprite 参数添加到 Group 中。该组支持以下标准 Python 操作：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">in</span>      test <span class="keyword">if</span> a Sprite <span class="keyword">is</span> contained </span><br><span class="line">len     the number of Sprites contained</span><br><span class="line">bool    test <span class="keyword">if</span> any Sprites are contained</span><br><span class="line">iter    iterate through all the Sprites</span><br><span class="line"><span class="keyword">in</span> 测试是否包含Sprite</span><br><span class="line">len 包含的精灵数量</span><br><span class="line">bool 测试是否包含任何精灵</span><br><span class="line">iter 遍历所有精灵</span><br></pre></td></tr></table></figure>
+
+<p>组中的 Sprite 不是有序的，因此绘制和迭代 Sprites 没有特别的顺序。</p>
+<h2 id="C-super-函数"><a href="#C-super-函数" class="headerlink" title="(C) super( ) 函数"></a>(C) super( ) 函数</h2><h3 id="a-概述"><a href="#a-概述" class="headerlink" title="(a) 概述"></a>(a) 概述</h3><p>super( ) 函数用于调用父类(超类)的一个方法。<br>super( ) 是用来解决多重继承问题的，直接用类名调用父类方法在使用单继承的时候没问题，但是如果使用多继承，会涉及到查找顺序 (MRO)，重复调用(钻石继承)等种种问题。MRO 就是类的方法解析顺序表，其实也就是继承父类方法时的顺序表。</p>
+<h3 id="b-语法"><a href="#b-语法" class="headerlink" title="(b) 语法"></a>(b) 语法</h3><p>以下是 super( ) 方法的语法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">super(type[, object-<span class="keyword">or</span>-type])</span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type -- 类</span><br><span class="line">object-<span class="keyword">or</span>-tyoe -- 类，一般是self</span><br></pre></td></tr></table></figure>
+
+<p>注，Python3.x 和 Python2.x 的一个区别是，Python3 可以使用 <code>super().xxx</code> 代替 <code>super(Class,self).xxx</code></p>
+<p>Python3.x 实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">self, x</span>):</span></span><br><span class="line">         y = x+<span class="number">1</span></span><br><span class="line">         print(y)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>(<span class="params">A</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        super().add(x)</span><br><span class="line">b = B()</span><br><span class="line">b.add(<span class="number">2</span>)  <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<p>Python2.x 实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>(<span class="params">object</span>):</span>   <span class="comment"># Python2.x 记得继承object</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">self, x</span>):</span></span><br><span class="line">         y = x+<span class="number">1</span></span><br><span class="line">         print(y)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>(<span class="params">A</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        super(B, self).add(x)</span><br><span class="line">b = B()</span><br><span class="line">b.add(<span class="number">2</span>)  <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="c-实例"><a href="#c-实例" class="headerlink" title="(c) 实例"></a>(c) 实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FooParent</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.parent = <span class="string">&#x27;I\&#x27;m the parent.&#x27;</span></span><br><span class="line">        print(<span class="string">&#x27;Parent&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bar</span>(<span class="params">self, message</span>):</span></span><br><span class="line">        print(<span class="string">&quot;%s from Parent&quot;</span> % message)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FooChild</span>(<span class="params">FooParent</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># super(FooChild,self) 首先找到 FooChild 的父类（就是类 FooParent）,</span></span><br><span class="line">        <span class="comment">#然后把类 FooChild 的对象转换为类 FooParent 的对象</span></span><br><span class="line">        super(FooChild, self).__init__()</span><br><span class="line">        print(<span class="string">&#x27;Child&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bar</span>(<span class="params">self, message</span>):</span></span><br><span class="line">        super(FooChild, self).bar(message)</span><br><span class="line">        print(<span class="string">&#x27;Child bar fuction&#x27;</span>)</span><br><span class="line">        print(self.parent)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    fooChild = FooChild()</span><br><span class="line">    fooChild.bar(<span class="string">&#x27;HelloWorld&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Parent</span><br><span class="line">Child</span><br><span class="line">HelloWorld <span class="keyword">from</span> Parent</span><br><span class="line">Child bar fuction</span><br><span class="line">I<span class="string">&#x27;m the parent.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="D-staticmethod-函数"><a href="#D-staticmethod-函数" class="headerlink" title="(D) staticmethod( ) 函数"></a>(D) staticmethod( ) 函数</h2><h3 id="a-概述-1"><a href="#a-概述-1" class="headerlink" title="(a) 概述"></a>(a) 概述</h3><p>python staticmethod 返回函数的静态方法。<br>该方法不强制要求传递参数，如下声明一个静态方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>(<span class="params">object</span>):</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">arg1, arg2, ...</span>):</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p>以上实例声明了静态方法 f，从而可以不实例化调用该方法 <code>C.f()</code></p>
+<h3 id="b-实例"><a href="#b-实例" class="headerlink" title="(b) 实例"></a>(b) 实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>(<span class="params">object</span>):</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span>():</span></span><br><span class="line">        print(<span class="string">&#x27;runoob&#x27;</span>);</span><br><span class="line"> </span><br><span class="line">C.f();          <span class="comment"># 静态方法无需实例化</span></span><br><span class="line">cobj = C()</span><br><span class="line">cobj.f()        <span class="comment"># 也可以实例化后调用</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" rel="tag"># 项目实战</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/08/Cpplus04/" rel="prev" title="C++笔记(零四)：头文件与预处理·泛型编程与容器">
+      <i class="fa fa-chevron-left"></i> C++笔记(零四)：头文件与预处理·泛型编程与容器
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minwei Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
