@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
   </script>
 
-  <meta name="description" content="本篇记录的是软件测试方向的项目实战，使用 Selenium 实现爬虫与自动化测试。具体来说来说则是自动化测试运行了合成大西瓜游戏以及使用 Selenium 爬取京东商城的商品。">
+  <meta name="description" content="本篇记录的是软件测试方向的项目实战，使用 Selenium 实现爬虫与自动化测试。具体来说则是自动化测试运行了合成大西瓜游戏以及使用 Selenium 爬取京东商城的商品。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="项目实战(零二)：Selenium实现爬虫与自动化测试">
 <meta property="og:url" content="http://yoursite.com/2021/05/19/JdSpider/index.html">
 <meta property="og:site_name" content="Cross Code">
-<meta property="og:description" content="本篇记录的是软件测试方向的项目实战，使用 Selenium 实现爬虫与自动化测试。具体来说来说则是自动化测试运行了合成大西瓜游戏以及使用 Selenium 爬取京东商城的商品。">
+<meta property="og:description" content="本篇记录的是软件测试方向的项目实战，使用 Selenium 实现爬虫与自动化测试。具体来说则是自动化测试运行了合成大西瓜游戏以及使用 Selenium 爬取京东商城的商品。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-19T03:19:15.000Z">
-<meta property="article:modified_time" content="2021-05-19T06:33:24.429Z">
+<meta property="article:modified_time" content="2021-05-21T02:24:23.520Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="项目实战">
 <meta name="twitter:card" content="summary">
@@ -281,10 +281,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-19 11:19:15 / 修改时间：14:33:24" itemprop="dateCreated datePublished" datetime="2021-05-19T11:19:15+08:00">2021-05-19</time>
+              <time title="创建时间：2021-05-19 11:19:15" itemprop="dateCreated datePublished" datetime="2021-05-19T11:19:15+08:00">2021-05-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-21 10:24:23" itemprop="dateModified" datetime="2021-05-21T10:24:23+08:00">2021-05-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -304,7 +310,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本篇记录的是软件测试方向的项目实战，使用 Selenium 实现爬虫与自动化测试。具体来说来说则是自动化测试运行了合成大西瓜游戏以及使用 Selenium 爬取京东商城的商品。</p>
+        <p>本篇记录的是软件测试方向的项目实战，使用 Selenium 实现爬虫与自动化测试。具体来说则是自动化测试运行了合成大西瓜游戏以及使用 Selenium 爬取京东商城的商品。</p>
 <a id="more"></a>
 
 <h1 id="一-Selenium-常规操作"><a href="#一-Selenium-常规操作" class="headerlink" title="一. Selenium 常规操作"></a>一. Selenium 常规操作</h1><h2 id="A-基本请求"><a href="#A-基本请求" class="headerlink" title="(A) 基本请求"></a>(A) 基本请求</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建实例 </span></span><br><span class="line">browser = webdriver.Chrome()</span><br><span class="line">browser = webdriver.Firefox()</span><br><span class="line">browser = webdriver.xxx()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 浏览器窗口最大化  </span></span><br><span class="line">browser.maximize_window() </span><br><span class="line"></span><br><span class="line"><span class="comment"># 请求百度首页</span></span><br><span class="line">browser.get(<span class="string">&quot;https://movie.douban.com/top250&quot;</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭当前页面</span></span><br><span class="line">browser.close()</span><br><span class="line"><span class="comment"># 退出浏览器</span></span><br><span class="line">browser.quit()</span><br></pre></td></tr></table></figure>
