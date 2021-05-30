@@ -29,24 +29,24 @@
 <meta property="og:site_name" content="Cross Code">
 <meta property="og:description" content="本篇介绍的内容包括，错误处理和调试，C++ 动态内存管理，副本构造器，C++ 的四种动态类型转换。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3301.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3302.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3303.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3304.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3305.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3306.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3307.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3308.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3309.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3310.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3311.jpg">
-<meta property="og:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3312.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3301.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3302.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3303.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3304.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3305.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3306.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3307.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3308.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3309.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3310.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3311.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3312.jpg">
 <meta property="article:published_time" content="2021-02-02T02:05:09.000Z">
-<meta property="article:modified_time" content="2021-02-02T02:07:27.659Z">
+<meta property="article:modified_time" content="2021-05-30T15:30:01.531Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3301.jpg">
+<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3301.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2021/02/02/Cpplus03/">
 
@@ -294,10 +294,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-02-02 10:05:09 / 修改时间：10:07:27" itemprop="dateCreated datePublished" datetime="2021-02-02T10:05:09+08:00">2021-02-02</time>
+              <time title="创建时间：2021-02-02 10:05:09" itemprop="dateCreated datePublished" datetime="2021-02-02T10:05:09+08:00">2021-02-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 23:30:01" itemprop="dateModified" datetime="2021-05-30T23:30:01+08:00">2021-05-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -421,42 +427,42 @@
 <li><p>首先 <code>new</code> 调用了 <code>operator new</code></p>
 </li>
 </ul>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3301.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3301.jpg"></p>
 <p>进去 <code>operator new</code> 还要跳一次</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3302.jpg"></p>
-<p>终于跳到真正的 <code>operator new</code> 了<br><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3303.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3302.jpg"></p>
+<p>终于跳到真正的 <code>operator new</code> 了<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3303.jpg"></p>
 <p>我们通过汇编代码终于发现 <code>operator new</code> 其实也是调了 <code>malloc</code> 来开空间，但是 new 失败了抛异常在哪，往下翻</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3304.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3304.jpg"></p>
 <p>扔了一个什么标准 bad_alloc，嗯没错了，这就是抛异常，至于原理，还没学 QAQ</p>
 <ul>
 <li>通过上面的汇编代码我们发现，new 和 malloc 的关系非常密切啊，new 就用了 malloc，然后看看 delete 是不是也是这样。<br>首先是调用 <code>operator delete</code></li>
 </ul>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3305.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3305.jpg"></p>
 <p>然后，进入 <code>operator delete</code> 看看</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3306.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3306.jpg"></p>
 <p>看来是调用了 <code>free</code> 没错了，也就是说 new 和 delete 与 malloc 和 free 其实是密切联系的，但是为什么我们在 C++ 中不直接用 malloc 和 free 呢？</p>
 <h3 id="b-为什么在-C-中用-new-不用-malloc"><a href="#b-为什么在-C-中用-new-不用-malloc" class="headerlink" title="(b) 为什么在 C++ 中用 new 不用 malloc"></a>(b) 为什么在 C++ 中用 new 不用 malloc</h3><p>为了解决这个问题，我们要从自定义类型入手，也就是类。C++ 中类的概念很重要，对于类来说，不能简单地开辟空间。<br>举个例子，如果一个类是管理字符串的，就不是简单地开空间了，我们看图</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3307.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3307.jpg"></p>
 <p>怎么证明 <code>new</code> 调用了构造函数，简单，写个实例测一下就好了。代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">String</span>(<span class="keyword">const</span> <span class="keyword">char</span>* str = <span class="string">&quot;&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//构造函数</span></span><br><span class="line">        <span class="keyword">int</span> <span class="built_in">size</span> = <span class="built_in">strlen</span>(str);</span><br><span class="line">        _str = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">size</span> + <span class="number">1</span>];</span><br><span class="line">        _capacity = <span class="built_in">size</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">char</span>* cur = _str;</span><br><span class="line">        <span class="keyword">while</span> (*cur++ = *str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="keyword">String</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//析构函数</span></span><br><span class="line">        <span class="keyword">delete</span>[] _str;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span>* _str;</span><br><span class="line">    <span class="keyword">int</span> _size;</span><br><span class="line">    <span class="keyword">int</span> _capacity;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">String</span>* s1 = (<span class="keyword">String</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">String</span>));</span><br><span class="line">    <span class="keyword">String</span>* s2 = <span class="keyword">new</span> <span class="keyword">String</span>;<span class="comment">//VS下运行代码，执行到此步按F11</span></span><br><span class="line">    <span class="built_in">free</span>(s1);</span><br><span class="line">    <span class="keyword">delete</span> s2;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>main 函数中 <code>new</code> 对象 String 那句按 F11，发现直接出现下图情况</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3308.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3308.jpg"></p>
 <p>看下执行完毕结果</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3309.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3309.jpg"></p>
 <p>调用构造函数，然后开空间，也就是说 <code>new</code> 不但开了空间还调用了构造函数，而由于成员是私有的，也就是说 malloc 开空间之后无法再去给 <code>_str</code> 开空间，这也就是为什么我们不用 malloc 而用 new 的原因。<br>delete 则是先调用析构函数，再进行 free，如果 free(2)，会出现内存泄漏，这是非常可怕的一件事。</p>
 <h3 id="c-探寻-new-和-delete-的原理"><a href="#c-探寻-new-和-delete-的原理" class="headerlink" title="(c) 探寻 new[ ] 和 delete[ ] 的原理"></a>(c) 探寻 new[ ] 和 delete[ ] 的原理</h3><p>最后一个问题，首先看代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span>* s = <span class="keyword">new</span> <span class="keyword">String</span>[<span class="number">100</span>];</span><br><span class="line"><span class="keyword">delete</span>[] s;</span><br></pre></td></tr></table></figure>
 
 <p>问题是：为什么 <code>new String[100]</code> 的时候给了大小，释放的时候 <code>delete[]</code> 却不需要给大小，他是怎么知道要释放这么多的空间的？<br>这个要一句一句执行代码入手了额，执行 <code>String* s = new String[100];</code> 的时候发现一个有趣的东西，看图 </p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3310.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3310.jpg"></p>
 <p>居然吞了我 4 个字节，干什么去了，猜测是存储了该指针指向对象的个数，我们把这个四字节的数取出来看看</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* police = (<span class="keyword">int</span>*)s - <span class="number">1</span>;<span class="comment">//强转一下取出这个4字节的内容</span></span><br></pre></td></tr></table></figure>
 
 <p>由于修改了代码，分配的空间地址不一样了，这不影响</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3311.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3311.jpg"></p>
 <p>为了证明这不是巧合，我们修改这四个字节的内容，改大一点 150，看会不会报错。<br>修改了之后，扔了个异常出来，本来如果不修改这个空间的值它是不会报错的</p>
-<p><img src="https://chenminwei-picture.oss-cn-beijing.aliyuncs.com/img/A3312.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3312.jpg"></p>
 <p>这也从侧面说明了这个地方存的值就是对象的个数，当 delete 时，会取出指针前四个字节的内容，知晓删除多少个对象，然后进行删除，至此，案件告破。<br>因此，这也告诫我们，<code>new[]/delete[]</code>，<code>new/delete</code>，<code>malloc/free</code> 一定要配套使用。不能瞎搭配，否则后果自负。</p>
 <h2 id="C-动态数组"><a href="#C-动态数组" class="headerlink" title="(C) 动态数组"></a>(C) 动态数组</h2><h3 id="a-动态一维数组"><a href="#a-动态一维数组" class="headerlink" title="(a) 动态一维数组"></a>(a) 动态一维数组</h3><p>实例</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;请输入数组长度: &quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">   <span class="keyword">int</span> n;   <span class="comment">//输入数组长度</span></span><br><span class="line">   <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">   <span class="keyword">int</span> *p;  <span class="comment">//声明一个指针</span></span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;请输入数组元素: &quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">   p=<span class="keyword">new</span> <span class="keyword">int</span>[n]; <span class="comment">/* 创建了一个长度为n的动态数组，并且返回这个数组的首地址给p，</span></span><br><span class="line"><span class="comment">   p就指向了这个动态数组，可以通过指针p来操作数组，因为创建的动态数组并没有名字，</span></span><br><span class="line"><span class="comment">   只返回了首地址给p，所以可以把p看作是这个动态数组的名字 */</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">   &#123;</span><br><span class="line">           <span class="built_in">cin</span>&gt;&gt;p[i];</span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;数组元素是：&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">   &#123;</span><br><span class="line">           <span class="built_in">cout</span>&lt;&lt;p[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">   &#125;</span><br><span class="line">       </span><br><span class="line">   <span class="keyword">delete</span> []p;  <span class="comment">//释放这个一维的动态数组，而不是释放指针p。用完以后要记得释放掉</span></span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;指针p地址是：&quot;</span>&lt;&lt;<span class="built_in">endl</span>; </span><br><span class="line">   <span class="built_in">cout</span>&lt;&lt;p;    <span class="comment">//输出指针p的地址</span></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
