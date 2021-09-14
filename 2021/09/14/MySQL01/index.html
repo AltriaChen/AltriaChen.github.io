@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3727.png">
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3728.png">
 <meta property="article:published_time" content="2021-09-14T00:20:28.000Z">
-<meta property="article:modified_time" content="2021-09-14T01:06:11.163Z">
+<meta property="article:modified_time" content="2021-09-14T01:47:37.428Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -312,7 +312,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-09-14 08:20:28 / 修改时间：09:06:11" itemprop="dateCreated datePublished" datetime="2021-09-14T08:20:28+08:00">2021-09-14</time>
+              <time title="创建时间：2021-09-14 08:20:28 / 修改时间：09:47:37" itemprop="dateCreated datePublished" datetime="2021-09-14T08:20:28+08:00">2021-09-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -446,17 +446,17 @@
 
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3703.png"></p>
 <p>不好点在于字段顺序为表中定义顺序，因此开发中更常用的是将所有字段按照需要的顺序点击，如果太长不方便阅读，使用快捷键 F12，来自动换行。</p>
-<h4 id="6-查询函数-调用函数，获取返回值"><a href="#6-查询函数-调用函数，获取返回值" class="headerlink" title="(6) 查询函数(调用函数，获取返回值)"></a>(6) 查询函数(调用函数，获取返回值)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select database(); #查询当前的数据库select version();    </span><br><span class="line">#查询当前数据库服务器版本select user();     #查询当前用户</span><br></pre></td></tr></table></figure>
+<h4 id="6-查询函数-调用函数，获取返回值"><a href="#6-查询函数-调用函数，获取返回值" class="headerlink" title="(6) 查询函数(调用函数，获取返回值)"></a>(6) 查询函数(调用函数，获取返回值)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select database(); #查询当前的数据库</span><br><span class="line">select version();  #查询当前数据库服务器版本</span><br><span class="line">select user();     #查询当前用户</span><br></pre></td></tr></table></figure>
 
 <h4 id="7-起别名"><a href="#7-起别名" class="headerlink" title="(7) 起别名"></a>(7) 起别名</h4><p>方式一：使用 as 关键字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select user() as 用户名; select user() as &#96;用户名&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select user() as 用户名; </span><br><span class="line">select user() as &#96;用户名&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>使用前</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3704.png"></p>
 <p>使用后</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3705.png"></p>
 <p>加<strong>着重号</strong>是为了方便识别，如下面例子。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name as 姓 名 from &#96;employees&#96;;    </span><br><span class="line">#报错,因为不知道名是干嘛的select last_name as &quot;姓 名&quot; from &#96;employees&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name as 姓 名 from &#96;employees&#96;;  #报错,因为不知道名是干嘛的</span><br><span class="line">select last_name as &quot;姓 名&quot; from &#96;employees&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>如果姓名中间有空格，不加引号会报错。</p>
 <p>方式二：使用空格</p>
@@ -475,7 +475,7 @@
 <li>加法运算<br>– 两个操作数为数值型<br>   100 + 1.5<br>– 其中一个操作数为字符型<br>   将字符型数据强制转换成数值型，如果无法转换，则直接当做 0 处理<br>   ‘张无忌’ + 100 ===&gt; 100<br>– 其中一个操作数为 null<br>   null + null ===&gt; null<br>   null + 100 ===&gt; null<br>因此两个 char 直接相加，都不能识别，结果为 0。</li>
 </ol>
 <p>方案二：使用 concat( ) 拼接函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select concat(first_name,last_name) as &quot;姓 名&quot; from employees;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select concat(first_name,last_name) as &quot;姓 名&quot;   </span><br><span class="line">from employees;</span><br></pre></td></tr></table></figure>
 
 <p>concat( ) 函数中支持任意长度的 String。</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3707.png"></p>
@@ -488,12 +488,12 @@
 
 <p>显示结果为</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3709.png"></p>
-<h4 id="10-查看表结构"><a href="#10-查看表结构" class="headerlink" title="(10) 查看表结构"></a>(10) 查看表结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc employees;show columns from &#96;employees&#96;;</span><br></pre></td></tr></table></figure>
+<h4 id="10-查看表结构"><a href="#10-查看表结构" class="headerlink" title="(10) 查看表结构"></a>(10) 查看表结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">desc employees;    </span><br><span class="line">show columns from &#96;employees&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>上面两种都可以显示表所有列的结构</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3710.png"></p>
 <h3 id="c-练习题-1"><a href="#c-练习题-1" class="headerlink" title="(c) 练习题 1"></a>(c) 练习题 1</h3><p>(1) 下面的语句是否可以执行成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select   last_name,  job_id,  salary as sal from  employees ;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">  last_name,  </span><br><span class="line">  job_id,  </span><br><span class="line">  salary as sal </span><br><span class="line">from  employees ;</span><br></pre></td></tr></table></figure>
 
 <p>可以，输出多个，将 salary 起名为 sal。</p>
 <p>(2) 下面的语句是否可以执行成功</p>
@@ -501,11 +501,11 @@
 
 <p>可以，输出 employees 中全部。</p>
 <p>(3) 找出下面语句中的错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select   employee_id,  last_name，  salary * 12 “ ANNUAL SALARY ” from  employees ;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">  employee_id,  </span><br><span class="line">  last_name，  </span><br><span class="line">  salary * 12 “ ANNUAL SALARY ” </span><br><span class="line">from  employees ;</span><br></pre></td></tr></table></figure>
 
 <p>错误在于 last_name 后面的逗号为中文逗号，12 后面的双引号为中文的符号，更改即可。salary*12 起名为 ANNUAL SALARY。</p>
 <p>(4) 显示表 departments 的结构，并查询其中的全部数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc departments;select * from departments;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">desc departments;</span><br><span class="line">select * from departments;</span><br></pre></td></tr></table></figure>
 
 <p>可以使用 desc，也可以使用 show columns from departments;</p>
 <p>(5) 显示出表 employees 中的全部 job_id (不能重复)</p>
@@ -513,7 +513,7 @@
 
 <p>考 distinct 关键字的使用，查哪个表，就 from 哪个。</p>
 <p>(6) 显示出表 employees 的全部列，各个列之间用逗号连接，列头显示成 OUT_PUT</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select concat(employee_id,&#39;,&#39;,first_name,&#39;,&#39;,last_name,&#39;,&#39;,commission_pct) as    </span><br><span class="line">&quot;OUT_PUT&quot;from employees;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select concat(employee_id,&#39;,&#39;,first_name,&#39;,&#39;,last_name,&#39;,&#39;,commission_pct) as &quot;OUT_PUT&quot;  </span><br><span class="line">from employees;</span><br></pre></td></tr></table></figure>
 
 <p>考 concat 使用，在不同列之间还要拼接上 ‘,’，然后起名。</p>
 <p>但是有的为 null，有的是正常的。</p>
@@ -590,22 +590,22 @@
 </li>
 </ol>
 <h3 id="b-按关系表达式查询"><a href="#b-按关系表达式查询" class="headerlink" title="(b) 按关系表达式查询"></a>(b) 按关系表达式查询</h3><p>案例 1：查询部门编号不是 100 的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where department_id &lt;&gt; 100;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees   </span><br><span class="line">where department_id &lt;&gt; 100;</span><br></pre></td></tr></table></figure>
 
 <p>先按照 select，from，where 写好，然后进行填充。输出的是员工信息，但是不确定，用 * 号，然后选择的表是员工表，条件时部门编号不为 100。 的后跟什么，select后加什么；的前面是什么，where 后加什么。</p>
 <p>案例 2：查询工资小于 15000 的姓名，工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,salary from employees where salary&lt;15000;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select last_name,salary   </span><br><span class="line">from employees  </span><br><span class="line">where salary&lt;15000;</span><br></pre></td></tr></table></figure>
 
 <p>的后为姓名工资，放在 select 后，的前为工资小于 15000，放在 where 后。</p>
 <h3 id="c-按逻辑表达式查询"><a href="#c-按逻辑表达式查询" class="headerlink" title="(c) 按逻辑表达式查询"></a>(c) 按逻辑表达式查询</h3><p>案例 1：查询部门编号不是 50-100 之间员工姓名，部门编号，邮箱</p>
 <p>方式 1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,emailfrom employees    </span><br><span class="line">where department_id &gt; 100 or department_id &lt; 50;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,email  </span><br><span class="line">from employees    </span><br><span class="line">where department_id &gt; 100 or department_id &lt; 50;</span><br></pre></td></tr></table></figure>
 
 <p>方式 2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,email from employees    </span><br><span class="line">where not(department_id &gt;&#x3D; 50 and department_id &lt;&#x3D; 100);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,email   </span><br><span class="line">from employees    </span><br><span class="line">where not(department_id &gt;&#x3D; 50 and department_id &lt;&#x3D; 100);</span><br></pre></td></tr></table></figure>
 
 <p>案例 2：查询奖金率 &gt; 0.03 或者员工编号在 60-110 之间的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select *from employees     </span><br><span class="line">where commission_pct &gt; 0.03 or (employee_id &gt;&#x3D; 60 and employee_id &lt;&#x3D; 110);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees     </span><br><span class="line">where commission_pct &gt; 0.03 or (employee_id &gt;&#x3D; 60 and employee_id &lt;&#x3D; 110);</span><br></pre></td></tr></table></figure>
 
 <h3 id="d-模糊查询"><a href="#d-模糊查询" class="headerlink" title="(d) 模糊查询"></a>(d) 模糊查询</h3><h4 id="1-like"><a href="#1-like" class="headerlink" title="(1) like"></a>(1) like</h4><p>功能：一般和通配符搭配使用，对字符型数据进行<strong>部分匹配查询</strong></p>
 <p>like / not like</p>
@@ -615,7 +615,7 @@
 <li>% 任意多个字符，支持 0 到多个字符</li>
 </ul>
 <p>案例 1：查询姓名中包含字符 a 的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where last_name like &#39;%a%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees   </span><br><span class="line">where last_name like &#39;%a%&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>姓名中包含 a，使用 like，因为 a 前面有几个字符不知道，因此 a 前面加 %；a 后面有几个字符不知道，因此 a 后面加 %。而 sql 中字符要用单引号括起来，因此是 <code>like &#39;%a%&#39;</code>。</p>
 <p>案例 2：查询姓名中最后一个字符为 e 的员工信息</p>
@@ -623,7 +623,7 @@
 
 <p>最后一个字符为 e，因此 e 前面有几个字符不知道，但 e 后面没有字符，因此是 <code>like &#39;%e&#39;</code>。</p>
 <p>案例 3：查询姓名中第一个字符为 e 的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where last_name like &#39;e%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees   </span><br><span class="line">where last_name like &#39;e%&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>第一个字符为 e，因此 e 后面有几个字符不知道，但 e 前面没有字符，因此是 <code>like &#39;e%&#39;</code>。</p>
 <p>案例 4：查询姓名中第三个字符为 x 的员工信息</p>
@@ -631,11 +631,11 @@
 
 <p>x 前面有 2 个字符，因此添加 2 个下划线 _，然后 x 后面的字符个数未知，使用 %，因此为 <code>&#39;__x%&#39;</code>。</p>
 <p>案例 5：查询姓名中包含第二个字符为 _ 的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where last_name like &#39;_\_%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees   </span><br><span class="line">where last_name like &#39;_\_%&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>第二个下划线需要使用转义字符进行转义。</p>
 <p>但这种在 sql 中不是常见语法，我们可以</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where last_name like &#39;_$_%&#39; escape &#39;$&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees   </span><br><span class="line">where last_name like &#39;_$_%&#39; escape &#39;$&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>使用一个喜欢的而且不常见的字符作为转义字符，利用 escape 来标记其为转义字符。</p>
 <h4 id="2-in"><a href="#2-in" class="headerlink" title="(2) in"></a>(2) in</h4><p>功能：查询某字段的值是否<strong>属于指定的列表</strong>之内</p>
@@ -647,28 +647,28 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id from employees where department_id in(30,50,90);</span><br></pre></td></tr></table></figure>
 
 <p>方式 2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id from employees    </span><br><span class="line">where department_id &#x3D; 30 or department_id &#x3D; 50 or department_id &#x3D; 90;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id   </span><br><span class="line">from employees    </span><br><span class="line">where department_id &#x3D; 30 </span><br><span class="line">or department_id &#x3D; 50 </span><br><span class="line">or department_id &#x3D; 90;</span><br></pre></td></tr></table></figure>
 
 <p>案例 2：查询工种编号不是 SH_CLERK 或 IT_PROG 的员工信息</p>
 <p>方式 1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where job_id not in(&#39;SH_CLERK&#39;,&#39;IT_PROG&#39;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * </span><br><span class="line">from employees   </span><br><span class="line">where job_id not in(&#39;SH_CLERK&#39;,&#39;IT_PROG&#39;);</span><br></pre></td></tr></table></figure>
 
 <p>方式 2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where not (job_id &#x3D; &#39;SH_CLERK&#39;or job_id &#x3D; &#39;IT_PROG&#39;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees   </span><br><span class="line">where not (job_id &#x3D; &#39;SH_CLERK&#39; or job_id &#x3D; &#39;IT_PROG&#39;);</span><br></pre></td></tr></table></figure>
 
 <h4 id="3-between-and"><a href="#3-between-and" class="headerlink" title="(3) between and"></a>(3) between and</h4><p>功能：判断某个字段的值是否介于 xx 之间。判断的是区间值，<strong>包含临界值</strong>。</p>
 <p>between and / not between and</p>
 <p>案例 1：查询部门编号是 30-90 之间的部门编号，员工姓名</p>
 <p>方式 1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select department_id,last_name from employees    </span><br><span class="line">where department_id between 30 and 90;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select department_id,last_name  </span><br><span class="line">from employees    </span><br><span class="line">where department_id between 30 and 90;</span><br></pre></td></tr></table></figure>
 
 <p>between 和 and 之间，要<strong>先写小的数，再写大的</strong>。</p>
 <p>方式 2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select department_id,last_name from employees    </span><br><span class="line">where department_id &gt;&#x3D; 30 and department_id &lt;&#x3D; 90;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select department_id,last_name  </span><br><span class="line">from employees    </span><br><span class="line">where department_id &gt;&#x3D; 30 and department_id &lt;&#x3D; 90;</span><br></pre></td></tr></table></figure>
 
 <p>两种方式是等价的，因此一定要先写小的，不然查询不到。</p>
 <p>案例 2：查询年薪不是 10万 - 20万之间的员工姓名，工资，年薪</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,salary,salary*12*(1+ifnull(commission_pct,0)) 年薪 from employees    </span><br><span class="line">where salary*12*(1+ifnull(commission_pct,0)) not between 100000 and 200000;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select last_name,salary,salary*12*(1+ifnull(commission_pct,0)) 年薪   </span><br><span class="line">from employees    </span><br><span class="line">where salary*12*(1+ifnull(commission_pct,0)) not between 100000 and 200000;</span><br></pre></td></tr></table></figure>
 
 <p>首先在表格中没有年薪，因此要明确年薪的计算</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">年薪 &#x3D; 月薪×12×(1+奖金率)</span><br></pre></td></tr></table></figure>
@@ -677,11 +677,11 @@
 <p>小技巧：可以先进行 select 和 from 进行判断语句是否写正确，然后再写 where 语句。</p>
 <h4 id="4-is-null"><a href="#4-is-null" class="headerlink" title="(4) is null"></a>(4) is null</h4><p>is null / is not null</p>
 <p>案例 1：查询没有奖金的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where commission_pct is NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees </span><br><span class="line">where commission_pct is NULL;</span><br></pre></td></tr></table></figure>
 
 <p>直接用 = null 无法判断出来。</p>
 <p>案例 2：查询有奖金的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employees where commission_pct is not NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select *  </span><br><span class="line">from employees  </span><br><span class="line">where commission_pct is not NULL;</span><br></pre></td></tr></table></figure>
 
 <p>= 与 is null 比较</p>
 <ul>
@@ -689,7 +689,7 @@
 <li>is 只能判断 null 值</li>
 <li>&lt;=&gt; 安全等于，既能判断普通内容，又能判断 NULL 值，但<strong>可读性差</strong></li>
 </ul>
-<h2 id="C-进阶三：排序查询"><a href="#C-进阶三：排序查询" class="headerlink" title="(C) 进阶三：排序查询"></a>(C) 进阶三：排序查询</h2><h3 id="a-语法-2"><a href="#a-语法-2" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 查询列表 from 表格 where 筛选条件(可省略) order by 排序列表</span><br></pre></td></tr></table></figure>
+<h2 id="C-进阶三：排序查询"><a href="#C-进阶三：排序查询" class="headerlink" title="(C) 进阶三：排序查询"></a>(C) 进阶三：排序查询</h2><h3 id="a-语法-2"><a href="#a-语法-2" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select 查询列表   </span><br><span class="line">from 表格 </span><br><span class="line">where 筛选条件(可省略) </span><br><span class="line">order by 排序列表</span><br></pre></td></tr></table></figure>
 
 <p>执行顺序</p>
 <ol>
@@ -1014,7 +1014,7 @@
 <h2 id="E-进阶五：分组查询"><a href="#E-进阶五：分组查询" class="headerlink" title="(E) 进阶五：分组查询"></a>(E) 进阶五：分组查询</h2><h3 id="a-分组查询引入"><a href="#a-分组查询引入" class="headerlink" title="(a) 分组查询引入"></a>(a) 分组查询引入</h3><p>思考题：求每个部门的总工资，平均工资。需要使用分组查询。</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3720.png"></p>
 <p>使用 group by 关键字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sum(salary) &#96;总工资&#96;,avg(salary) &#96;平均工资&#96;,department_idfrom employeesgroup by department_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select sum(salary) &#96;总工资&#96;,avg(salary) &#96;平均工资&#96;,department_id    </span><br><span class="line">from employees group by department_id;</span><br></pre></td></tr></table></figure>
 
 <p>出来结果如下</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3721.png"></p>
@@ -1067,44 +1067,44 @@
 </li>
 </ol>
 <h3 id="d-简单的分组"><a href="#d-简单的分组" class="headerlink" title="(d) 简单的分组"></a>(d) 简单的分组</h3><p>案例 1：查询每个工种的员工平均工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select avg(salary),job_idfrom employeesgroup by job_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select avg(salary),job_id from employees group by job_id;</span><br></pre></td></tr></table></figure>
 
 <p>select 后将分组函数和被分组字段放在一起。</p>
 <p>案例 2：查询每个领导的手下人数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*),manager_idfrom employeeswhere manager_id is not NULLgroup by manager_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select count(*),manager_id from employees    </span><br><span class="line">where manager_id is not NULL group by manager_id;</span><br></pre></td></tr></table></figure>
 
 <p>人数，使用 count(*) 来查询，用领导 id 来分组。将领导 id 为空的去掉。</p>
 <h3 id="e-可以实现分组前的筛选"><a href="#e-可以实现分组前的筛选" class="headerlink" title="(e) 可以实现分组前的筛选"></a>(e) 可以实现分组前的筛选</h3><p>案例 1：查询邮箱中包含 a 字符的每个部门的最高工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select max(salary) &#96;最高工资&#96;,department_idfrom employeeswhere email like &#39;%a%&#39;group by department_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select max(salary) &#96;最高工资&#96;,department_id from employees    </span><br><span class="line">where email like &#39;%a%&#39; group by department_id;</span><br></pre></td></tr></table></figure>
 
 <p>案例 2：查询每个领导手下有奖金的员工的平均工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select avg(salary) &#96;平均工资&#96;,manager_idfrom employeeswhere commission_pct is not NULLgroup by manager_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select avg(salary) &#96;平均工资&#96;,manager_id from employees    </span><br><span class="line">where commission_pct is not NULL group by manager_id;</span><br></pre></td></tr></table></figure>
 
 <p>按照领导分组</p>
 <h3 id="f-可以实现分组后的筛选"><a href="#f-可以实现分组后的筛选" class="headerlink" title="(f) 可以实现分组后的筛选"></a>(f) 可以实现分组后的筛选</h3><p>案例 1：查询哪个部门的员工个数 &gt; 5</p>
 <p>分析 1：查询每个部门的员工个数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) &#96;员工个数&#96;,department_idfrom employeesgroup by department_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) &#96;员工个数&#96;,department_id from employees group by department_id;</span><br></pre></td></tr></table></figure>
 
 <p>分析 2：在刚才的结果基础上，筛选哪个部门的员工个数 &gt; 5</p>
 <p>因此思路是在 where 后加 count( ) &gt; 5 的判断，但会报错，原因在于 select 执行在 where 后，count 函数此时还无意义。此时 where 的条件只能看到 from 后面 employees 的表，没有包含 count( ) 这一列，因此应该放在 group by 后面，但会报错，因为此时不应该用 where，而是使用 having 连接词。having 支持后面加分组函数和分组后的筛选。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) &#96;员工个数&#96;,department_idfrom employeesgroup by department_idhaving count(*)&gt;5;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select count(*) &#96;员工个数&#96;,department_id from employees    </span><br><span class="line">group by department_id having count(*)&gt;5;</span><br></pre></td></tr></table></figure>
 
 <p>小结：分组前筛选，还没有 group by，此时能够筛选的列只能够从 from 后面的原始表格列中获取；而分组后筛选，基于的表是分组后的表，因此此时可以按照分组后的结果来筛选。为了区分分组前和分组后，使用关键词不同，分组前为 where，分组后为 having。</p>
 <p>案例 2：每个工种有奖金的员工的最高工资 &gt; 12000 的工种编号和最高工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select job_id,max(salary)from employeeswhere commission_pct is not NULLgroup by job_idhaving max(salary)&gt;12000;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select job_id,max(salary) from employees where commission_pct is not NULL    </span><br><span class="line">group by job_id having max(salary)&gt;12000;</span><br></pre></td></tr></table></figure>
 
 <p>有奖金的判断在分组前，最高工资的判断在分组后。</p>
 <p>案例 3：领导编号 &gt; 102 的每个领导手下的最低工资大于 5000 的领导编号和最低工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select manager_id,min(salary) &#96;最低工资&#96;from employeeswhere manager_id &gt; 102group by manager_idhaving min(salary) &gt; 5000</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select manager_id,min(salary) &#96;最低工资&#96; from employees where manager_id &gt; 102    </span><br><span class="line">group by manager_id having min(salary) &gt; 5000</span><br></pre></td></tr></table></figure>
 
 <p>将题干分段，先查询每个领导手下的最低工资，筛选刚才的结果。领导的编号可以在分组前计算出来，因此可以放在 where 这。也可以放在 having 那，虽然结果一样，但这样效率比较低。因此既能放 where 和 having 的，优先放在 where 后面。</p>
 <h3 id="g-可以实现排序"><a href="#g-可以实现排序" class="headerlink" title="(g) 可以实现排序"></a>(g) 可以实现排序</h3><p>案例：查询没有奖金的员工的最高工资 &gt; 6000 的工种编号和最高工资，按最高工资升序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select job_id,max(salary) &#96;最高工资&#96;from employeeswhere commission_pct is NULLgroup by job_idhaving &#96;最高工资&#96; &gt; 6000order by &#96;最高工资&#96; asc;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select job_id,max(salary) &#96;最高工资&#96; from employees where commission_pct is NULL    </span><br><span class="line">group by job_id having &#96;最高工资&#96; &gt; 6000 order by &#96;最高工资&#96; asc;</span><br></pre></td></tr></table></figure>
 
 <p>先按照工种分类，查询每个工种没有奖金的员工的最高工资；筛选刚才的结果，看哪个最高工资 &gt; 6000；按最高工资升序。</p>
 <h3 id="h-按多个字段分组"><a href="#h-按多个字段分组" class="headerlink" title="(h) 按多个字段分组"></a>(h) 按多个字段分组</h3><p>案例：查询每个工种每个部门的最低工资，并按最低工资降序</p>
 <p>多个分组字段用<strong>逗号隔开</strong>，两个字段没有顺序要求。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select min(salary) &#96;最低工资&#96;,job_id,department_idfrom employeesgroup by job_id,department_idorder by &#96;最低工资&#96; desc;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select min(salary) &#96;最低工资&#96;,job_id,department_id from employees    </span><br><span class="line">group by job_id,department_id order by &#96;最低工资&#96; desc;</span><br></pre></td></tr></table></figure>
 
 <h2 id="F-进阶六：连接查询"><a href="#F-进阶六：连接查询" class="headerlink" title="(F) 进阶六：连接查询"></a>(F) 进阶六：连接查询</h2><h3 id="a-概述"><a href="#a-概述" class="headerlink" title="(a) 概述"></a>(a) 概述</h3><p>含义：又称多表查询，当查询的字段来自多个表时，就会用到连接查询。</p>
 <p>如果直接使用以下语法，相当于用第一张表每一行内容去匹配第二张表每行内容，这样均能匹配成功。</p>
@@ -1114,7 +1114,7 @@
 <p>笛卡尔乘积现象：表 1 有 m 行，表 2 有 n 行，结果 = m*n 行</p>
 <p>发生原因：没有有效的连接条件</p>
 <p>如何避免：添加有效的连接条件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &#96;name&#96;,boyName from beauty,boyswhere beauty.&#96;boyfriend_id&#96; &#x3D; boys.&#96;id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &#96;name&#96;,boyName from beauty,boys where beauty.&#96;boyfriend_id&#96; &#x3D; boys.&#96;id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>用点号来标识属性的归属。</p>
 <h4 id="1-分类"><a href="#1-分类" class="headerlink" title="(1) 分类"></a>(1) 分类</h4><p>(1) 按年代分类</p>
@@ -1159,12 +1159,12 @@
 <li>可以搭配前面介绍的所有子句使用，如筛选，分组，排序</li>
 </ul>
 <p>案例 1：查询女神名和对应的男神名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &#96;name&#96;,boyName from beauty,boyswhere beauty.&#96;boyfriend_id&#96; &#x3D; boys.&#96;id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &#96;name&#96;,boyName from beauty,boys where beauty.&#96;boyfriend_id&#96; &#x3D; boys.&#96;id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>将要查询的两个属性写在 select 中，查询的表写在 from 中，用逗号隔开，最重要的是写 where 语句。</p>
 <p>用第一个表的每一行去匹配第二个表的每一行。</p>
 <p>案例 2：查询员工名和对应的部门名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_namefrom employees,departmentswhere employees.&#96;department_id&#96; &#x3D; departments.&#96;department_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_name from employees,departments    </span><br><span class="line">where employees.&#96;department_id&#96; &#x3D; departments.&#96;department_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>(2) 为表起别名</p>
 <ul>
@@ -1173,43 +1173,43 @@
 </ul>
 <p>注意：如果为表起了别名，则查询的字段就不能使用原来的表名去限定。</p>
 <p>案例：查询员工名，工种号，工种名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,employees.&#96;job_id&#96;,job_titlefrom employees,jobswhere employees.&#96;job_id&#96; &#x3D; jobs.&#96;job_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,employees.&#96;job_id&#96;,job_title from employees,jobs    </span><br><span class="line">where employees.&#96;job_id&#96; &#x3D; jobs.&#96;job_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>如果一个字段在多个表中都出现，为了避免歧义，那么需要加上完整的表名，为了方便，给表起别名。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,e.&#96;job_id&#96;,j.job_titlefrom employees e,jobs jwhere e.&#96;job_id&#96; &#x3D; j.&#96;job_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,e.&#96;job_id&#96;,j.job_title from employees e,jobs j    </span><br><span class="line">where e.&#96;job_id&#96; &#x3D; j.&#96;job_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p><strong>起了别名后，就不能再使用原来的名称了</strong>，因为 from 先执行，这样表就有了别名。</p>
 <p>(3) 两个表的顺序是否可以调换</p>
 <p>可以替换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,e.&#96;job_id&#96;,j.job_titlefrom jobs j,employees ewhere e.&#96;job_id&#96; &#x3D; j.&#96;job_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,e.&#96;job_id&#96;,j.job_title from jobs j,employees e    </span><br><span class="line">where e.&#96;job_id&#96; &#x3D; j.&#96;job_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>表的交集</p>
 <p>(4) 加筛选</p>
 <p>案例 1：查询有奖金的员工名，部门名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_namefrom employees e,departments dwhere e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and e.&#96;commission_pct&#96; is not NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_name from employees e,departments d    </span><br><span class="line">where e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and e.&#96;commission_pct&#96; is not NULL;</span><br></pre></td></tr></table></figure>
 
 <p>在 where 后利用 and 添加筛选</p>
 <p>案例 2：查询城市名中第二个字符为 o 的部门名和城市名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select department_name,cityfrom &#96;departments&#96; d,&#96;locations&#96; lwhere d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;and city like &#39;_o%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select department_name,city from &#96;departments&#96; d,&#96;locations&#96; l    </span><br><span class="line">where d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96; and city like &#39;_o%&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>关键：找到两个的连接关系。一般都给表起别名，更方便。</p>
 <p>(5) 加分组</p>
 <p>案例 1：查询每个城市的部门个数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) &#96;部门个数&#96;,cityfrom departments d,locations lwhere d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;group by city;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select count(*) &#96;部门个数&#96;,city from departments d,locations l    </span><br><span class="line">where d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96; group by city;</span><br></pre></td></tr></table></figure>
 
 <p>部门个数，为 count(*)，部门个数跟城市在两个表中，利用 location_id 进行连接，然后每个城市，用城市来进行分组。</p>
 <p>案例 2：查询有奖金的每个部门的部门名和部门的领导编号和该部门的最低工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select department_name,d.manager_id,min(salary)from &#96;departments&#96; d,&#96;employees&#96; ewhere d.&#96;department_id&#96; &#x3D; e.&#96;department_id&#96;and e.&#96;commission_pct&#96; is not NULLgroup by department_name,manager_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select department_name,d.manager_id,min(salary) from &#96;departments&#96; d,&#96;employees&#96; e    </span><br><span class="line">where d.&#96;department_id&#96; &#x3D; e.&#96;department_id&#96;and e.&#96;commission_pct&#96; is not NULL    </span><br><span class="line">group by department_name,manager_id;</span><br></pre></td></tr></table></figure>
 
 <p>先把要查询的写在 select，然后来自的表，先加表格的连接条件，然后增加筛选，最后加上按照部门名的领导编号进行分组。</p>
 <p>因为要查询的有两个列，不能确定这两个列是否一一对应，因此分组的时候最好将这两个组都添加上。</p>
 <p>(6) 加排序</p>
 <p>案例：查询每个工种的工种名和员工的个数，并且按员工个数降序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select job_title,count(*) &#96;员工个数&#96;from &#96;jobs&#96; j,&#96;employees&#96; ewhere j.&#96;job_id&#96;&#x3D;e.&#96;job_id&#96;group by job_titleorder by &#96;员工个数&#96; desc;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select job_title,count(*) &#96;员工个数&#96; from &#96;jobs&#96; j,&#96;employees&#96; e    </span><br><span class="line">where j.&#96;job_id&#96;&#x3D;e.&#96;job_id&#96; group by job_title order by &#96;员工个数&#96; desc;</span><br></pre></td></tr></table></figure>
 
 <p>(7) 三表连接</p>
 <p>案例：查询员工名，部门名和所在的城市</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_name,cityfrom employees e,departments d,locations lwhere e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_name,city from employees e,departments d,locations l    </span><br><span class="line">where e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96; and d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-非等值连接"><a href="#2-非等值连接" class="headerlink" title="(2) 非等值连接"></a>(2) 非等值连接</h4><p>(1) 语法</p>
 <p>select 查询列表</p>
@@ -1220,58 +1220,58 @@
 <p>[having 分组后的筛选]</p>
 <p>[order by 排序字段]</p>
 <p>案例 1：查询员工的工资和工资级别</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select salary,grade_levelfrom employees e,job_grades jwhere e.&#96;salary&#96; between j.&#96;lowest_sal&#96; and j.&#96;highest_sal&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select salary,grade_level from employees e,job_grades j    </span><br><span class="line">where e.&#96;salary&#96; between j.&#96;lowest_sal&#96; and j.&#96;highest_sal&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>salary 在最低和最高之间的范围即可。也可以在后面加 and 用于筛选或者增加排序。</p>
 <h4 id="3-自连接"><a href="#3-自连接" class="headerlink" title="(3) 自连接"></a>(3) 自连接</h4><p>案例：查询员工名和上级的名称</p>
 <p>如员工有对应的领导编号，然后用领导编号再找为此编号的员工姓名。相当于<strong>一个表和自己相连接</strong>。</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3722.png"></p>
 <p>将一张表当成 2 张或更多来使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.employee_id,e.last_name,m.employee_id,m.last_namefrom employees e,employees mwhere e.&#96;manager_id&#96;&#x3D;m.&#96;employee_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select e.employee_id,e.last_name,m.employee_id,m.last_name    </span><br><span class="line">from employees e,employees m where e.&#96;manager_id&#96;&#x3D;m.&#96;employee_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>这时候就体现出了起别名的好处，增加了代码的可读性。</p>
 <h3 id="c-练习题-4"><a href="#c-练习题-4" class="headerlink" title="(c) 练习题 4"></a>(c) 练习题 4</h3><p>(1) 显示员工表的最大工资，工资平均值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select max(salary),avg(salary) from employees;</span><br></pre></td></tr></table></figure>
 
 <p>(2) 查询员工表的 employee_id，job_id，last_name，按 department_id 降序，salary 升序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select employee_id,job_id,last_namefrom employeesorder by department_id desc,salary asc;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select employee_id,job_id,last_name from employees    </span><br><span class="line">order by department_id desc,salary asc;</span><br></pre></td></tr></table></figure>
 
 <p>(3) 查询员工表的 job_id 中包含 a 和 e 的，并且 a 在 e 的前面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select job_idfrom employeeswhere job_id like &#39;%a%e%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select job_id from employees where job_id like &#39;%a%e%&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>(4) 已知表 student，里面有 id (学号)，name,grade_id (年级编号)；已知表 grade，里面有 id (年级编号),name (年级名)；已知表 result，里面有 id，score，studentNo (学号)。要求查询姓名、年级名、成绩。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.name,g.name,r.scorefrom student s,grade g,result rwhere s.grade_id&#x3D;g.idand s.id&#x3D;r.studentNo;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select s.name,g.name,r.score from student s,grade g,result r    </span><br><span class="line">where s.grade_id&#x3D;g.id and s.id&#x3D;r.studentNo;</span><br></pre></td></tr></table></figure>
 
 <p>(5) 显示当前日期，以及去前后空格，截取子字符串的函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select now();select trim(字符 from &#39;&#39;);select substr(str,startIndex);select substr(str,startIndex,length);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select now();select trim(字符 from &#39;&#39;);select substr(str,startIndex);    </span><br><span class="line">select substr(str,startIndex,length);</span><br></pre></td></tr></table></figure>
 
 <p>(6) 显示所有员工的姓名，部门号和部门名称</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,d.department_id,department_namefrom employees e,departments dwhere e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,d.department_id,department_name from employees e,departments d    </span><br><span class="line">where e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>(7) 查询 90 号部门员工的 job_id 和 90 号部门的 location_id</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.job_id,d.location_idfrom employees e,departments dwhere e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and e.&#96;department_id&#96;&#x3D;90;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select e.job_id,d.location_id from employees e,departments d    </span><br><span class="line">where e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and e.&#96;department_id&#96;&#x3D;90;</span><br></pre></td></tr></table></figure>
 
 <p>限定条件为员工的部门编号为 90</p>
 <p>(8) 选择所有有奖金的员工的 last_name，department_name，location_id，city</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,d.department_name,d.location_id,l.cityfrom employees e,departments d,locations lwhere e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;and e.&#96;commission_pct&#96; is not NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,d.department_name,d.location_id,l.city    </span><br><span class="line">from employees e,departments d,locations l    </span><br><span class="line">where e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96; and d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;    </span><br><span class="line">and e.&#96;commission_pct&#96; is not NULL;</span><br></pre></td></tr></table></figure>
 
 <p>(9) 选择 city 在 Toronto 工作的员工的 last_name，job_id，department_id，department_name</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,e.job_id,e.department_id,d.department_namefrom employees e,departments d,locations lwhere e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;and l.&#96;city&#96;&#x3D;&#39;Toronto&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,e.job_id,e.department_id,d.department_name    </span><br><span class="line">from employees e,departments d,locations l    </span><br><span class="line">where e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96; and d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;    </span><br><span class="line">and l.&#96;city&#96;&#x3D;&#39;Toronto&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>(10) 查询每个工种，每个部门的部门名，工种名和最低工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select d.department_name,j.job_title,min(salary) &#96;最低工资&#96;from departments d,jobs j,employees ewhere e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;and e.&#96;job_id&#96;&#x3D;j.&#96;job_id&#96;group by j.job_title,d.department_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select d.department_name,j.job_title,min(salary) &#96;最低工资&#96;    </span><br><span class="line">from departments d,jobs j,employees e    </span><br><span class="line">where e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96; and e.&#96;job_id&#96;&#x3D;j.&#96;job_id&#96;    </span><br><span class="line">group by j.job_title,d.department_name;</span><br></pre></td></tr></table></figure>
 
 <p>(11) 查询每个国家下的部门个数大于 2 的国家编号</p>
 <p>将位置表和部门表连接，这时候部门编号没有重复，每个部门编号都有对应的国家名，然后利用国家分组，就可以算出其部门个数。</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3723.png"></p>
 <p>最后加上分组后的筛选条件，放在 having 语句后</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select country_id,count(*) &#96;部门个数&#96;from locations l,departments dwhere d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96;group by country_idhaving count(*)&gt;2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select country_id,count(*) &#96;部门个数&#96; from locations l,departments d    </span><br><span class="line">where d.&#96;location_id&#96;&#x3D;l.&#96;location_id&#96; group by country_id having count(*)&gt;2;</span><br></pre></td></tr></table></figure>
 
 <p>having 后也可以支持别名，但不太建议。</p>
 <p>(12) 选择指定员工的姓名，员工号，以及他的管理者的姓名和员工号</p>
 <p>格式类似于</p>
 <p>employees Emp# manager Mgr#</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name employees,e.employee_id &#96;Emp#&#96;,m.last_name manager,m.employee_id &#96;Mgr#&#96;from employees e,employees mwhere e.&#96;manager_id&#96;&#x3D;m.&#96;employee_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name employees,e.employee_id &#96;Emp#&#96;,m.last_name manager,m.employee_id &#96;Mgr#&#96;    </span><br><span class="line">from employees e,employees m where e.&#96;manager_id&#96;&#x3D;m.&#96;employee_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <h3 id="d-sql-99-标准"><a href="#d-sql-99-标准" class="headerlink" title="(d) sql 99 标准"></a>(d) sql 99 标准</h3><h4 id="1-概述-1"><a href="#1-概述-1" class="headerlink" title="(1) 概述"></a>(1) 概述</h4><p>(1) 语法</p>
 <p>select 查询列表</p>
@@ -1312,34 +1312,34 @@
 </ul>
 <p>(1) 等值连接</p>
 <p>案例 1：查询员工名，部门名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_namefrom employees einner join departments don e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_name from employees einner     </span><br><span class="line">join departments d on e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>将两个表的位置调换顺序也可以</p>
 <p>案例 2：查询名字中包含 e 的员工名和工种名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,job_titlefrom employees einner join jobs jon e.&#96;job_id&#96;&#x3D;j.&#96;job_id&#96;where last_name like &#39;%e%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,job_title from employees einner     </span><br><span class="line">join jobs j on e.&#96;job_id&#96;&#x3D;j.&#96;job_id&#96; where last_name like &#39;%e%&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>案例 3：查询部门个数 &gt;3 的城市名和部门个数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select city,count(*) 部门个数from locations linner join departments don l.&#96;location_id&#96;&#x3D;d.&#96;location_id&#96;group by cityhaving count(*)&gt;3;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select city,count(*) 部门个数 from locations linner     </span><br><span class="line">join departments d on l.&#96;location_id&#96;&#x3D;d.&#96;location_id&#96;    </span><br><span class="line">group by city having count(*)&gt;3;</span><br></pre></td></tr></table></figure>
 
 <p>可以分步来做，先按照城市来分组，然后按照部门个数来筛选</p>
 <p>案例 4：查询哪个部门的部门员工个数 &gt;3 的部门名和员工个数，并按个数降序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select department_name,count(*) 员工个数from employees einner join departments don e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;group by department_namehaving count(*)&gt;3order by count(*) desc;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select department_name,count(*) 员工个数 from employees e     </span><br><span class="line">inner join departments d on e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;    </span><br><span class="line">group by department_name having count(*)&gt;3 order by count(*) desc;</span><br></pre></td></tr></table></figure>
 
 <p>案例 5：查询员工名，部门名，工种名，并按部门名排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_name,job_titlefrom employees einner join departments d on e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;inner join jobs j on e.&#96;job_id&#96;&#x3D;j.&#96;job_id&#96;order by department_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_name,job_title from employees e    </span><br><span class="line">inner join departments d on e.&#96;department_id&#96;&#x3D;d.&#96;department_id&#96;    </span><br><span class="line">inner join jobs j on e.&#96;job_id&#96;&#x3D;j.&#96;job_id&#96;    </span><br><span class="line">order by department_name;</span><br></pre></td></tr></table></figure>
 
 <p>三表连接，先写一个 inner join 表 1 别名 on 连接条件，然后再写一个 inner join 表 2 别名 on 连接条件。保证第三个表和前两个表中的<strong>至少一个有连接条件</strong>。</p>
 <p>(2) 非等值连接</p>
 <p>案例 1：查询员工的工资级别</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select salary,grade_levelfrom employees ejoin job_grades gon e.&#96;salary&#96; between g.&#96;lowest_sal&#96; and g.&#96;highest_sal&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select salary,grade_level from employees e    </span><br><span class="line">join job_grades g on e.&#96;salary&#96; between g.&#96;lowest_sal&#96; and g.&#96;highest_sal&#96;;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3724.png"></p>
 <p>案例 2：查询工资级别的个数 &gt;2 的个数，并且按工资级别降序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select grade_level,count(*) 工资级别个数from employees ejoin job_grades gon e.&#96;salary&#96; between g.&#96;lowest_sal&#96; and g.&#96;highest_sal&#96;group by grade_levelhaving count(*)&gt;2order by grade_level desc;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select grade_level,count(*) 工资级别 个数 from employees e    </span><br><span class="line">join job_grades g on e.&#96;salary&#96; between g.&#96;lowest_sal&#96; and g.&#96;highest_sal&#96;    </span><br><span class="line">group by grade_level having count(*)&gt;2 order by grade_level desc;</span><br></pre></td></tr></table></figure>
 
 <p>(3) 自连接</p>
 <p>案例：查询姓名中包含字符 k 员工的名字，上级的名字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,m.last_namefrom employees ejoin employees mon e.&#96;manager_id&#96;&#x3D;m.&#96;employee_id&#96;where e.&#96;last_name&#96; like &#39;%k%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select e.last_name,m.last_name from employees e    </span><br><span class="line">join employees m on e.&#96;manager_id&#96;&#x3D;m.&#96;employee_id&#96;    </span><br><span class="line">where e.&#96;last_name&#96; like &#39;%k%&#39;;</span><br></pre></td></tr></table></figure>
 
 <h4 id="3-外连接"><a href="#3-外连接" class="headerlink" title="(3) 外连接"></a>(3) 外连接</h4><p>应用场景：用于查询一个表中有，另一个表没有的记录</p>
 <p>特点：</p>
@@ -1362,28 +1362,28 @@
 <p>引入：查询男朋友不在男神表的女神名</p>
 <p>之前的内连接查两个表的交集部分，因此无法直接用来实现这里的需求。</p>
 <p>做外连接实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.name,bo.*from beauty bleft join boys boon b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select b.name,bo.* from beauty b   </span><br><span class="line">left join boys bo on b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96;;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3725.png"></p>
 <p>如果只想看没有男朋友不在表中的女神信息，可以加入筛选</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.name,bo.*from beauty bleft join boys boon b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96;where bo.&#96;id&#96; is NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select b.name,bo.* from beauty b    </span><br><span class="line">left join boys bo on b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96; where bo.&#96;id&#96; is NULL;</span><br></pre></td></tr></table></figure>
 
 <p>选择 id 来判断是因为 boys 中的 id 为主键，不能为 null。判断时最好选从表中的主键列。</p>
 <p>右外连接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.name,bo.*from boys boright join beauty bon b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96;where bo.&#96;id&#96; is NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select b.name,bo.* from boys bo    </span><br><span class="line">right join beauty b on b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96; where bo.&#96;id&#96; is NULL;</span><br></pre></td></tr></table></figure>
 
 <p>案例 1：查询哪个部门没有员工</p>
 <p>左外</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select d.*,e.employee_idfrom departments dleft join employees eon d.&#96;department_id&#96;&#x3D;e.&#96;department_id&#96;where e.&#96;employee_id&#96; is NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select d.*,e.employee_id from departments d    </span><br><span class="line">left join employees e on d.&#96;department_id&#96;&#x3D;e.&#96;department_id&#96;    </span><br><span class="line">where e.&#96;employee_id&#96; is NULL;</span><br></pre></td></tr></table></figure>
 
 <p>查询的没有员工的部门，因此主表是部门，然后与员工表左连接，筛选条件为没有员工即员工的 id 为 null。</p>
 <p>右外</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select d.*,e.employee_idfrom employees eright join departments d on d.&#96;department_id&#96;&#x3D;e.&#96;department_id&#96;where e.&#96;employee_id&#96; is NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select d.*,e.employee_id from employees e    </span><br><span class="line">right join departments d on d.&#96;department_id&#96;&#x3D;e.&#96;department_id&#96;    </span><br><span class="line">where e.&#96;employee_id&#96; is NULL;</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-全外"><a href="#4-全外" class="headerlink" title="(4) 全外"></a>(4) 全外</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.*,bo.*from beauty bfull join boys boon b.boyfriend_id&#x3D;bo.id</span><br></pre></td></tr></table></figure>
+<h4 id="4-全外"><a href="#4-全外" class="headerlink" title="(4) 全外"></a>(4) 全外</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.*,bo.* from beauty b full join boys bo on b.boyfriend_id&#x3D;bo.id</span><br></pre></td></tr></table></figure>
 
 <p>MySQL 不支持</p>
-<h4 id="5-交叉连接"><a href="#5-交叉连接" class="headerlink" title="(5) 交叉连接"></a>(5) 交叉连接</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.*,bo.*from beauty bcross join boys bo;</span><br></pre></td></tr></table></figure>
+<h4 id="5-交叉连接"><a href="#5-交叉连接" class="headerlink" title="(5) 交叉连接"></a>(5) 交叉连接</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.*,bo.* from beauty b cross join boys bo;</span><br></pre></td></tr></table></figure>
 
 <p>结果就为笛卡尔乘积</p>
 <h3 id="e-sql-92-与-sql-99"><a href="#e-sql-92-与-sql-99" class="headerlink" title="(e) sql 92 与 sql 99"></a>(e) sql 92 与 sql 99</h3><p>功能：sql 99 支持的更多</p>
@@ -1393,15 +1393,15 @@
 <p>下为左外，右外加筛选和全外的比较</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3727.png"></p>
 <h3 id="f-多表连接练习"><a href="#f-多表连接练习" class="headerlink" title="(f) 多表连接练习"></a>(f) 多表连接练习</h3><p>(1) 查询编号 &gt;3 的女神的男朋友信息，如果有则列出详细，如果没有，用 null 填充</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select b.name,b.&#96;id&#96;,bo.*from beauty bleft join boys boon b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96;where b.&#96;id&#96;&gt;3;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select b.name,b.&#96;id&#96;,bo.* from beauty b    </span><br><span class="line">left join boys bo on b.&#96;boyfriend_id&#96;&#x3D;bo.&#96;id&#96; where b.&#96;id&#96;&gt;3;</span><br></pre></td></tr></table></figure>
 
 <p>(2) 查询哪个城市没有部门</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select cityfrom locations lleft join departments don l.&#96;location_id&#96;&#x3D;d.&#96;location_id&#96;where d.&#96;department_id&#96; is NULL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select city from locations l    </span><br><span class="line">left join departments d on l.&#96;location_id&#96;&#x3D;d.&#96;location_id&#96;    </span><br><span class="line">where d.&#96;department_id&#96; is NULL;</span><br></pre></td></tr></table></figure>
 
 <p>用从表的主键去判断</p>
 <p>(3) 查询部门名为 SAL 或 IT 的员工信息</p>
 <p>这两个部门可能没有员工，外连接会比较全。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select department_name,e.*from departments dleft join employees eon d.&#96;department_id&#96;&#x3D;e.&#96;department_id&#96;where d.&#96;department_name&#96; in(&#39;SAL&#39;,&#39;IT&#39;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select department_name,e.* from departments d    </span><br><span class="line">left join employees e on d.&#96;department_id&#96;&#x3D;e.&#96;department_id&#96;    </span><br><span class="line">where d.&#96;department_name&#96; in(&#39;SAL&#39;,&#39;IT&#39;);</span><br></pre></td></tr></table></figure>
 
 <p>如果用 departments 来当主表，信息会比较全，会将空的员工信息也显示上去。用 d 来当主表对比 e 来当主表，会多出 NULL 的员工信息，因为有的部门中没有员工。想要哪个表信息更全，就用哪个表来当主键。差的是部门的员工信息，因此主要是看部门。如果用员工表当主表，会去掉空的员工信息。</p>
 <h2 id="G-进阶七：子查询"><a href="#G-进阶七：子查询" class="headerlink" title="(G) 进阶七：子查询"></a>(G) 进阶七：子查询</h2><h3 id="a-概述-1"><a href="#a-概述-1" class="headerlink" title="(a) 概述"></a>(a) 概述</h3><h4 id="1-含义"><a href="#1-含义" class="headerlink" title="(1) 含义"></a>(1) 含义</h4><p>出现在其他语句中的 select 语句，称为子查询或内查询<br>外部的查询语句，称为主查询或外查询<br>外面的语句可以是 insert，update，delete，<strong>select</strong> 等，一般 select 作为外面语句较多</p>
@@ -1441,21 +1441,21 @@
 </ul>
 <h3 id="b-where-或-having-后面"><a href="#b-where-或-having-后面" class="headerlink" title="(b) where 或 having 后面"></a>(b) where 或 having 后面</h3><h4 id="1-标量子查询"><a href="#1-标量子查询" class="headerlink" title="(1) 标量子查询"></a>(1) 标量子查询</h4><p>案例 1：谁的工资比 Abel 高</p>
 <p>步骤 1：查询 Abel 的工资</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT salaryFROM employeesWHERE last_name&#x3D;&#39;Abel&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT salary    </span><br><span class="line">FROM employees    </span><br><span class="line">WHERE last_name&#x3D;&#39;Abel&#39;;</span><br></pre></td></tr></table></figure>
 
 <p>出来的结果为一行一列，因此为标量子查询</p>
 <p>步骤 2：查询员工的信息，满足 salary 大于步骤 1 结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT *FROM employeesWHERE salary&gt;(    SELECT salary    FROM employees    WHERE last_name&#x3D;&#39;Abel&#39;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT *   </span><br><span class="line">FROM employees     </span><br><span class="line">WHERE salary&gt;(</span><br><span class="line">    SELECT salary    </span><br><span class="line">    FROM employees </span><br><span class="line">    WHERE last_name&#x3D;&#39;Abel&#39;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>案例 2：返回 job_id 与 141 号员工相同，salary 与 143 号员工多的员工姓名，job_id 和工资</p>
 <p>步骤 1：查询 141 号员工的 job_id</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT job_idFROM employeesWHERE employee_id&#x3D;141;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT job_id FROM employees WHERE employee_id&#x3D;141;</span><br></pre></td></tr></table></figure>
 
 <p>步骤 2：查询 143 号员工的 salary</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT salaryFROM  employeesWHERE employee_id&#x3D;143;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT salary FROM employees WHERE employee_id&#x3D;143;</span><br></pre></td></tr></table></figure>
 
 <p>步骤 3：查询员工的姓名，job_id 和工资，要求 job_id = 步骤 1，并且 salary &gt; 步骤 2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT last_name,job_id,salaryFROM employeesWHERE job_id&#x3D;(    SELECT job_id    FROM employees    WHERE employee_id&#x3D;141) AND salary&gt;(    SELECT salary    FROM  employees    WHERE employee_id&#x3D;143);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT last_name,job_id,salary FROM employees    </span><br><span class="line">WHERE job_id&#x3D;(SELECT job_id    FROM employees WHERE employee_id&#x3D;141)     </span><br><span class="line">AND salary&gt;(SELECT salary FROM employees WHERE employee_id&#x3D;143);</span><br></pre></td></tr></table></figure>
 
 <p>案例 3：返回工资最少的员工的 last_name，job_id 和 salary</p>
 <p>步骤 1：查询公司的最低工资</p>
@@ -1636,7 +1636,7 @@
 <ul>
 <li>id 学号</li>
 <li>name 姓名</li>
-<li>email 邮箱 <a href="mailto:&#x6a;&#x6f;&#104;&#110;&#64;&#49;&#50;&#x36;&#x2e;&#99;&#x6f;&#x6d;">&#x6a;&#x6f;&#104;&#110;&#64;&#49;&#50;&#x36;&#x2e;&#99;&#x6f;&#x6d;</a></li>
+<li>email 邮箱 <a href="mailto:&#x6a;&#x6f;&#x68;&#110;&#64;&#x31;&#x32;&#x36;&#x2e;&#99;&#x6f;&#x6d;">&#x6a;&#x6f;&#x68;&#110;&#64;&#x31;&#x32;&#x36;&#x2e;&#99;&#x6f;&#x6d;</a></li>
 <li>gradeld 年级编号</li>
 <li>sex 性别 男/女</li>
 <li>age 年龄</li>
