@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3727.png">
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3728.png">
 <meta property="article:published_time" content="2021-09-14T00:20:28.000Z">
-<meta property="article:modified_time" content="2021-09-14T00:21:44.238Z">
+<meta property="article:modified_time" content="2021-09-14T00:45:03.748Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -312,7 +312,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-09-14 08:20:28 / 修改时间：08:21:44" itemprop="dateCreated datePublished" datetime="2021-09-14T08:20:28+08:00">2021-09-14</time>
+              <time title="创建时间：2021-09-14 08:20:28 / 修改时间：08:45:03" itemprop="dateCreated datePublished" datetime="2021-09-14T08:20:28+08:00">2021-09-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -446,7 +446,7 @@
 
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3703.png"></p>
 <p>不好点在于字段顺序为表中定义顺序，因此开发中更常用的是将所有字段按照需要的顺序点击，如果太长不方便阅读，使用快捷键 F12，来自动换行。</p>
-<h4 id="6-查询函数-调用函数，获取返回值"><a href="#6-查询函数-调用函数，获取返回值" class="headerlink" title="(6) 查询函数(调用函数，获取返回值)"></a>(6) 查询函数(调用函数，获取返回值)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select database(); #查询当前的数据库select version();  #查询当前数据库服务器版本select user();     #查询当前用户</span><br></pre></td></tr></table></figure>
+<h4 id="6-查询函数-调用函数，获取返回值"><a href="#6-查询函数-调用函数，获取返回值" class="headerlink" title="(6) 查询函数(调用函数，获取返回值)"></a>(6) 查询函数(调用函数，获取返回值)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select database(); #查询当前的数据库select version();    </span><br><span class="line">#查询当前数据库服务器版本select user();     #查询当前用户</span><br></pre></td></tr></table></figure>
 
 <h4 id="7-起别名"><a href="#7-起别名" class="headerlink" title="(7) 起别名"></a>(7) 起别名</h4><p>方式一：使用 as 关键字</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select user() as 用户名;select user() as &#96;用户名&#96;;</span><br></pre></td></tr></table></figure>
@@ -456,7 +456,7 @@
 <p>使用后</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3705.png"></p>
 <p>加<strong>着重号</strong>是为了方便识别，如下面例子。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name as 姓 名 from &#96;employees&#96;;    #报错,因为不知道名是干嘛的select last_name as &quot;姓 名&quot; from &#96;employees&#96;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name as 姓 名 from &#96;employees&#96;;    </span><br><span class="line">#报错,因为不知道名是干嘛的select last_name as &quot;姓 名&quot; from &#96;employees&#96;;</span><br></pre></td></tr></table></figure>
 
 <p>如果姓名中间有空格，不加引号会报错。</p>
 <p>方式二：使用空格</p>
@@ -513,7 +513,7 @@
 
 <p>考 distinct 关键字的使用，查哪个表，就 from 哪个。</p>
 <p>(6) 显示出表 employees 的全部列，各个列之间用逗号连接，列头显示成 OUT_PUT</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select concat(employee_id,&#39;,&#39;,first_name,&#39;,&#39;,last_name,&#39;,&#39;,commission_pct) as &quot;OUT_PUT&quot;from employees;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select concat(employee_id,&#39;,&#39;,first_name,&#39;,&#39;,last_name,&#39;,&#39;,commission_pct) as    </span><br><span class="line">&quot;OUT_PUT&quot;from employees;</span><br></pre></td></tr></table></figure>
 
 <p>考 concat 使用，在不同列之间还要拼接上 ‘,’，然后起名。</p>
 <p>但是有的为 null，有的是正常的。</p>
@@ -524,7 +524,7 @@
 <p>此函数需要输入两个参数，一个是进行判断的参数，第二个是如果此参数为 null 要显示的参数。</p>
 <p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3712.png"></p>
 <p>因此将 commission 进行替换为 ifnull 即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selectconcat(employee_id,&#39;,&#39;,first_name,&#39;,&#39;,last_name,&#39;,&#39;,ifnull(commission_pct,&#39;&#39;)) as &quot;OUT_PUT&quot; from employees;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">selectconcat(employee_id,&#39;,&#39;,first_name,&#39;,&#39;,last_name,&#39;,&#39;,ifnull(commission_pct,&#39;&#39;)) as   </span><br><span class="line">&quot;OUT_PUT&quot; from employees;</span><br></pre></td></tr></table></figure>
 
 <h2 id="B-进阶二：条件查询"><a href="#B-进阶二：条件查询" class="headerlink" title="(B) 进阶二：条件查询"></a>(B) 进阶二：条件查询</h2><h3 id="a-语法-1"><a href="#a-语法-1" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 查询列表from 表名where 筛选条件;</span><br></pre></td></tr></table></figure>
 
@@ -599,13 +599,13 @@
 <p>的后为姓名工资，放在 select 后，的前为工资小于 15000，放在 where 后。</p>
 <h3 id="c-按逻辑表达式查询"><a href="#c-按逻辑表达式查询" class="headerlink" title="(c) 按逻辑表达式查询"></a>(c) 按逻辑表达式查询</h3><p>案例 1：查询部门编号不是 50-100 之间员工姓名，部门编号，邮箱</p>
 <p>方式 1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,emailfrom employeeswhere department_id &gt; 100 or department_id &lt; 50;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,emailfrom employeeswhere department_id &gt; 100 or   </span><br><span class="line">department_id &lt; 50;</span><br></pre></td></tr></table></figure>
 
 <p>方式 2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,emailfrom employeeswhere not(department_id &gt;&#x3D; 50 and department_id &lt;&#x3D; 100);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select last_name,department_id,emailfrom employeeswhere not(department_id &gt;&#x3D; 50 and     department_id &lt;&#x3D; 100);</span><br></pre></td></tr></table></figure>
 
 <p>案例 2：查询奖金率 &gt; 0.03 或者员工编号在 60-110 之间的员工信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employeeswhere commission_pct &gt; 0.03 or (employee_id &gt;&#x3D; 60 and employee_id &lt;&#x3D; 110);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from employeeswhere commission_pct &gt; 0.03 or (employee_id &gt;&#x3D; 60 and employee_id   &lt;&#x3D; 110);</span><br></pre></td></tr></table></figure>
 
 <h3 id="d-模糊查询"><a href="#d-模糊查询" class="headerlink" title="(d) 模糊查询"></a>(d) 模糊查询</h3><h4 id="1-like"><a href="#1-like" class="headerlink" title="(1) like"></a>(1) like</h4><p>功能：一般和通配符搭配使用，对字符型数据进行<strong>部分匹配查询</strong></p>
 <p>like / not like</p>
@@ -1636,7 +1636,7 @@
 <ul>
 <li>id 学号</li>
 <li>name 姓名</li>
-<li>email 邮箱 <a href="mailto:&#106;&#x6f;&#104;&#x6e;&#64;&#49;&#50;&#x36;&#46;&#99;&#x6f;&#x6d;">&#106;&#x6f;&#104;&#x6e;&#64;&#49;&#50;&#x36;&#46;&#99;&#x6f;&#x6d;</a></li>
+<li>email 邮箱 <a href="mailto:&#106;&#x6f;&#x68;&#x6e;&#x40;&#49;&#x32;&#x36;&#x2e;&#x63;&#111;&#x6d;">&#106;&#x6f;&#x68;&#x6e;&#x40;&#49;&#x32;&#x36;&#x2e;&#x63;&#111;&#x6d;</a></li>
 <li>gradeld 年级编号</li>
 <li>sex 性别 男/女</li>
 <li>age 年龄</li>
