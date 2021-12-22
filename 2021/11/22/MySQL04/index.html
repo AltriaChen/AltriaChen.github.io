@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
   </script>
 
-  <meta name="description" content="又是一年公历生日，由于微博的出卖，上午收到了小伙伴们的祝福。虽然其实我挺后悔生而为人，毕竟对我这样的人来说人生实在太残忍了。但很开心一路走来遇到的都是师长和朋友，没有敌人。这让我感到很幸福。 人固有一死，希望阿伟最终的结局是为知遇之恩而死。 好了，言归正传。本篇是 MySQL 的终章，讲解的是 MySQL 的运行机制相关的知识，故称 MySQL 高级。内容包括数据库范式，逻辑架构，索引，查询截取分">
+  <meta name="description" content="又是一年公历生日，感谢小伙伴们的祝福。虽然以后的人生会一直为生存而战，直至最终战死，但能有幸遇到善良又努力的小伙伴们，我已知足。 人固有一死，希望阿伟最终的结局是为知遇之恩而死。 好了，言归正传。本篇是 MySQL 的终章，讲解的是 MySQL 的运行机制相关的知识，故称 MySQL 高级。内容包括数据库范式，逻辑架构，索引，查询截取分析，锁机制，主从复制，缓存与 MQ。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL笔记(零四)：MySQL高级">
 <meta property="og:url" content="http://yoursite.com/2021/11/22/MySQL04/index.html">
 <meta property="og:site_name" content="Cross Code">
-<meta property="og:description" content="又是一年公历生日，由于微博的出卖，上午收到了小伙伴们的祝福。虽然其实我挺后悔生而为人，毕竟对我这样的人来说人生实在太残忍了。但很开心一路走来遇到的都是师长和朋友，没有敌人。这让我感到很幸福。 人固有一死，希望阿伟最终的结局是为知遇之恩而死。 好了，言归正传。本篇是 MySQL 的终章，讲解的是 MySQL 的运行机制相关的知识，故称 MySQL 高级。内容包括数据库范式，逻辑架构，索引，查询截取分">
+<meta property="og:description" content="又是一年公历生日，感谢小伙伴们的祝福。虽然以后的人生会一直为生存而战，直至最终战死，但能有幸遇到善良又努力的小伙伴们，我已知足。 人固有一死，希望阿伟最终的结局是为知遇之恩而死。 好了，言归正传。本篇是 MySQL 的终章，讲解的是 MySQL 的运行机制相关的知识，故称 MySQL 高级。内容包括数据库范式，逻辑架构，索引，查询截取分析，锁机制，主从复制，缓存与 MQ。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4101.png">
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4102.png">
@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4110.png">
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4111.png">
 <meta property="article:published_time" content="2021-11-22T03:10:03.000Z">
-<meta property="article:modified_time" content="2021-11-22T03:12:42.376Z">
+<meta property="article:modified_time" content="2021-12-22T06:22:35.013Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -293,10 +293,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-22 11:10:03 / 修改时间：11:12:42" itemprop="dateCreated datePublished" datetime="2021-11-22T11:10:03+08:00">2021-11-22</time>
+              <time title="创建时间：2021-11-22 11:10:03" itemprop="dateCreated datePublished" datetime="2021-11-22T11:10:03+08:00">2021-11-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-22 14:22:35" itemprop="dateModified" datetime="2021-12-22T14:22:35+08:00">2021-12-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -316,7 +322,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>又是一年公历生日，由于微博的出卖，上午收到了小伙伴们的祝福。虽然其实我挺后悔生而为人，毕竟对我这样的人来说人生实在太残忍了。但很开心一路走来遇到的都是师长和朋友，没有敌人。这让我感到很幸福。</p>
+        <p>又是一年公历生日，感谢小伙伴们的祝福。虽然以后的人生会一直为生存而战，直至最终战死，但能有幸遇到善良又努力的小伙伴们，我已知足。</p>
 <p>人固有一死，希望阿伟最终的结局是为知遇之恩而死。</p>
 <p>好了，言归正传。本篇是 MySQL 的终章，讲解的是 MySQL 的运行机制相关的知识，故称 MySQL 高级。内容包括数据库范式，逻辑架构，索引，查询截取分析，锁机制，主从复制，缓存与 MQ。</p>
 <a id="more"></a>
