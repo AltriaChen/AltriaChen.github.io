@@ -22,21 +22,22 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
   </script>
 
-  <meta name="description" content="Python 学习笔记 (零二) 篇，本篇将介绍 Python 中函数相关知识，以及很常用的 filter( ) 和 map( ) 函数。同时，结合具体实例讲解了函数的递归。">
+  <meta name="description" content="Python 学习笔记 (零二) 篇，本篇将介绍 Python 中函数相关知识，以及很常用的 filter( ) 和 map( ) 函数。同时，结合具体实例讲解了函数的递归。之后将讲解 Python 中的文件与模块，以及 Python 中会出现的标准异常，及检测异常的 try-except 语句。在此基础上，对 else 语句与 with 语句进行了简析。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python学习笔记(零二)：函数">
+<meta property="og:title" content="Python学习笔记(零二)：函数·文件·模块·异常">
 <meta property="og:url" content="http://yoursite.com/2020/08/28/python-02/index.html">
 <meta property="og:site_name" content="Cross Code">
-<meta property="og:description" content="Python 学习笔记 (零二) 篇，本篇将介绍 Python 中函数相关知识，以及很常用的 filter( ) 和 map( ) 函数。同时，结合具体实例讲解了函数的递归。">
+<meta property="og:description" content="Python 学习笔记 (零二) 篇，本篇将介绍 Python 中函数相关知识，以及很常用的 filter( ) 和 map( ) 函数。同时，结合具体实例讲解了函数的递归。之后将讲解 Python 中的文件与模块，以及 Python 中会出现的标准异常，及检测异常的 try-except 语句。在此基础上，对 else 语句与 with 语句进行了简析。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A0701.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A0702.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Python/python-02/A0701.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Python/python-02/A0702.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Python/python-02/A0801.jpg">
 <meta property="article:published_time" content="2020-08-27T16:04:43.000Z">
-<meta property="article:modified_time" content="2021-05-30T14:46:48.000Z">
+<meta property="article:modified_time" content="2022-11-13T10:06:35.959Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A0701.jpg">
+<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Python/python-02/A0701.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2020/08/28/python-02/">
 
@@ -51,7 +52,7 @@
   };
 </script>
 
-  <title>Python学习笔记(零二)：函数 | Cross Code</title>
+  <title>Python学习笔记(零二)：函数·文件·模块·异常 | Cross Code</title>
   
 
 
@@ -186,7 +187,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0"><span class="nav-text">一. 创建函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-def-%E5%85%B3%E9%94%AE%E5%AD%97%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0"><span class="nav-text">(A) def 关键字创建函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="nav-text">(B) lambda 表达式创建匿名函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%86%85%E5%B5%8C%E5%87%BD%E6%95%B0"><span class="nav-text">(C) 内嵌函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E9%97%AD%E5%8C%85"><span class="nav-text">(D) 闭包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E5%8F%82%E6%95%B0%E4%B8%8E%E5%8F%98%E9%87%8F"><span class="nav-text">二. 参数与变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E9%BB%98%E8%AE%A4%E5%80%BC%E5%8F%82%E6%95%B0"><span class="nav-text">(A) 默认值参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%94%B6%E9%9B%86%E5%8F%82%E6%95%B0"><span class="nav-text">(B) 收集参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-or-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-text">(C) 全局变量 or 局部变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%AE%9A%E4%B9%89"><span class="nav-text">(a) 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-global-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">(b) global 关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-nonlocal-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">(c) nonlocal 关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-global-%E4%B8%8E-nonlocal-%E5%8C%BA%E5%88%AB%E7%AE%80%E6%9E%90"><span class="nav-text">(d) global 与 nonlocal 区别简析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-filter-%E4%B8%8E-map"><span class="nav-text">三. filter( ) 与 map( )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-filter"><span class="nav-text">(A) filter( )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(b) 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BE%8B-1"><span class="nav-text">(1) 例 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BE%8B-2%EF%BC%9A%E7%AD%9B%E9%80%89%E5%A5%87%E6%95%B0"><span class="nav-text">(2) 例 2：筛选奇数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-map"><span class="nav-text">(B) map( )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95-1"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B-1"><span class="nav-text">(b) 实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%92%E5%BD%92"><span class="nav-text">四. 函数的递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E9%80%92%E5%BD%92%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E7%89%B9%E6%80%A7"><span class="nav-text">(A) 递归的含义与特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%90%AB%E4%B9%89"><span class="nav-text">(a) 含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E7%89%B9%E6%80%A7"><span class="nav-text">(b) 特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E5%AE%9E%E4%BE%8B-1%EF%BC%9A%E5%86%99%E9%98%B6%E4%B9%98"><span class="nav-text">(B) 实例 1：写阶乘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%B3%95%E4%B8%80%EF%BC%9A%E9%9D%9E%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="nav-text">(a) 法一：非递归方法示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%B3%95%E4%BA%8C%EF%BC%9A%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="nav-text">(b) 法二：递归方法示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%AE%9E%E4%BE%8B-2%EF%BC%9A%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="nav-text">(C) 实例 2：斐波那契数列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%B3%95%E4%B8%80%EF%BC%9A%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="nav-text">(a) 法一：迭代法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%B3%95%E4%BA%8C%EF%BC%9A%E9%80%92%E5%BD%92%E6%B3%95"><span class="nav-text">(b) 法二：递归法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E5%AE%9E%E4%BE%8B-3%EF%BC%9A%E6%B1%89%E8%AF%BA%E5%A1%94%E9%97%AE%E9%A2%98"><span class="nav-text">(D) 实例 3：汉诺塔问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E9%80%92%E5%BD%92%E6%80%9D%E8%B7%AF"><span class="nav-text">(a) 递归思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81"><span class="nav-text">(b) 代码</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0"><span class="nav-text">一. 创建函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-def-%E5%85%B3%E9%94%AE%E5%AD%97%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0"><span class="nav-text">(A) def 关键字创建函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="nav-text">(B) lambda 表达式创建匿名函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%86%85%E5%B5%8C%E5%87%BD%E6%95%B0"><span class="nav-text">(C) 内嵌函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E9%97%AD%E5%8C%85"><span class="nav-text">(D) 闭包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E5%8F%82%E6%95%B0%E4%B8%8E%E5%8F%98%E9%87%8F"><span class="nav-text">二. 参数与变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E9%BB%98%E8%AE%A4%E5%80%BC%E5%8F%82%E6%95%B0"><span class="nav-text">(A) 默认值参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%94%B6%E9%9B%86%E5%8F%82%E6%95%B0"><span class="nav-text">(B) 收集参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-or-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-text">(C) 全局变量 or 局部变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%AE%9A%E4%B9%89"><span class="nav-text">(a) 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-global-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">(b) global 关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-nonlocal-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">(c) nonlocal 关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-global-%E4%B8%8E-nonlocal-%E5%8C%BA%E5%88%AB%E7%AE%80%E6%9E%90"><span class="nav-text">(d) global 与 nonlocal 区别简析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-filter-%E4%B8%8E-map"><span class="nav-text">三. filter( ) 与 map( )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-filter"><span class="nav-text">(A) filter( )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(b) 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BE%8B-1"><span class="nav-text">(1) 例 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BE%8B-2%EF%BC%9A%E7%AD%9B%E9%80%89%E5%A5%87%E6%95%B0"><span class="nav-text">(2) 例 2：筛选奇数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-map"><span class="nav-text">(B) map( )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95-1"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B-1"><span class="nav-text">(b) 实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%92%E5%BD%92"><span class="nav-text">四. 函数的递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E9%80%92%E5%BD%92%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E7%89%B9%E6%80%A7"><span class="nav-text">(A) 递归的含义与特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%90%AB%E4%B9%89"><span class="nav-text">(a) 含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E7%89%B9%E6%80%A7"><span class="nav-text">(b) 特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E5%AE%9E%E4%BE%8B-1%EF%BC%9A%E5%86%99%E9%98%B6%E4%B9%98"><span class="nav-text">(B) 实例 1：写阶乘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%B3%95%E4%B8%80%EF%BC%9A%E9%9D%9E%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="nav-text">(a) 法一：非递归方法示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%B3%95%E4%BA%8C%EF%BC%9A%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="nav-text">(b) 法二：递归方法示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%AE%9E%E4%BE%8B-2%EF%BC%9A%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="nav-text">(C) 实例 2：斐波那契数列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%B3%95%E4%B8%80%EF%BC%9A%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="nav-text">(a) 法一：迭代法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%B3%95%E4%BA%8C%EF%BC%9A%E9%80%92%E5%BD%92%E6%B3%95"><span class="nav-text">(b) 法二：递归法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E5%AE%9E%E4%BE%8B-3%EF%BC%9A%E6%B1%89%E8%AF%BA%E5%A1%94%E9%97%AE%E9%A2%98"><span class="nav-text">(D) 实例 3：汉诺塔问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E9%80%92%E5%BD%92%E6%80%9D%E8%B7%AF"><span class="nav-text">(a) 递归思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81"><span class="nav-text">(b) 代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94-%E6%96%87%E4%BB%B6"><span class="nav-text">五. 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E6%A8%A1%E5%BC%8F"><span class="nav-text">(A) 文件打开模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%96%87%E4%BB%B6%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="nav-text">(B) 文件对象方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%B0%8F%E7%94%B2%E9%B1%BC%E4%BB%BB%E5%8A%A1%E5%AE%9E%E4%BE%8B"><span class="nav-text">(C) 小甲鱼任务实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0"><span class="nav-text">(a) 任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text">(b) 代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD-%E6%A8%A1%E5%9D%97"><span class="nav-text">六. 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E6%A8%A1%E5%9D%97"><span class="nav-text">(A) 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%AE%80%E4%BB%8B"><span class="nav-text">(a) 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97"><span class="nav-text">(b) 导入模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-if-name-%E2%80%99-main-%E2%80%98"><span class="nav-text">(c) if __name__&#x3D;&#x3D;’__main__‘:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-OS-%E6%A8%A1%E5%9D%97"><span class="nav-text">(B) OS 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-os-%E6%A8%A1%E5%9D%97%E4%B8%AD%E5%85%B3%E4%BA%8E%E6%96%87%E4%BB%B6-%E7%9B%AE%E5%BD%95%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">(a) os 模块中关于文件&#x2F;目录常用的函数使用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-os-path-%E6%A8%A1%E5%9D%97%E4%B8%AD%E5%85%B3%E4%BA%8E%E8%B7%AF%E5%BE%84%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">(b) os.path 模块中关于路径常用的函数使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-pickle-%E6%A8%A1%E5%9D%97"><span class="nav-text">(C) pickle 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%AE%80%E4%BB%8B-1"><span class="nav-text">(a) 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-pickle-dump-obj-file-protocol"><span class="nav-text">(1) pickle.dump(obj, file, [,protocol])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-pickle-load-file"><span class="nav-text">(2) pickle.load(file)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BE%8B-1%EF%BC%9A%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">(b) 例 1：序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E4%BE%8B-2%EF%BC%9A%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">(c) 例 2：反序列化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83-Python-%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8%E6%80%BB%E7%BB%93"><span class="nav-text">七. Python 标准异常总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB-%E6%A3%80%E6%B5%8B%E5%BC%82%E5%B8%B8"><span class="nav-text">八. 检测异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-try-except-%E8%AF%AD%E5%8F%A5"><span class="nav-text">(A) try-except 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95-2"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B-1%EF%BC%9A%E6%89%93%E5%BC%80%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-text">(b) 实例 1：打开不存在的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%AE%9E%E4%BE%8B-2%EF%BC%9A%E5%B7%B2%E7%9F%A5%E9%94%99%E8%AF%AF%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%88%B6%E7%B1%BB%EF%BC%8C%E6%98%BE%E7%A4%BA%E5%AD%90%E7%B1%BB"><span class="nav-text">(c) 实例 2：已知错误类型的父类，显示子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E5%AE%9E%E4%BE%8B-3%EF%BC%9A%E4%B8%8D%E7%A1%AE%E5%AE%9A%E9%94%99%E8%AF%AF%E7%9A%84%E5%85%B7%E4%BD%93%E7%B1%BB%E5%9E%8B%EF%BC%8C%E4%BD%86%E7%9F%A5%E9%81%93%E5%9C%A8%E4%B8%A4%E8%80%85%E4%B9%8B%E9%97%B4"><span class="nav-text">(d) 实例 3：不确定错误的具体类型，但知道在两者之间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E5%AE%9E%E4%BE%8B-4%EF%BC%9A%E4%B8%8D%E7%A1%AE%E5%AE%9A%E9%94%99%E8%AF%AF%E7%B1%BB%E5%9E%8B%EF%BC%8C%E4%BD%86%E5%B8%8C%E6%9C%9B%E5%87%BA%E9%94%99%E6%97%B6%E6%8A%A5%E9%94%99"><span class="nav-text">(e) 实例 4：不确定错误类型，但希望出错时报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#f-%E5%AE%9E%E4%BE%8B-5%EF%BC%9A%E5%90%8C%E6%97%B6%E5%AF%B9%E5%A4%9A%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-text">(f) 实例 5：同时对多种类型异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-try-finally-%E8%AF%AD%E5%8F%A5"><span class="nav-text">(B) try-finally 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%AF%AD%E6%B3%95-3"><span class="nav-text">(a) 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B-2"><span class="nav-text">(b) 实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%9D-%E4%B8%B0%E5%AF%8C%E7%9A%84else%E8%AF%AD%E5%8F%A5%E4%B8%8E%E7%AE%80%E6%B4%81%E7%9A%84with%E8%AF%AD%E5%8F%A5"><span class="nav-text">九. 丰富的else语句与简洁的with语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-else-%E8%AF%AD%E5%8F%A5"><span class="nav-text">(A) else 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%9C%A8-if-%E8%AF%AD%E5%8F%A5%E4%B8%AD"><span class="nav-text">(a) 在 if 语句中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%9C%A8%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E4%B8%AD"><span class="nav-text">(b) 在循环语句中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%9C%A8-try-%E8%AF%AD%E5%8F%A5%E4%B8%AD"><span class="nav-text">(c) 在 try 语句中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-with-%E8%AF%AD%E5%8F%A5"><span class="nav-text">(B) with 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E7%AE%80%E4%BB%8B-2"><span class="nav-text">(a) 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%AE%9E%E4%BE%8B-3"><span class="nav-text">(b) 实例</span></a></li></ol></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -202,7 +203,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -215,7 +216,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -275,7 +276,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Python学习笔记(零二)：函数
+          Python学习笔记(零二)：函数·文件·模块·异常
         </h1>
 
         <div class="post-meta">
@@ -292,7 +293,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-30 22:46:48" itemprop="dateModified" datetime="2021-05-30T22:46:48+08:00">2021-05-30</time>
+                <time title="修改时间：2022-11-13 18:06:35" itemprop="dateModified" datetime="2022-11-13T18:06:35+08:00">2022-11-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -313,7 +314,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Python 学习笔记 (零二) 篇，本篇将介绍 Python 中函数相关知识，以及很常用的 filter( ) 和 map( ) 函数。同时，结合具体实例讲解了函数的递归。</p>
+        <p>Python 学习笔记 (零二) 篇，本篇将介绍 Python 中函数相关知识，以及很常用的 filter( ) 和 map( ) 函数。同时，结合具体实例讲解了函数的递归。之后将讲解 Python 中的文件与模块，以及 Python 中会出现的标准异常，及检测异常的 try-except 语句。在此基础上，对 else 语句与 with 语句进行了简析。</p>
 <a id="more"></a>
 
 <h1 id="一-创建函数"><a href="#一-创建函数" class="headerlink" title="一. 创建函数"></a>一. 创建函数</h1><h2 id="A-def-关键字创建函数"><a href="#A-def-关键字创建函数" class="headerlink" title="(A) def 关键字创建函数"></a>(A) def 关键字创建函数</h2><p>python 中用 def 关键字创建函数。例 def functionA( ):  ，( )内是函数的参数。例:</p>
@@ -407,7 +408,7 @@
 <h3 id="b-法二：递归方法示例"><a href="#b-法二：递归方法示例" class="headerlink" title="(b) 法二：递归方法示例"></a>(b) 法二：递归方法示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">factorial</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> n*factorial(n<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">number=int(input(<span class="string">&#x27;请输入一个正整数：&#x27;</span>))</span><br><span class="line">result=factorial(number)</span><br><span class="line">print(<span class="string">&#x27;%d 的阶乘是 %d&#x27;</span>%(number,result))</span><br></pre></td></tr></table></figure>
 
 <p>注，该问题中递归的实现过程如下图</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A0701.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Python/python-02/A0701.jpg"></p>
 <p>注，(1) 递归必须满足两个条件，1. 有调用函数自身的行为，2. 有一个正确的返回条件。</p>
 <p>(2) 用 if ···  else ··· 实现递归时，可以这样做：if 后接首项，亦即返回条件；else 后接通项公式，即第 n 项与第 n-1 项的关系。</p>
 <h2 id="C-实例-2：斐波那契数列"><a href="#C-实例-2：斐波那契数列" class="headerlink" title="(C) 实例 2：斐波那契数列"></a>(C) 实例 2：斐波那契数列</h2><p>问题描述：求斐波那契数列的第 n 项，例如第 8 项。</p>
@@ -416,7 +417,7 @@
 <h3 id="b-法二：递归法"><a href="#b-法二：递归法" class="headerlink" title="(b) 法二：递归法"></a>(b) 法二：递归法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fab</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n&lt;<span class="number">1</span>:</span><br><span class="line">        print(<span class="string">&#x27;输入有误！&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> n==<span class="number">1</span> <span class="keyword">or</span> n==<span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fab(n<span class="number">-1</span>)+fab(n<span class="number">-2</span>)</span><br><span class="line"></span><br><span class="line">result = fab(<span class="number">8</span>)</span><br><span class="line"><span class="keyword">if</span> result != <span class="number">-1</span>:</span><br><span class="line">    print(<span class="string">&#x27;斐波那契数列第8项为%d&#x27;</span> % result)</span><br></pre></td></tr></table></figure>
 
 <p>注，该问题中递归的实现过程如下图</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A0702.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Python/python-02/A0702.jpg"></p>
 <p>注，迭代法和递归法，实际操作中发现，比如求 fab(35)，递归法运行时间比迭代长很多，求的项越大，递归越久，但迭代就很快。<br>说明递归法虽然思路理解简单，但代码运行效率低。</p>
 <h2 id="D-实例-3：汉诺塔问题"><a href="#D-实例-3：汉诺塔问题" class="headerlink" title="(D) 实例 3：汉诺塔问题"></a>(D) 实例 3：汉诺塔问题</h2><p>问题描述：汉诺塔问题是一个经典的问题。汉诺塔 (Hanoi Tower)，又称河内塔，源于印度一个古老传说。大梵天创造世界的时候做了三根金刚石柱子，在第一根柱子上从下面开始按从大到小顺序摞着 64 片黄金圆盘。大梵天命令婆罗门把圆盘从下面开始按从大到小顺序重新摆放在第三根柱子上。并且规定，任何时候，在小圆盘上都不能放大圆盘，且在三根柱子之间一次只能移动一个圆盘。问应该如何操作？</p>
 <h3 id="a-递归思路"><a href="#a-递归思路" class="headerlink" title="(a) 递归思路"></a>(a) 递归思路</h3><p>我们设三根柱子为 X，Y，Z</p>
@@ -435,6 +436,478 @@
 </ul>
 <h3 id="b-代码"><a href="#b-代码" class="headerlink" title="(b) 代码"></a>(b) 代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hanoi</span>(<span class="params">n,x,y,z</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n==<span class="number">1</span>:</span><br><span class="line">        print(x, <span class="string">&#x27;--&gt;&#x27;</span> ,z)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        hanoi(n<span class="number">-1</span>,x,z,y)    <span class="comment">#将前n-1个盘子从x移到y上</span></span><br><span class="line">        print(x, <span class="string">&#x27;--&gt;&#x27;</span> ,z)  <span class="comment">#将最底下的最后一个盘子从x移到z上 </span></span><br><span class="line">        hanoi(n<span class="number">-1</span>,y,x,z)    <span class="comment">#将y上的n-1个盘子移到z上</span></span><br><span class="line"></span><br><span class="line">n=int(input(<span class="string">&#x27;请输入汉诺塔的层数：&#x27;</span>))</span><br><span class="line">hanoi(n,<span class="string">&#x27;X&#x27;</span>,<span class="string">&#x27;Y&#x27;</span>,<span class="string">&#x27;Z&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
+<h1 id="五-文件"><a href="#五-文件" class="headerlink" title="五. 文件"></a>五. 文件</h1><h2 id="A-文件打开模式"><a href="#A-文件打开模式" class="headerlink" title="(A) 文件打开模式"></a>(A) 文件打开模式</h2><table>
+<thead>
+<tr>
+<th>打开模式</th>
+<th>执行操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘r’</td>
+<td>以只读方式打开文件(默认)</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>以写入的方式打开文件，会覆盖已存在的文件</td>
+</tr>
+<tr>
+<td>‘x’</td>
+<td>如果文件已经存在，使用此模式打开将引发异常</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>以写入模式打开，如果文件存在，则在末尾追加写入</td>
+</tr>
+<tr>
+<td>‘b’</td>
+<td>以二进制模式打开文件</td>
+</tr>
+<tr>
+<td>‘t’</td>
+<td>以文本模式打开(默认)</td>
+</tr>
+<tr>
+<td>‘+’</td>
+<td>可读写模式(可添加到其他模式中使用)</td>
+</tr>
+<tr>
+<td>‘U’</td>
+<td>通用换行符支持</td>
+</tr>
+</tbody></table>
+<p>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f=open(<span class="string">&#x27;E:\\PycharmProject\\record.txt&#x27;</span>)   <span class="comment">#注意是双斜杠，其中一个斜杠表示转义</span></span><br><span class="line">print(f)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;_io.TextIOWrapper name=<span class="string">&#x27;E:\\PycharmProject\\record.txt&#x27;</span> mode=<span class="string">&#x27;r&#x27;</span> encoding=<span class="string">&#x27;cp936&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者也可以使用原始字符串，即</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f=open(<span class="string">r&#x27;E:\PycharmProject\record.txt&#x27;</span>)</span><br><span class="line">print(f)</span><br></pre></td></tr></table></figure>
+
+<h2 id="B-文件对象方法"><a href="#B-文件对象方法" class="headerlink" title="(B) 文件对象方法"></a>(B) 文件对象方法</h2><table>
+<thead>
+<tr>
+<th>文件对象方法</th>
+<th align="left">执行操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>f.close( )</td>
+<td align="left">关闭文件</td>
+</tr>
+<tr>
+<td>f.read(size = -1)</td>
+<td align="left">从文件读取 size 个字符，当未给定 size 或给定负值的时候，读取剩余的所有字符，然后作为字符串返回</td>
+</tr>
+<tr>
+<td>f.readline( )</td>
+<td align="left">以写入模式打开，如果文件存在，则在末尾追加写入</td>
+</tr>
+<tr>
+<td>f.write(str)</td>
+<td align="left">将字符串 str 写入文件</td>
+</tr>
+<tr>
+<td>f.writelines(seq)</td>
+<td align="left">向文件写入字符串序列 seq，seq 应该是一个返回字符串的可迭代对象</td>
+</tr>
+<tr>
+<td>f.seek(offset,from)</td>
+<td align="left">在文件中移动文件指针，从from( 0 代表文件起始位置，1 代表当前位置，2 代表文件末尾)偏移 offset 个字节</td>
+</tr>
+<tr>
+<td>f.tell( )</td>
+<td align="left">返回当前在文件中的位置</td>
+</tr>
+</tbody></table>
+<p>(a) 例 1:</p>
+<p>在 “E:\PycharmProject” 路径下新建 record.txt，里面内容是 hello awei，则以下代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f=open(<span class="string">r&#x27;E:\PycharmProject\record.txt&#x27;</span>)</span><br><span class="line">print(f.read())</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello awei</span><br></pre></td></tr></table></figure>
+
+<p>以下代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f=open(<span class="string">r&#x27;E:\PycharmProject\record.txt&#x27;</span>)</span><br><span class="line">print(f.read(<span class="number">5</span>))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello </span><br></pre></td></tr></table></figure>
+
+<p>(b) 例 2：</p>
+<p>在 “E:\PycharmProject” 路径下新建 record2.txt，里面内容是 hello awei  hello world，则</p>
+<p>例：把文件中每一行按行打印</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">f=open(<span class="string">r&#x27;E:\PycharmProject\record.txt&#x27;</span>)</span><br><span class="line">f.seek(<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> each_line <span class="keyword">in</span> f:</span><br><span class="line">    print(each_line)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hello awei</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+
+<h2 id="C-小甲鱼任务实例"><a href="#C-小甲鱼任务实例" class="headerlink" title="(C) 小甲鱼任务实例"></a>(C) 小甲鱼任务实例</h2><h3 id="a-任务描述"><a href="#a-任务描述" class="headerlink" title="(a) 任务描述"></a>(a) 任务描述</h3><p>任务：将文件 (record.txt) 中的数据进行分割并按照以下规律保存起来，</p>
+<ul>
+<li>小甲鱼的对话单独保存为 boy_*.txt 的文件(去掉“小甲鱼：”)</li>
+<li>小客服的对话单独保存为 girl_*.txt 的文件(去掉“小客服：”)</li>
+<li>文件中总共有三段对话，分别保存为 boy_1.txt，girl_1.txt，boy_2.txt，girl_2.txt，boy_3.txt，girl_3.txt 共6个文件(提示:文件中不同的对话间已经使用”==========”分割)</li>
+</ul>
+<p>record.txt 中内容如下</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Python/python-02/A0801.jpg"></p>
+<h3 id="b-代码实现"><a href="#b-代码实现" class="headerlink" title="(b) 代码实现"></a>(b) 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_file</span>(<span class="params">boy,girl,count</span>):</span></span><br><span class="line">      file_name_boy=<span class="string">&#x27;boy_&#x27;</span>+str(count)+<span class="string">&#x27;.txt&#x27;</span></span><br><span class="line">      file_name_girl=<span class="string">&#x27;girl_&#x27;</span>+str(count)+<span class="string">&#x27;.txt&#x27;</span></span><br><span class="line"></span><br><span class="line">      boy_file=open(file_name_boy,<span class="string">&#x27;w&#x27;</span>)    <span class="comment"># &#x27;w&#x27;，以写入的方式读取文件</span></span><br><span class="line">      girl_file=open(file_name_girl,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line">      boy_file.writelines(boy)            <span class="comment"># writelines 向文件写入字符串序列</span></span><br><span class="line">      girl_file.writelines(girl)</span><br><span class="line"></span><br><span class="line">      boy_file.close()</span><br><span class="line">      girl_file.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_file</span>(<span class="params">file_name</span>):</span></span><br><span class="line">      f=open(<span class="string">&#x27;record.txt&#x27;</span>)</span><br><span class="line">      </span><br><span class="line">      boy=[ ]</span><br><span class="line">      girl=[ ]</span><br><span class="line">      count=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> each_line <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">if</span> each_line[:<span class="number">6</span>]!=<span class="string">&#x27;======&#x27;</span>:</span><br><span class="line">                (role,line_spoken)=each_line.split(<span class="string">&#x27;:&#x27;</span>,<span class="number">1</span>)                </span><br><span class="line">                <span class="keyword">if</span> role==<span class="string">&#x27;小甲鱼&#x27;</span>:</span><br><span class="line">                    boy.append(line_spoken)                 </span><br><span class="line">                <span class="keyword">if</span> role==<span class="string">&#x27;小客服&#x27;</span>:</span><br><span class="line">                    girl.append(line_spoken)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                   save_file(boy,girl,count)</span><br><span class="line"></span><br><span class="line">                    boy=[ ]</span><br><span class="line">                    girl=[ ]</span><br><span class="line">                    count+=<span class="number">1</span></span><br><span class="line">      save_file(boy,girl,count)</span><br><span class="line">     </span><br><span class="line">      f.close()</span><br><span class="line"></span><br><span class="line">split_file(<span class="string">&#x27;record.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注，</p>
+<ul>
+<li>split( ) 方法</li>
+</ul>
+<p>split( ) 通过指定分隔符对字符串进行切片。<br>each_line.split(‘:’,1) 这里指以“：”为分隔符切片，切 1 次(即分隔成两个字符串)。</p>
+<h1 id="六-模块"><a href="#六-模块" class="headerlink" title="六. 模块"></a>六. 模块</h1><h2 id="A-模块"><a href="#A-模块" class="headerlink" title="(A) 模块"></a>(A) 模块</h2><h3 id="a-简介"><a href="#a-简介" class="headerlink" title="(a) 简介"></a>(a) 简介</h3><p>(1) Python 模块 (Module)，是一个 Python 文件，以 .py 结尾，包含了 Python 对象定义和 Python 语句。<br>模块让你能够有逻辑地组织你的 Python 代码段。把相关的代码分配到一个模块里能让你的代码更好用，更易懂。模块能定义函数，类和变量，模块里也能包含可执行的代码。<br>(2) 我们可以类比理解模块：<br>容器可认为是数据的封装；函数可认为是语句的封装；类可认为是属性和方法的封装；而模块，其本质上就是程序。</p>
+<h3 id="b-导入模块"><a href="#b-导入模块" class="headerlink" title="(b) 导入模块"></a>(b) 导入模块</h3><p>(1) 法一：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> 模块名</span><br></pre></td></tr></table></figure>
+
+<p>(2) 法二：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> 模块名 <span class="keyword">import</span> 函数名</span><br></pre></td></tr></table></figure>
+
+<p>(3) 法三：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> 模块名 <span class="keyword">as</span> 新名字</span><br></pre></td></tr></table></figure>
+
+<h3 id="c-if-name-’-main-‘"><a href="#c-if-name-’-main-‘" class="headerlink" title="(c) if __name__==’__main__‘:"></a>(c) if __name__==’__main__‘:</h3><p>一个 Python 文件通常有两种使用方法，第一是作为脚本直接执行，第二是 import 到其他的 Python 脚本中被调用(模块重用)执行。<br>因此 if __name__ == ‘__main__‘: 的作用就是控制这两种情况执行代码的过程，在 if __name__ == ‘__main__‘: 下的代码只有在第一种情况下(即文件作为脚本直接执行)才会被执行，而 import 到其他脚本中是不会被执行的。</p>
+<h2 id="B-OS-模块"><a href="#B-OS-模块" class="headerlink" title="(B) OS 模块"></a>(B) OS 模块</h2><p>os 模块，即操作系统 (operating system)<br>os 模块提供了多数操作系统的功能接口函数。当 os 模块被导入后，它会自适应于不同的操作系统平台，根据不同的平台进行相应的操作，在 Python 编程时，经常和文件、目录打交道，这就离不了 os 模块</p>
+<h3 id="a-os-模块中关于文件-目录常用的函数使用方法"><a href="#a-os-模块中关于文件-目录常用的函数使用方法" class="headerlink" title="(a) os 模块中关于文件/目录常用的函数使用方法"></a>(a) os 模块中关于文件/目录常用的函数使用方法</h3><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>使用方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getcwd()</td>
+<td>返回当前工作目录</td>
+</tr>
+<tr>
+<td>chdir(path)</td>
+<td>改变工作目录</td>
+</tr>
+<tr>
+<td>listdir(path=’.’)</td>
+<td>列举指定目录中的文件名(‘.’ 表示当前目录，’..‘ 表示上一级目录)</td>
+</tr>
+<tr>
+<td>mkdir(path)</td>
+<td>创建单层目录，如该目录已存在抛出异常</td>
+</tr>
+<tr>
+<td>makedirs(path)</td>
+<td>递归创建多层目录，如该目录已存在抛出异常，注意：’E:\\a\\b’ 和 ‘E:\\a\\c’ 并不会冲突</td>
+</tr>
+<tr>
+<td>remove(path)</td>
+<td>删除文件</td>
+</tr>
+<tr>
+<td>rmdir(path)</td>
+<td>删除单层目录，如该目录非空则抛出异常</td>
+</tr>
+<tr>
+<td>removedirs(path)</td>
+<td>递归删除目录，从子目录到父目录逐层尝试删除，遇到目录非空则抛出异常</td>
+</tr>
+<tr>
+<td>rename(old,new)</td>
+<td>将文件 old 重命名为 new</td>
+</tr>
+<tr>
+<td>system(command)</td>
+<td>运行系统的 shell 命令</td>
+</tr>
+<tr>
+<td></td>
+<td>以下是支持路径操作中常用到的一些定义，支持所有平台</td>
+</tr>
+<tr>
+<td>os.curdir</td>
+<td>指代当前目录(‘.’)</td>
+</tr>
+<tr>
+<td>os.pardir</td>
+<td>指代上一级目录(‘..’)</td>
+</tr>
+<tr>
+<td>os.sep</td>
+<td>输出操作系统特定的路径分隔符 (Win 下为’\\‘，Linux 下为’/‘)</td>
+</tr>
+<tr>
+<td>os.linesep</td>
+<td>当前平台使用的行终止符 (Win 下为’\r\n’，Linux 下为’\n’)</td>
+</tr>
+<tr>
+<td>os.name</td>
+<td>指代当前使用的操作系统(包括：’posix’，’nt’，’mac’，’os2’，’ce’，’java’)</td>
+</tr>
+</tbody></table>
+<h3 id="b-os-path-模块中关于路径常用的函数使用方法"><a href="#b-os-path-模块中关于路径常用的函数使用方法" class="headerlink" title="(b) os.path 模块中关于路径常用的函数使用方法"></a>(b) os.path 模块中关于路径常用的函数使用方法</h3><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>使用方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>basename(path)</td>
+<td>去掉目录路径，单独返回文件名</td>
+</tr>
+<tr>
+<td>dirname(path)</td>
+<td>去掉文件名，单独返回目录路径</td>
+</tr>
+<tr>
+<td>join(path1[, path2[,…]])</td>
+<td>将 path1，path2 各部分组合成一个路径名</td>
+</tr>
+<tr>
+<td>split(path)</td>
+<td>分割文件名与路径，返回 (f_path, f_name) 元组。如果完全使用目录，它也会将最后一个目录作为文件名分离，且不会判断文件或者目录是否存在</td>
+</tr>
+<tr>
+<td>splitext(path)</td>
+<td>分离文件名与拓展名，返回 (f_name, f_extension) 元组</td>
+</tr>
+<tr>
+<td>getsize(file)</td>
+<td>返回指定文件的尺寸，单位是字节</td>
+</tr>
+<tr>
+<td>getatime(file)</td>
+<td>返回指定文件最近的访问时间(浮点型秒数，可用 time 模块的 gmtime( ) 或 localtime( ) 函数换算)</td>
+</tr>
+<tr>
+<td>getctime(file)</td>
+<td>返回指定文件的创建时间(浮点型秒数，可用 time 模块的 gmtime( ) 或 localtime( ) 函数换算)</td>
+</tr>
+<tr>
+<td>getmtime(file)</td>
+<td>返回指定文件最新的修改时间(浮点型秒数，可用 time 模块的 gmtime( ) 或 localtime( ) 函数换算)</td>
+</tr>
+<tr>
+<td></td>
+<td>以下函数返回 True 或 False</td>
+</tr>
+<tr>
+<td>exists(path)</td>
+<td>判断指定路径(目录或文件)是否存在</td>
+</tr>
+<tr>
+<td>isabs(path)</td>
+<td>判断指定路径是否为绝对路径</td>
+</tr>
+<tr>
+<td>isdir(path)</td>
+<td>判断指定路径是否存在且是一个目录</td>
+</tr>
+<tr>
+<td>isfile(path)</td>
+<td>判断指定路径是否存在且是一个文件</td>
+</tr>
+<tr>
+<td>islink(path)</td>
+<td>判断指定路径是否存在且是一个符号链接</td>
+</tr>
+<tr>
+<td>ismount(path)</td>
+<td>判断指定路径是否存在且是一个挂载点</td>
+</tr>
+<tr>
+<td>samefile(path1, path2)</td>
+<td>判断 path1 和 path2 两个路径是否指向同一个文件</td>
+</tr>
+</tbody></table>
+<h2 id="C-pickle-模块"><a href="#C-pickle-模块" class="headerlink" title="(C) pickle 模块"></a>(C) pickle 模块</h2><h3 id="a-简介-1"><a href="#a-简介-1" class="headerlink" title="(a) 简介"></a>(a) 简介</h3><p>pickle 模块实现了数据序列化和反序列化。<br>pickle 模块使用的数据格式是 Python 专用的,能够把 Python 对象直接保存到文件，而不须要把他们转化为字符串，也不用底层的文件访问操作把它们写入到一个二进制文件中。</p>
+<h4 id="1-pickle-dump-obj-file-protocol"><a href="#1-pickle-dump-obj-file-protocol" class="headerlink" title="(1) pickle.dump(obj, file, [,protocol])"></a>(1) pickle.dump(obj, file, [,protocol])</h4><p>pickle.dump(obj, file, [,protocol])<br>注释：序列化对象，将对象 obj 保存到文件 file 中去。参数 protocol 是序列化模式，默认是 0 (ASCII 协议，表示以文本的形式进行序列化)，protocol 的值还可以是 1 和 2 (1 和 2 表示以二进制的形式进行序列化。其中，1 是老式的二进制协议；2 是新二进制协议)。file 可以是一个以 ’w‘ 打开的文件或者是一个 String 对象，也可以是任何可以实现 write( ) 接口的对象。</p>
+<h4 id="2-pickle-load-file"><a href="#2-pickle-load-file" class="headerlink" title="(2) pickle.load(file)"></a>(2) pickle.load(file)</h4><p>注释：反序列化对象，将文件中的数据解析为一个 Python 对象。file 中有 read( ) 接口和 readline( ) 接口。</p>
+<h3 id="b-例-1：序列化"><a href="#b-例-1：序列化" class="headerlink" title="(b) 例 1：序列化"></a>(b) 例 1：序列化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">my_list=[<span class="number">123</span>,<span class="number">3.14</span>,<span class="string">&#x27;小甲鱼&#x27;</span>,[<span class="string">&#x27;another list&#x27;</span>]]</span><br><span class="line">pickle_file=open(<span class="string">&#x27;my_list.pkl&#x27;</span>,<span class="string">&#x27;wb&#x27;</span>)</span><br><span class="line">pickle.dump(my_list,pickle_file)</span><br><span class="line">pickle_file.close()</span><br></pre></td></tr></table></figure>
+
+<p>结果为，会在默认的路径 (E:/PycharmProject) 生成文件 my_list.pkl<br>注，wb，w 代表写入, b 代表二进制形式。</p>
+<h3 id="c-例-2：反序列化"><a href="#c-例-2：反序列化" class="headerlink" title="(c) 例 2：反序列化"></a>(c) 例 2：反序列化</h3><p>在之前已生成 my_list.pkl 的基础上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">pickle_file=open(<span class="string">&#x27;my_list.pkl&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">my_list2=pickle.load(pickle_file)</span><br><span class="line">pickle_file.close()</span><br><span class="line">print(my_list2)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">123</span>, <span class="number">3.14</span>, <span class="string">&#x27;小甲鱼&#x27;</span>, [<span class="string">&#x27;another list&#x27;</span>]]</span><br></pre></td></tr></table></figure>
+
+<h1 id="七-Python-标准异常总结"><a href="#七-Python-标准异常总结" class="headerlink" title="七. Python 标准异常总结"></a>七. Python 标准异常总结</h1><table>
+<thead>
+<tr>
+<th>AssertionError</th>
+<th>断言语句 (assert) 失败</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AttributeError</td>
+<td>尝试访问未知的对象属性</td>
+</tr>
+<tr>
+<td>EOFError</td>
+<td>input( ) 读取到 EOF 却没有接收任何数据</td>
+</tr>
+<tr>
+<td>FloatingPointError</td>
+<td>浮点计算错误</td>
+</tr>
+<tr>
+<td>GeneratorExit</td>
+<td>generator.close( ) 方法被调用的时候</td>
+</tr>
+<tr>
+<td>ImportError</td>
+<td>导入模块失败的时候</td>
+</tr>
+<tr>
+<td>IndexError</td>
+<td>索引超出序列的范围</td>
+</tr>
+<tr>
+<td>KeyError</td>
+<td>字典中查找一个不存在的关键字</td>
+</tr>
+<tr>
+<td>KeyboardInterrupt</td>
+<td>用户输入中断键 (Ctrl + c)</td>
+</tr>
+<tr>
+<td>MemoryError</td>
+<td>内存溢出(可通过删除对象释放内存)</td>
+</tr>
+<tr>
+<td>NameError</td>
+<td>尝试访问一个不存在的变量</td>
+</tr>
+<tr>
+<td>NotImplementedError</td>
+<td>尚未实现的方法</td>
+</tr>
+<tr>
+<td>OSError</td>
+<td>操作系统产生的异常(例如打开一个不存在的文件)</td>
+</tr>
+<tr>
+<td>OverflowError</td>
+<td>数值运算超出最大限制</td>
+</tr>
+<tr>
+<td>ReferenceError</td>
+<td>弱引用 (weak reference) 试图访问一个已经被垃圾回收机制回收了的对象</td>
+</tr>
+<tr>
+<td>RuntimeError</td>
+<td>一般的运行时错误</td>
+</tr>
+<tr>
+<td>StopIteration</td>
+<td>迭代器没有更多的值</td>
+</tr>
+<tr>
+<td>SyntaxError</td>
+<td>Python 的语法错误</td>
+</tr>
+<tr>
+<td>IndentationError</td>
+<td>缩进错误</td>
+</tr>
+<tr>
+<td>TabError</td>
+<td>Tab 和空格混合使用</td>
+</tr>
+<tr>
+<td>SystemError</td>
+<td>Python 编译器系统错误</td>
+</tr>
+<tr>
+<td>SystemExit</td>
+<td>Python 编译器进程被关闭</td>
+</tr>
+<tr>
+<td>TypeError</td>
+<td>不同类型间的无效操作</td>
+</tr>
+<tr>
+<td>UnboundLocalError</td>
+<td>访问一个未初始化的本地变量 (NameError 的子类)</td>
+</tr>
+<tr>
+<td>UnicodeError</td>
+<td>Unicode 相关的错误 (ValueError 的子类)</td>
+</tr>
+<tr>
+<td>UnicodeEncodeError</td>
+<td>Unicode 编码时的错误 (UnicodeError 的子类)</td>
+</tr>
+<tr>
+<td>UnicodeDecodeError</td>
+<td>Unicode 解码时的错误 (UnicodeError 的子类)</td>
+</tr>
+<tr>
+<td>UnicodeTranslateError</td>
+<td>Unicode 转换时的错误 (UnicodeError 的子类)</td>
+</tr>
+<tr>
+<td>ValueError</td>
+<td>传入无效的参数</td>
+</tr>
+<tr>
+<td>ZeroDivisionError</td>
+<td>除数为零</td>
+</tr>
+</tbody></table>
+<h1 id="八-检测异常"><a href="#八-检测异常" class="headerlink" title="八. 检测异常"></a>八. 检测异常</h1><p>检测异常可以使用 try 语句实现</p>
+<h2 id="A-try-except-语句"><a href="#A-try-except-语句" class="headerlink" title="(A) try-except 语句"></a>(A) try-except 语句</h2><h3 id="a-语法-2"><a href="#a-语法-2" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    检测范围</span><br><span class="line"><span class="keyword">except</span> Exception[<span class="keyword">as</span> reason]：</span><br><span class="line">    出现异常 (Exception) 后的处理代码</span><br></pre></td></tr></table></figure>
+
+<p>注，try 语句一旦在某处检测出异常，则剩下的语句不会执行。</p>
+<h3 id="b-实例-1：打开不存在的文件"><a href="#b-实例-1：打开不存在的文件" class="headerlink" title="(b) 实例 1：打开不存在的文件"></a>(b) 实例 1：打开不存在的文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f=open(<span class="string">&#x27;test.txt&#x27;</span>)</span><br><span class="line">    print(f.read())</span><br><span class="line">    f.close</span><br><span class="line"><span class="keyword">except</span> OSError:</span><br><span class="line">    print(<span class="string">&#x27;文件出错啦&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件出错啦</span><br></pre></td></tr></table></figure>
+
+<p>注，出错是因为，并不存在 text.txt 这个文件。</p>
+<h3 id="c-实例-2：已知错误类型的父类，显示子类"><a href="#c-实例-2：已知错误类型的父类，显示子类" class="headerlink" title="(c) 实例 2：已知错误类型的父类，显示子类"></a>(c) 实例 2：已知错误类型的父类，显示子类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f=open(<span class="string">&#x27;test.txt&#x27;</span>)</span><br><span class="line">    print(f.read())</span><br><span class="line">    f.close</span><br><span class="line"><span class="keyword">except</span> OSError <span class="keyword">as</span> reason:</span><br><span class="line">    print(<span class="string">&#x27;文件出错啦\n错误的原因是：&#x27;</span>+str(reason))</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">文件出错啦</span><br><span class="line">错误的原因是：[Errno <span class="number">2</span>] No such file <span class="keyword">or</span> directory: <span class="string">&#x27;test.txt&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="d-实例-3：不确定错误的具体类型，但知道在两者之间"><a href="#d-实例-3：不确定错误的具体类型，但知道在两者之间" class="headerlink" title="(d) 实例 3：不确定错误的具体类型，但知道在两者之间"></a>(d) 实例 3：不确定错误的具体类型，但知道在两者之间</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    sum=<span class="number">1</span>+<span class="string">&#x27;1&#x27;</span></span><br><span class="line">    f=open(<span class="string">&#x27;test.txt&#x27;</span>)</span><br><span class="line">    print(f.read())</span><br><span class="line">    f.close</span><br><span class="line"><span class="keyword">except</span> OSError <span class="keyword">as</span> reason:</span><br><span class="line">    print(<span class="string">&#x27;文件出错啦\n错误的原因是：&#x27;</span>+str(reason))</span><br><span class="line"><span class="keyword">except</span> TypeError <span class="keyword">as</span> reason:</span><br><span class="line">    print(<span class="string">&#x27;类型出错啦\n错误的原因是：&#x27;</span> + str(reason))</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">类型出错啦</span><br><span class="line">错误的原因是：unsupported operand type(s) <span class="keyword">for</span> +: <span class="string">&#x27;int&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;str&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="e-实例-4：不确定错误类型，但希望出错时报错"><a href="#e-实例-4：不确定错误类型，但希望出错时报错" class="headerlink" title="(e) 实例 4：不确定错误类型，但希望出错时报错"></a>(e) 实例 4：不确定错误类型，但希望出错时报错</h3><p>要实现此目的， except 后不指定类型即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    int(<span class="string">&#x27;abc&#x27;</span>)</span><br><span class="line">    sum=<span class="number">1</span>+<span class="string">&#x27;1&#x27;</span></span><br><span class="line">    f=open(<span class="string">&#x27;test.txt&#x27;</span>)</span><br><span class="line">    print(f.read())</span><br><span class="line">    f.close</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> msg:</span><br><span class="line">    msg = str(msg) + <span class="string">&#x27;\n&#x27;</span></span><br><span class="line">    print(msg)</span><br></pre></td></tr></table></figure>
+
+<h3 id="f-实例-5：同时对多种类型异常处理"><a href="#f-实例-5：同时对多种类型异常处理" class="headerlink" title="(f) 实例 5：同时对多种类型异常处理"></a>(f) 实例 5：同时对多种类型异常处理</h3><p>若同时对多种类型异常处理，则在 except 后将异常类型用元组括起来，例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    sum=<span class="number">1</span>+<span class="string">&#x27;1&#x27;</span></span><br><span class="line">    f=open(<span class="string">&#x27;test.txt&#x27;</span>)</span><br><span class="line">    print(f.read())</span><br><span class="line">    f.close</span><br><span class="line"><span class="keyword">except</span> (OSError,TypeError):</span><br><span class="line">    print(<span class="string">&#x27;出错啦\n&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="B-try-finally-语句"><a href="#B-try-finally-语句" class="headerlink" title="(B) try-finally 语句"></a>(B) try-finally 语句</h2><h3 id="a-语法-3"><a href="#a-语法-3" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    检测范围</span><br><span class="line"><span class="keyword">except</span> Exception[<span class="keyword">as</span> reason]:</span><br><span class="line">    出现异常 (Exception) 后的处理代码</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    无论如何都会被执行的代码</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-实例-2"><a href="#b-实例-2" class="headerlink" title="(b) 实例"></a>(b) 实例</h3><p>在已存在 test.txt 的情况下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f=open(<span class="string">&#x27;test.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">    print(f.write(<span class="string">&#x27;我存在了！&#x27;</span>))</span><br><span class="line">    sum=<span class="number">1</span>+<span class="string">&#x27;1&#x27;</span></span><br><span class="line"><span class="keyword">except</span> (OSError,TypeError):</span><br><span class="line">    print(<span class="string">&#x27;文件出错啦T_T&#x27;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    f.close</span><br></pre></td></tr></table></figure>
+
+<p>注，这里若不加这个 finally 语句。出错时会跳到 except，由于没有执行 f.close，“我存在了！” 不会被写入 test.txt</p>
+<h1 id="九-丰富的else语句与简洁的with语句"><a href="#九-丰富的else语句与简洁的with语句" class="headerlink" title="九. 丰富的else语句与简洁的with语句"></a>九. 丰富的else语句与简洁的with语句</h1><h2 id="A-else-语句"><a href="#A-else-语句" class="headerlink" title="(A) else 语句"></a>(A) else 语句</h2><h3 id="a-在-if-语句中"><a href="#a-在-if-语句中" class="headerlink" title="(a) 在 if 语句中"></a>(a) 在 if 语句中</h3><p>在 if 语句中，if，else 构成要么怎样，要么不怎样的结构。<br>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">if_else</span>():</span></span><br><span class="line">    <span class="keyword">if</span> <span class="number">1</span> &gt; <span class="number">2</span>:</span><br><span class="line">        print(<span class="string">&#x27;这是错误的&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&#x27;这才是正确的&#x27;</span>)</span><br><span class="line"></span><br><span class="line">if_else()</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-在循环语句中"><a href="#b-在循环语句中" class="headerlink" title="(b) 在循环语句中"></a>(b) 在循环语句中</h3><p>与 while，for 等循环语句配合时，else 语句只在循环完成时执行。所以如果循环中使用了 break 语句跳出了循环，则 else 中的语句不会被执行。<br>循环语句与 else 配合使用，构成干完了能怎样，干不完就别想怎样的结构。<br>例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">showMaxFactor</span>(<span class="params">num</span>):</span></span><br><span class="line">    count = num // <span class="number">2</span>        <span class="comment"># //是地板除，返回商的整数部分</span></span><br><span class="line">    <span class="keyword">while</span> count &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> num % count == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;%d最大的约数是%d&#x27;</span> % (num, count))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        count -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&#x27;%d是素数！&#x27;</span> % num)</span><br><span class="line"></span><br><span class="line">num = int(input(<span class="string">&#x27;请输入一个数：&#x27;</span>))</span><br><span class="line">showMaxFactor(num)</span><br></pre></td></tr></table></figure>
+
+<h3 id="c-在-try-语句中"><a href="#c-在-try-语句中" class="headerlink" title="(c) 在 try 语句中"></a>(c) 在 try 语句中</h3><p>与try语句配合使用，构成没有问题，那就干吧的结构。<br>例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    int(<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span> ValueError <span class="keyword">as</span> reason:</span><br><span class="line">    print(<span class="string">&#x27;出错啦：&#x27;</span>+ str(reason))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">&#x27;没有任何异常！&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="B-with-语句"><a href="#B-with-语句" class="headerlink" title="(B) with 语句"></a>(B) with 语句</h2><h3 id="a-简介-2"><a href="#a-简介-2" class="headerlink" title="(a) 简介"></a>(a) 简介</h3><p>with 是从 Python2.5 引入的一个新的语法，它是一种上下文管理协议，目的在于从流程图中把 try, except 和finally 关键字和资源分配释放相关代码统统去掉，简化 try….except….finlally 的处理流程。<br>with 通过 __enter__( ) 方法初始化，然后在 __exit__( ) 中做善后以及处理异常。所以使用 with 处理的对象必须有 __enter__( ) 和 __exit__( ) 这两个方法。<br>其中__enter__( ) 方法在语句体 (with 语句包裹起来的代码块)执行之前进入运行，__exit__( ) 方法在语句体执行完毕退出后运行。with 语句适用于对资源进行访问的场合，确保不管使用过程中是否发生异常都会执行必要的“清理”操作，释放资源，比如文件使用后自动关闭，线程中锁的自动获取和释放等。</p>
+<h3 id="b-实例-3"><a href="#b-实例-3" class="headerlink" title="(b) 实例"></a>(b) 实例</h3><p>可以用 with 语句对以下代码改写</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f=open(<span class="string">&#x27;data.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> each_line <span class="keyword">in</span> f:</span><br><span class="line">         print(each_line)</span><br><span class="line"><span class="keyword">except</span> OSError <span class="keyword">as</span> reason:</span><br><span class="line">    print(<span class="string">&#x27;出错啦：&#x27;</span>+str(reason))</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    f.close()</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">出错啦：<span class="keyword">not</span> readable</span><br></pre></td></tr></table></figure>
+
+<p>可用 with 语句改写为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">&#x27;data.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> each_line <span class="keyword">in</span> f:</span><br><span class="line">              print(each_line)</span><br><span class="line"><span class="keyword">except</span> OSError <span class="keyword">as</span> reason:</span><br><span class="line">    print(<span class="string">&#x27;出错啦：&#x27;</span>+str(reason))</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">出错啦：<span class="keyword">not</span> readable</span><br></pre></td></tr></table></figure>
+
+<p>注，使用了 with 语句后，with 会自动关注定义的 f 文件，不用该文件时，with 语句会自动执行 f.close( )</p>
 
     </div>
 
@@ -457,8 +930,8 @@
       <i class="fa fa-chevron-left"></i> Python学习笔记(零一)：基础知识
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/09/04/python-03/" rel="next" title="Python学习笔记(零三)：文件·模块·检测异常">
-      Python学习笔记(零三)：文件·模块·检测异常 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/09/04/python-03/" rel="next" title="Python学习笔记(零三)：类和对象·属性和方法">
+      Python学习笔记(零三)：类和对象·属性和方法 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

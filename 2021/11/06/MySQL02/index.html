@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Cross Code">
 <meta property="og:description" content="本篇讲解的是 DML (数据操作语言)，DDL (数据定义语言)，TCL (传输控制语言)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3901.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL02/A3901.png">
 <meta property="article:published_time" content="2021-11-06T01:32:26.000Z">
-<meta property="article:modified_time" content="2021-11-06T01:36:34.000Z">
+<meta property="article:modified_time" content="2022-11-12T11:56:08.230Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3901.png">
+<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL02/A3901.png">
 
 <link rel="canonical" href="http://yoursite.com/2021/11/06/MySQL02/">
 
@@ -201,7 +201,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -214,7 +214,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -283,10 +283,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-06 09:32:26 / 修改时间：09:36:34" itemprop="dateCreated datePublished" datetime="2021-11-06T09:32:26+08:00">2021-11-06</time>
+              <time title="创建时间：2021-11-06 09:32:26" itemprop="dateCreated datePublished" datetime="2021-11-06T09:32:26+08:00">2021-11-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-12 19:56:08" itemprop="dateModified" datetime="2022-11-12T19:56:08+08:00">2022-11-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1078,7 +1084,7 @@
 <p>读取数据时，MySQL 可以判断是否需要回滚并找到所需要的 undo log，从而实现。</p>
 <p>对 MVCC 有帮助的是 undo log 中记录了 update 和 delete 的日志，在快照读时有用。</p>
 <p>当有新事物对数据进行了修改，新事务会有指针指向旧事务。</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A3901.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL02/A3901.png"></p>
 <p>这样 undo log 形成一个单向链表，表头为最新的旧记录，表尾是最早的旧记录。</p>
 <p>而 Read View 是在事务进行快照读的时候产生的读视图，维护了活跃事务的 ID (自增，越新事务 ID 越大)，用来判断当前版本的视图可以看到哪个版本的数据。其用来做数据的可见性判断，其可见性算法是，取出要修改的数据的最新记录中的事务 ID，与 Read View 中维护的活跃事务 ID 比较，若不符合可见性，则通过回滚指针找到 undo log 中上一条记录，直到找到符合可见性规则的 (从表头到表尾)。</p>
 <p>其判断的逻辑为：在 Read View 中维护了一系列生成时刻事务 ID，其中有最小事务 ID 与已创建最大事务 ID。</p>

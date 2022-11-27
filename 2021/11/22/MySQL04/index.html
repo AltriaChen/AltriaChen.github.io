@@ -29,23 +29,23 @@
 <meta property="og:site_name" content="Cross Code">
 <meta property="og:description" content="又是一年公历生日，感谢小伙伴们的祝福。虽然以后的人生会一直为生存而战，直至最终战死，但能有幸遇到善良又努力的小伙伴们，我已知足。 人固有一死，希望阿伟最终的结局是为知遇之恩而死。 好了，言归正传。本篇是 MySQL 的终章，讲解的是 MySQL 的运行机制相关的知识，故称 MySQL 高级。内容包括数据库范式，逻辑架构，索引，查询截取分析，锁机制，主从复制，缓存与 MQ。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4101.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4102.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4103.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4104.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4105.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4106.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4107.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4108.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4109.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4110.png">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4111.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4101.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4102.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4103.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4104.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4105.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4106.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4107.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4108.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4109.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4110.png">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4111.png">
 <meta property="article:published_time" content="2021-11-22T03:10:03.000Z">
-<meta property="article:modified_time" content="2021-12-22T06:22:36.000Z">
+<meta property="article:modified_time" content="2022-11-12T11:57:44.886Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4101.png">
+<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4101.png">
 
 <link rel="canonical" href="http://yoursite.com/2021/11/22/MySQL04/">
 
@@ -211,7 +211,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -224,7 +224,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -301,7 +301,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-22 14:22:36" itemprop="dateModified" datetime="2021-12-22T14:22:36+08:00">2021-12-22</time>
+                <time title="修改时间：2022-11-12 19:57:44" itemprop="dateModified" datetime="2022-11-12T19:57:44+08:00">2022-11-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -423,7 +423,7 @@
 <li>关联查询太多 join (设计缺陷或不得已的需求)</li>
 <li>服务器调优及各个参数设置 (缓冲，线程数等)</li>
 </ul>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4101.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4101.png"></p>
 <p>sql 的执行顺序为</p>
 <ol>
 <li>from</li>
@@ -435,8 +435,8 @@
 <li>order by</li>
 <li>limit</li>
 </ol>
-<h2 id="A-join-分类"><a href="#A-join-分类" class="headerlink" title="(A) join 分类"></a>(A) join 分类</h2><p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4102.png"></p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4103.png"></p>
+<h2 id="A-join-分类"><a href="#A-join-分类" class="headerlink" title="(A) join 分类"></a>(A) join 分类</h2><p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4102.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4103.png"></p>
 <p>在左外，右外，全连接上加筛选得到。</p>
 <h2 id="B-索引的认识"><a href="#B-索引的认识" class="headerlink" title="(B) 索引的认识"></a>(B) 索引的认识</h2><p>索引 Index 是帮助 MySQL 高效获取数据的数据结构，即索引的本质是<strong>数据结构</strong>。</p>
 <p>索引的目的是提高查询效率，可以类比字典。直观理解为<strong>排好序</strong>的<strong>快速查找</strong>数据结构。影响 where 的查找与 order 后的排序。</p>
@@ -476,9 +476,9 @@
 <li>密集索引文件中每个搜索码值对应一个索引值</li>
 <li>稀疏索引只为索引码的某些值建立索引项(需要找到对应地址，再继续搜索)</li>
 </ul>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4104.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4104.png"></p>
 <p>而下图展示了 InnoDB 和 MyISAM 的索引图</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4105.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4105.png"></p>
 <p>对于 Innodb</p>
 <ul>
 <li>主键为密集索引，叶子结点存储了索引和行数据，主键检索可以直接查找</li>
@@ -520,7 +520,7 @@
 <h3 id="b-B-树与-B-树区别"><a href="#b-B-树与-B-树区别" class="headerlink" title="(b) B 树与 B+ 树区别"></a>(b) B 树与 B+ 树区别</h3><p>B 树与 B+ 树均为平衡多路查找树，避免了二叉查找树树高度过高 IO 频繁的问题，所有叶结点高度相同，因此树是平衡的。</p>
 <p>B 树在所有结点上既存储数据又存储索引。如果一个结点为 16k，而因为数据放在每一个结点中，数据需要占据一定的内存，因此每个结点存放数据大小有限。</p>
 <p>而 B+ 树在 B 树的基础之上，仅用叶子结点存储数据或指向数据的指针 (InnoDB 中主键索引中叶子结点有数据，非主键索引存放主键索引地址；MyISAM 中主键与非主键索引均存放数据地址)，非叶子结点的关键字个数与指针相同，可存储更多关键字，非叶子结点不存放数据，是从叶子结点中提取出的冗余索引，便于去查找数据，所有结点索引从左至右递增。所有的<strong>叶子结点</strong>有指针指向下一个结点。</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4106.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4106.png"></p>
 <p>每个结点如果设置太大，那么单次 IO 时间太长；如果设置太小，则树的高度不可控。Mysql 默认设置一个结点 16kb (一页)，如果索引设置 bigint 为 8 字节，存储地址的字符大小为 6 字节，这样单个索引+指针占用 14 字节，这样可以存储 1170 个索引。若叶子结点存放数据，单个索引+数据大小假设为 16kb，则一个叶子结点可放 16 个索引+数据，则总的为 1170×1170×16 约等于 2.2kw。因此 B+ 树可以存储更多数据，一般 3 层可以支持千万级别的数据量查询。而根结点一般常驻内存，3 层的 B+ 树一次查询的 IO 次数为 2。</p>
 <p>这样，B+ 树的优势为：更有利于对数据库的<strong>扫描</strong>与<strong>范围查询</strong>(叶子结点存在指针)。</p>
 <p>B 树的优势为：在某些查询条件下，查询效率更高，为 O(1)。</p>
@@ -649,7 +649,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain select id,&#96;author_id&#96; from &#96;article&#96; where &#96;category_id&#96;&#x3D;1 and &#96;comments&#96;&gt;1 order by views desc limit 1;</span><br></pre></td></tr></table></figure>
 
 <p>查询结果为</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4107.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4107.png"></p>
 <p>可以看出 type 为最差的 AII 即全表扫描，Extra 中有 Using filesort，最坏的情况，需要优化。</p>
 <p>因此需要建立索引，在 where 后面出现的可以建立索引。</p>
 <p>尝试 1：给 where 和 order by 后的 category_id，comments，views 建立符合索引</p>
@@ -663,7 +663,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index idx_article_cv on article(category_id,views);</span><br></pre></td></tr></table></figure>
 
 <p>这时候，再次查看 explain 结果</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4108.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4108.png"></p>
 <p>发现 type 为 ref，用到了索引，而且没有全文扫描，达到效果。</p>
 <h4 id="2-两表"><a href="#2-两表" class="headerlink" title="(2) 两表"></a>(2) 两表</h4><p>两表连接时，当两个 join 时，索引该如何建立呢？</p>
 <p>当有两个表，使用 left join 的时候，连接条件为，发现两个表的 type 都为 all，因此可以建立索引。</p>
@@ -746,7 +746,7 @@
 <li>SELECT ··· FROM table WHERE EXISTS(subquery)</li>
 </ul>
 <p>语法可理解为：<strong>将主查询的数据，放到子查询中做条件验证，根据验证结果 (true 或 false) 来决定主查询数据是都得以保留</strong>，当主查询的表比子查询中表更小时效率高，若主查询中数据多，用 IN 效率更高。即小表驱动大表。相当于 IN 查询的变种。</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4109.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4109.png"></p>
 <h3 id="f-order-by-关键字优化"><a href="#f-order-by-关键字优化" class="headerlink" title="(f) order by 关键字优化"></a>(f) order by 关键字优化</h3><p>(1) 尽量使用 index 方式排序，避免使用 filesort</p>
 <ul>
 <li><p>Mysql 支持两种方式的排序，Filesort 和 Index，Index 效率高，指 Mysql 扫描索引本身完成排序，Filesort 效率较低</p>
@@ -769,7 +769,7 @@
 <li>增大 sort_buffer_size</li>
 <li>提高 max_length_for_sort_data (提高排序查询效率)</li>
 </ul>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4110.png"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4110.png"></p>
 <h3 id="g-group-by-关键字优化"><a href="#g-group-by-关键字优化" class="headerlink" title="(g) group by 关键字优化"></a>(g) group by 关键字优化</h3><ul>
 <li>group by 实质为先排序后分组，按照索引的最佳左前缀原则</li>
 <li>当无法使用索引列，增大 sort_buffer_size + max_length_for_sort_data</li>
@@ -1037,7 +1037,7 @@
 <h3 id="b-主要用途"><a href="#b-主要用途" class="headerlink" title="(b) 主要用途"></a>(b) 主要用途</h3><h4 id="1-读写分离"><a href="#1-读写分离" class="headerlink" title="(1) 读写分离"></a>(1) 读写分离</h4><p>主库负责写，从库负责读，即使主库出现了锁表的情况，通过从库可以保证业务的正常进行</p>
 <h4 id="2-数据备份"><a href="#2-数据备份" class="headerlink" title="(2) 数据备份"></a>(2) 数据备份</h4><p>数据实时备份，当系统中某个节点发生故障时，可以方便故障切换(主从切换)</p>
 <h4 id="3-高可用"><a href="#3-高可用" class="headerlink" title="(3) 高可用"></a>(3) 高可用</h4><p>在主服务器上生成实时数据，在从服务器上分析数据，提高主服务器的性能</p>
-<h3 id="c-复制基本原理"><a href="#c-复制基本原理" class="headerlink" title="(c) 复制基本原理"></a>(c) 复制基本原理</h3><p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A4111.png"></p>
+<h3 id="c-复制基本原理"><a href="#c-复制基本原理" class="headerlink" title="(c) 复制基本原理"></a>(c) 复制基本原理</h3><p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/MySQL/MySQL04/A4111.png"></p>
 <ul>
 <li>slave 会从 master 读取 binblog 来进行数据同步</li>
 <li>三个步骤<ol>

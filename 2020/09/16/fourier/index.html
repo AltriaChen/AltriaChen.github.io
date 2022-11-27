@@ -29,21 +29,21 @@
 <meta property="og:site_name" content="Cross Code">
 <meta property="og:description" content="本文介绍了 Matlab 下的傅里叶变换，内容包括傅里叶变换的数学定义，Matlab 中实现傅里叶变化的函数，如 fourier，fft，fft2。进一步地，介绍了对图像进行傅里叶变换的简单例子。最后，对于傅里叶变换中的周期性，连续性，对称性进行了小结。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1001.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1002.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1003.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1004.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1005.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1006.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1007.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1008.jpg">
-<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1009.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1001.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1002.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1003.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1004.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1005.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1006.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1007.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1008.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1009.jpg">
 <meta property="article:published_time" content="2020-09-16T06:38:07.000Z">
-<meta property="article:modified_time" content="2021-05-30T14:51:04.000Z">
+<meta property="article:modified_time" content="2022-11-09T14:39:23.838Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="Matlab">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1001.jpg">
+<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1001.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/16/fourier/">
 
@@ -209,7 +209,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -222,7 +222,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -299,7 +299,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-30 22:51:04" itemprop="dateModified" datetime="2021-05-30T22:51:04+08:00">2021-05-30</time>
+                <time title="修改时间：2022-11-09 22:39:23" itemprop="dateModified" datetime="2022-11-09T22:39:23+08:00">2022-11-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -381,10 +381,10 @@
 <h3 id="c-实例-1：高斯脉冲"><a href="#c-实例-1：高斯脉冲" class="headerlink" title="(c) 实例 1：高斯脉冲"></a>(c) 实例 1：高斯脉冲</h3><p>将高斯脉冲从时域转换为频域</p>
 <h4 id="1-时域"><a href="#1-时域" class="headerlink" title="(1) 时域"></a>(1) 时域</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%定义信号参数和高斯脉冲X.</span></span><br><span class="line">Fs = <span class="number">100</span>;           <span class="comment">% Sampling frequency</span></span><br><span class="line">t = <span class="number">-0.5</span>:<span class="number">1</span>/Fs:<span class="number">0.5</span>;  <span class="comment">% Time vector</span></span><br><span class="line">L = <span class="built_in">length</span>(t);      <span class="comment">% Signal length</span></span><br><span class="line"></span><br><span class="line">X = <span class="number">1</span>/(<span class="number">4</span>*<span class="built_in">sqrt</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">0.01</span>))*(<span class="built_in">exp</span>(-t.^<span class="number">2</span>/(<span class="number">2</span>*<span class="number">0.01</span>)));</span><br><span class="line"><span class="comment">%在时域中绘制脉冲.</span></span><br><span class="line"><span class="built_in">plot</span>(t,X)</span><br><span class="line">title(<span class="string">&#x27;Gaussian Pulse in Time Domain&#x27;</span>)</span><br><span class="line">xlabel(<span class="string">&#x27;Time (t)&#x27;</span>)</span><br><span class="line">ylabel(<span class="string">&#x27;X(t)&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1001.jpg"></p>
+<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1001.jpg"></p>
 <h4 id="2-频域"><a href="#2-频域" class="headerlink" title="(2) 频域"></a>(2) 频域</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%定义信号参数和高斯脉冲X.</span></span><br><span class="line">Fs = <span class="number">100</span>;           <span class="comment">% Sampling frequency</span></span><br><span class="line">t = <span class="number">-0.5</span>:<span class="number">1</span>/Fs:<span class="number">0.5</span>;  <span class="comment">% Time vector</span></span><br><span class="line">L = <span class="built_in">length</span>(t);      <span class="comment">% Signal length</span></span><br><span class="line"></span><br><span class="line">X = <span class="number">1</span>/(<span class="number">4</span>*<span class="built_in">sqrt</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">0.01</span>))*(<span class="built_in">exp</span>(-t.^<span class="number">2</span>/(<span class="number">2</span>*<span class="number">0.01</span>)));</span><br><span class="line"></span><br><span class="line">n = <span class="number">2</span>^<span class="built_in">nextpow2</span>(L);  <span class="comment">%确定新输入长度</span></span><br><span class="line">Y = fft(X,n);       <span class="comment">%将高斯脉冲转换为频域</span></span><br><span class="line"><span class="comment">%定义频域并绘制唯一频率</span></span><br><span class="line">f = Fs*(<span class="number">0</span>:(n/<span class="number">2</span>))/n;</span><br><span class="line">P = <span class="built_in">abs</span>(Y/n);</span><br><span class="line"></span><br><span class="line"><span class="built_in">plot</span>(f,P(<span class="number">1</span>:n/<span class="number">2</span>+<span class="number">1</span>))</span><br><span class="line">title(<span class="string">&#x27;Gaussian Pulse in Frequency Domain&#x27;</span>)</span><br><span class="line">xlabel(<span class="string">&#x27;Frequency (f)&#x27;</span>)</span><br><span class="line">ylabel(<span class="string">&#x27;|P(f)|&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1002.jpg"></p>
+<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1002.jpg"></p>
 <p>注，<br>(1) 要使用 fft 将信号转换为频域，首先从原始信号长度确定是下一个 2 次幂的新输入长度。这将用尾随零填充信号 X 以改善 fft 的性能。故有</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">2</span>^<span class="built_in">nextpow2</span>(L);</span><br></pre></td></tr></table></figure>
 
@@ -392,28 +392,28 @@
 <h3 id="d-实例-2：余弦波"><a href="#d-实例-2：余弦波" class="headerlink" title="(d) 实例 2：余弦波"></a>(d) 实例 2：余弦波</h3><p>比较时域和频域中的余弦波</p>
 <h4 id="1-时域-1"><a href="#1-时域-1" class="headerlink" title="(1) 时域"></a>(1) 时域</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%指定信号的参数,采样频率为1kHz,信号持续时间为1秒。</span></span><br><span class="line">Fs = <span class="number">1000</span>;                    <span class="comment">% Sampling frequency</span></span><br><span class="line">T = <span class="number">1</span>/Fs;                     <span class="comment">% Sampling period</span></span><br><span class="line">L = <span class="number">1000</span>;                     <span class="comment">% Length of signal</span></span><br><span class="line">t = (<span class="number">0</span>:L<span class="number">-1</span>)*T;                <span class="comment">% Time vector</span></span><br><span class="line"><span class="comment">%创建一个矩阵，其中每一行代表一个频率经过缩放的余弦波.</span></span><br><span class="line"><span class="comment">%结果X为3×1000矩阵.第一行的波频为50,第二行的波频为150,第三行的波频为300.</span></span><br><span class="line">x1 = <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">50</span>*t);          <span class="comment">% First row wave</span></span><br><span class="line">x2 = <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">150</span>*t);         <span class="comment">% Second row wave</span></span><br><span class="line">x3 = <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">300</span>*t);         <span class="comment">% Third row wave</span></span><br><span class="line"></span><br><span class="line">X = [x1; x2; x3];</span><br><span class="line"><span class="comment">%在单个图形中按顺序绘制X的每行的前100个条目,并比较其频率</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="number">3</span></span><br><span class="line">    subplot(<span class="number">3</span>,<span class="number">1</span>,<span class="built_in">i</span>)</span><br><span class="line">    <span class="built_in">plot</span>(t(<span class="number">1</span>:<span class="number">100</span>),X(<span class="built_in">i</span>,<span class="number">1</span>:<span class="number">100</span>))</span><br><span class="line">    title([<span class="string">&#x27;Row &#x27;</span>,num2str(<span class="built_in">i</span>),<span class="string">&#x27; in the Time Domain&#x27;</span>])</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1003.jpg"></p>
+<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1003.jpg"></p>
 <h4 id="2-频域-1"><a href="#2-频域-1" class="headerlink" title="(2) 频域"></a>(2) 频域</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%指定信号的参数,采样频率为1kHz,信号持续时间为1秒。</span></span><br><span class="line">Fs = <span class="number">1000</span>;                    <span class="comment">% Sampling frequency</span></span><br><span class="line">T = <span class="number">1</span>/Fs;                     <span class="comment">% Sampling period</span></span><br><span class="line">L = <span class="number">1000</span>;                     <span class="comment">% Length of signal</span></span><br><span class="line">t = (<span class="number">0</span>:L<span class="number">-1</span>)*T;                <span class="comment">% Time vector</span></span><br><span class="line"><span class="comment">%创建一个矩阵，其中每一行代表一个频率经过缩放的余弦波.</span></span><br><span class="line"><span class="comment">%结果X为3×1000矩阵.第一行的波频为50,第二行的波频为150,第三行的波频为300.</span></span><br><span class="line">x1 = <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">50</span>*t);          <span class="comment">% First row wave</span></span><br><span class="line">x2 = <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">150</span>*t);         <span class="comment">% Second row wave</span></span><br><span class="line">x3 = <span class="built_in">cos</span>(<span class="number">2</span>*<span class="built_in">pi</span>*<span class="number">300</span>*t);         <span class="comment">% Third row wave</span></span><br><span class="line"></span><br><span class="line">X = [x1; x2; x3];</span><br><span class="line"></span><br><span class="line">n = <span class="number">2</span>^<span class="built_in">nextpow2</span>(L);</span><br><span class="line">dim = <span class="number">2</span>;              <span class="comment">%指定dim参数沿X的行(即对每个信号)使用fft.</span></span><br><span class="line">Y = fft(X,n,dim);     <span class="comment">%计算信号的傅里叶变换</span></span><br><span class="line"><span class="comment">%计算每个信号的双侧频谱和单侧频谱</span></span><br><span class="line">P2 = <span class="built_in">abs</span>(Y/n);</span><br><span class="line">P1 = P2(:,<span class="number">1</span>:n/<span class="number">2</span>+<span class="number">1</span>);</span><br><span class="line">P1(:,<span class="number">2</span>:<span class="keyword">end</span><span class="number">-1</span>) = <span class="number">2</span>*P1(:,<span class="number">2</span>:<span class="keyword">end</span><span class="number">-1</span>);</span><br><span class="line"><span class="comment">%在频域内,为单个图形中的每一行绘制单侧幅值频谱</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="number">3</span></span><br><span class="line">    subplot(<span class="number">3</span>,<span class="number">1</span>,<span class="built_in">i</span>)</span><br><span class="line">    <span class="built_in">plot</span>(<span class="number">0</span>:(Fs/n):(Fs/<span class="number">2</span>-Fs/n),P1(<span class="built_in">i</span>,<span class="number">1</span>:n/<span class="number">2</span>))</span><br><span class="line">    title([<span class="string">&#x27;Row &#x27;</span>,num2str(<span class="built_in">i</span>), <span class="string">&#x27; in the Frequency Domain&#x27;</span>])</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1004.jpg"></p>
+<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1004.jpg"></p>
 <p>注，出于算法性能的考虑，<code>fft</code> 允许您用尾随零填充输入。在这种情况下，用零填充 <code>X</code> 的每一行，以使每行的长度为比当前长度大的下一个最小的 2 的次幂值。使用<code>nextpow2</code> 函数定义新长度。故有</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">2</span>^<span class="built_in">nextpow2</span>(L);</span><br></pre></td></tr></table></figure>
 
 <h2 id="D-二维快速傅里叶变换"><a href="#D-二维快速傅里叶变换" class="headerlink" title="(D) 二维快速傅里叶变换"></a>(D) 二维快速傅里叶变换</h2><h3 id="a-语法-3"><a href="#a-语法-3" class="headerlink" title="(a) 语法"></a>(a) 语法</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Y = fft2(X)</span><br><span class="line">Y = fft2(X,m,n)</span><br></pre></td></tr></table></figure>
 
 <h3 id="b-说明-3"><a href="#b-说明-3" class="headerlink" title="(b) 说明"></a>(b) 说明</h3><p><code>Y = fft2(X)</code> 返回 <code>X</code> 的二维离散傅里叶变换 (DFT)。DFT 是使用快速傅里叶变换 (FFT) 算法计算出的。结果 <code>Y</code> 的大小与 <code>X</code> 相同。<br>如果 <code>X</code> 的维数大于 <code>2</code>，<code>fft2</code> 函数返回 <code>X</code> 的各个较高维切片的二维 DFT。例如，如果 <code>size(X) = [100 100 3]</code>，<code>fft2</code> 计算 <code>X(:,:,1)</code>、<code>X(:,:,2)</code> 和 <code>X(:,:,3)</code> 的 DFT。<br><code>Y = fft2(X,m,n)</code> 截断 <code>X</code>，或使用零填充 <code>X</code> 以便在执行变换前创建 <code>m</code>×<code>n</code> 数组。结果为 <code>m</code>×<code>n</code>。</p>
-<h1 id="三-利用-fft2-对图像傅里叶变换"><a href="#三-利用-fft2-对图像傅里叶变换" class="headerlink" title="三. 利用 fft2 对图像傅里叶变换"></a>三. 利用 fft2 对图像傅里叶变换</h1><h2 id="A-图像的傅里叶变换"><a href="#A-图像的傅里叶变换" class="headerlink" title="(A) 图像的傅里叶变换"></a>(A) 图像的傅里叶变换</h2><p>原图为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1005.jpg"></p>
+<h1 id="三-利用-fft2-对图像傅里叶变换"><a href="#三-利用-fft2-对图像傅里叶变换" class="headerlink" title="三. 利用 fft2 对图像傅里叶变换"></a>三. 利用 fft2 对图像傅里叶变换</h1><h2 id="A-图像的傅里叶变换"><a href="#A-图像的傅里叶变换" class="headerlink" title="(A) 图像的傅里叶变换"></a>(A) 图像的傅里叶变换</h2><p>原图为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1005.jpg"></p>
 <p>进行以下代码加密</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">A1=imread(<span class="string">&#x27;picture.jpg&#x27;</span>);  <span class="comment">%读入图片</span></span><br><span class="line">A2=rgb2gray(A1);           <span class="comment">%将RGB图像或彩色图转换为灰度图像，即灰度化处理</span></span><br><span class="line">A3=im2double(A2);          <span class="comment">%将数据格式转换为double型，并归一化至0-1之间</span></span><br><span class="line">F1=fft2(A3);               <span class="comment">%二维离散傅里叶变换</span></span><br><span class="line">F2=fftshift(F1);           <span class="comment">%将零频点移到频谱的中间</span></span><br><span class="line">F3=<span class="built_in">abs</span>(F2);                <span class="comment">%取绝对值，求复数的模</span></span><br><span class="line">T=<span class="built_in">log</span>(F3+<span class="number">1</span>);               <span class="comment">%x在0-1的logx为负数，log(x+1)所得值均为正数</span></span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">imshow(T,[]);              <span class="comment">%显示图片</span></span><br></pre></td></tr></table></figure>
 
-<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1006.jpg"></p>
+<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1006.jpg"></p>
 <h2 id="B-傅里叶逆变换-1"><a href="#B-傅里叶逆变换-1" class="headerlink" title="(B) 傅里叶逆变换"></a>(B) 傅里叶逆变换</h2><p>在上图的图像傅里叶变换后，执行逆变换代码</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A1=imread(<span class="string">&#x27;picture.jpg&#x27;</span>);</span><br><span class="line">A2=rgb2gray(A1);</span><br><span class="line">A3=im2double(A2);</span><br><span class="line">F1=fft2(A3);</span><br><span class="line">F2=fftshift(F1);</span><br><span class="line"></span><br><span class="line">fr=<span class="built_in">real</span>(ifft2(ifftshift(F2)));</span><br><span class="line">Tr=im2uint8(mat2gray(fr)); </span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">imshow(Tr,[]);</span><br></pre></td></tr></table></figure>
 
-<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1007.jpg"></p>
+<p>结果为<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1007.jpg"></p>
 <h1 id="四-关于傅里叶变换的深层思考"><a href="#四-关于傅里叶变换的深层思考" class="headerlink" title="四. 关于傅里叶变换的深层思考"></a>四. 关于傅里叶变换的深层思考</h1><h2 id="A-非周期，周期与连续，离散"><a href="#A-非周期，周期与连续，离散" class="headerlink" title="(A) 非周期，周期与连续，离散"></a>(A) 非周期，周期与连续，离散</h2><p>傅里叶变化过程中，在频域和时域，非周期和周期、连续和离散问题。</p>
-<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1008.jpg"></p>
-<h2 id="B-离散傅里叶变换中的对称性"><a href="#B-离散傅里叶变换中的对称性" class="headerlink" title="(B) 离散傅里叶变换中的对称性"></a>(B) 离散傅里叶变换中的对称性</h2><p>由欧拉公式<br>$$<br>e^{ix}=cosx+isinx<br>$$<br>设信号在复数域，即<br>$$<br>x_n=A_n+iB_n<br>$$<br>则离散傅里叶变换公式<br>$$<br>X[k]=\sum_{n=0}^{N-1}x_ne^{-i2\pi kn/N}<br>$$<br>可改写为<br>$$<br>X[k]=\sum_{n=0}^{N-1}[(A_ncos(2\pi kn/N)+B_nsin(2\pi kn/N))+i(B_ncos(2\pi kn/N)-A_nsin(2\pi kn/N))]<br>$$<br>说明离散傅里叶变换中具有这样的对称性：<br>时域信号的实部对应频谱为偶对称实部和奇对称虚部，<br>时域信号的虚部对应频谱为奇对称实部和偶对称虚部，<br>时域信号包含实部和虚部时，频谱是两者的叠加。<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/Blog/A1009.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1008.jpg"></p>
+<h2 id="B-离散傅里叶变换中的对称性"><a href="#B-离散傅里叶变换中的对称性" class="headerlink" title="(B) 离散傅里叶变换中的对称性"></a>(B) 离散傅里叶变换中的对称性</h2><p>由欧拉公式<br>$$<br>e^{ix}=cosx+isinx<br>$$<br>设信号在复数域，即<br>$$<br>x_n=A_n+iB_n<br>$$<br>则离散傅里叶变换公式<br>$$<br>X[k]=\sum_{n=0}^{N-1}x_ne^{-i2\pi kn/N}<br>$$<br>可改写为<br>$$<br>X[k]=\sum_{n=0}^{N-1}[(A_ncos(2\pi kn/N)+B_nsin(2\pi kn/N))+i(B_ncos(2\pi kn/N)-A_nsin(2\pi kn/N))]<br>$$<br>说明离散傅里叶变换中具有这样的对称性：<br>时域信号的实部对应频谱为偶对称实部和奇对称虚部，<br>时域信号的虚部对应频谱为奇对称实部和偶对称虚部，<br>时域信号包含实部和虚部时，频谱是两者的叠加。<br><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/Matlab/fourier/A1009.jpg"></p>
 
     </div>
 
@@ -432,12 +432,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/09/10/python-04/" rel="prev" title="Python学习笔记(零四)：类和对象·属性和方法">
-      <i class="fa fa-chevron-left"></i> Python学习笔记(零四)：类和对象·属性和方法
+    <a href="/2020/09/10/python-04/" rel="prev" title="Python学习笔记(零四)：魔法方法">
+      <i class="fa fa-chevron-left"></i> Python学习笔记(零四)：魔法方法
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/09/22/python-05/" rel="next" title="Python学习笔记(零五)：魔法方法(零一)">
-      Python学习笔记(零五)：魔法方法(零一) <i class="fa fa-chevron-right"></i>
+    <a href="/2020/09/22/python-05/" rel="next" title="Python学习笔记(零五)：图形用户界面工具Tkinter">
+      Python学习笔记(零五)：图形用户界面工具Tkinter <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
