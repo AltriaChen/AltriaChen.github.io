@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="本篇介绍了日常工作中用到过的一些 python 模块：模拟 web 请求的 requests，日志记录 logging，用于打包程序的 pyinstaller 以及发送邮件的 email。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python模块学习：requests·logging·pyinstaller·email">
+<meta property="og:url" content="http://yoursite.com/2023/05/22/Python_Module01/index.html">
+<meta property="og:site_name" content="Cross Code">
+<meta property="og:description" content="本篇介绍了日常工作中用到过的一些 python 模块：模拟 web 请求的 requests，日志记录 logging，用于打包程序的 pyinstaller 以及发送邮件的 email。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4201.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4202.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4203.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4204.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4205.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4206.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4207.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4208.jpg">
+<meta property="article:published_time" content="2023-05-22T10:24:44.000Z">
+<meta property="article:modified_time" content="2023-11-04T00:17:20.968Z">
+<meta property="article:author" content="Minwei Chen">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4201.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2023/05/22/Python_Module01/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Python模块学习：requests·logging·pyinstaller·email | Cross Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/js/my_js/clicklove.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cross Code</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is only one heroism in the world: to see the world as it is and to love it</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-requests-%E6%A8%A1%E5%9D%97"><span class="nav-text">一. requests 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">(A) 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-HTTP-%E5%8D%8F%E8%AE%AE"><span class="nav-text">(a) HTTP 协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-Get-%E8%AF%B7%E6%B1%82"><span class="nav-text">(b) Get 请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-Post-%E8%AF%B7%E6%B1%82"><span class="nav-text">(c) Post 请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-Get-%E5%92%8C-Post-%E5%8C%BA%E5%88%AB"><span class="nav-text">(d) Get 和 Post 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F"><span class="nav-text">(e) 接口请求方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-requests-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="nav-text">(B) requests 发送请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%8F%91%E9%80%81-get-%E8%AF%B7%E6%B1%82"><span class="nav-text">(a) 发送 get 请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%8F%91%E9%80%81-post-%E8%AF%B7%E6%B1%82"><span class="nav-text">(b) 发送 post 请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%8F%91%E9%80%81-put-%E8%AF%B7%E6%B1%82"><span class="nav-text">(c) 发送 put 请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E5%8F%91%E9%80%81-delete-%E8%AF%B7%E6%B1%82"><span class="nav-text">(d) 发送 delete 请求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E5%A4%84%E7%90%86%E5%93%8D%E5%BA%94"><span class="nav-text">(C) 处理响应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%8E%B7%E5%8F%96%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9"><span class="nav-text">(a) 获取响应内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E8%8E%B7%E5%8F%96%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81"><span class="nav-text">(b) 获取响应状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E8%8E%B7%E5%8F%96%E5%93%8D%E5%BA%94%E5%A4%B4%E9%83%A8%E4%BF%A1%E6%81%AF"><span class="nav-text">(c) 获取响应头部信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E5%A4%84%E7%90%86%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-text">(d) 处理重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E8%8E%B7%E5%8F%96%E5%85%B6%E4%BB%96%E5%93%8D%E5%BA%94%E4%BF%A1%E6%81%AF"><span class="nav-text">(e) 获取其他响应信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#f-%E6%8C%87%E5%AE%9A%E5%86%85%E5%AE%B9%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-text">(f) 指定内容字符集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E5%92%8C-Cookie"><span class="nav-text">(D) 会话管理和 Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86"><span class="nav-text">(a) 会话管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-Cookie-%E6%93%8D%E4%BD%9C"><span class="nav-text">(b) Cookie 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0-cookie"><span class="nav-text">(1) 添加 cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%8E%B7%E5%8F%96-cookie-%E5%80%BC"><span class="nav-text">(2) 获取 cookie 值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%88%A0%E9%99%A4-cookie"><span class="nav-text">(3) 删除 cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%B7%BB%E5%8A%A0-cookie-%E5%88%B0%E4%BC%9A%E8%AF%9D"><span class="nav-text">(4) 添加 cookie 到会话</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#E-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-text">(E) 异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%8D%95%E8%8E%B7%E6%89%80%E6%9C%89%E5%BC%82%E5%B8%B8"><span class="nav-text">(a) 捕获所有异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%8D%95%E8%8E%B7%E7%8A%B6%E6%80%81%E7%A0%81%E5%BC%82%E5%B8%B8"><span class="nav-text">(b) 捕获状态码异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E6%8D%95%E8%8E%B7%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5%E5%BC%82%E5%B8%B8"><span class="nav-text">(c) 捕获连接失败异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E6%8D%95%E8%8E%B7%E8%AF%B7%E6%B1%82%E8%B6%85%E6%97%B6%E5%BC%82%E5%B8%B8"><span class="nav-text">(d) 捕获请求超时异常</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#F-%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95"><span class="nav-text">(F) 其他方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-text">(a) 文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE"><span class="nav-text">(b) 代理设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%BF%AB%E9%80%9F%E8%AF%BB%E5%8F%96%E5%A4%9A%E4%B8%AA%E5%9C%B0%E5%9D%80%E4%BF%A1%E6%81%AF"><span class="nav-text">(c) 快速读取多个地址信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-logging-%E6%A8%A1%E5%9D%97"><span class="nav-text">二. logging 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-text">(A) 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E5%8F%8A%E5%AF%B9%E5%BA%94%E5%87%BD%E6%95%B0"><span class="nav-text">(a) 日志级别及对应函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-logging-basicConfig-kwargs"><span class="nav-text">(b) logging.basicConfig(**kwargs)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8"><span class="nav-text">(B) 进阶使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-pyinstaller-%E5%8F%8A-email"><span class="nav-text">三. pyinstaller 及 email</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-pyinstaller-%E6%89%93%E5%8C%85%E7%A8%8B%E5%BA%8F"><span class="nav-text">(A) pyinstaller 打包程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%AE%89%E8%A3%85-pyinstaller"><span class="nav-text">(a) 安装 pyinstaller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%BB%8D"><span class="nav-text">(b) 指令介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%AE%9E%E4%BE%8B"><span class="nav-text">(c) 实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-python-%E5%8F%91%E9%80%81%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6"><span class="nav-text">(B) python 发送电子邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E8%B4%A6%E5%8F%B7%E5%87%86%E5%A4%87"><span class="nav-text">(a) 账号准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%8F%91%E9%80%81%E7%BA%AF%E6%96%87%E6%9C%AC%E9%82%AE%E4%BB%B6"><span class="nav-text">(b) 发送纯文本邮件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%8F%91%E9%80%81%E5%B8%A6%E9%99%84%E4%BB%B6%E9%82%AE%E4%BB%B6"><span class="nav-text">(c) 发送带附件邮件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E8%84%9A%E6%9C%AC%E6%8B%BE%E9%81%97"><span class="nav-text">四. 脚本拾遗</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Minwei Chen"
+      src="/images/tuoqi.jpg">
+  <p class="site-author-name" itemprop="name">Minwei Chen</p>
+  <div class="site-description" itemprop="description">Cross the surface, get to the reality. Welcome to Cross Code!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AltriaChen" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AltriaChen" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mwchennju@foxmail.com" title="E-Mail → mailto:mwchennju@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/05/22/Python_Module01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tuoqi.jpg">
+      <meta itemprop="name" content="Minwei Chen">
+      <meta itemprop="description" content="Cross the surface, get to the reality. Welcome to Cross Code!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cross Code">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python模块学习：requests·logging·pyinstaller·email
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-22 18:24:44" itemprop="dateCreated datePublished" datetime="2023-05-22T18:24:44+08:00">2023-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-04 08:17:20" itemprop="dateModified" datetime="2023-11-04T08:17:20+08:00">2023-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">Python笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本篇介绍了日常工作中用到过的一些 python 模块：模拟 web 请求的 requests，日志记录 logging，用于打包程序的 pyinstaller 以及发送邮件的 email。</p>
+<a id="more"></a>
+
+<h1 id="一-requests-模块"><a href="#一-requests-模块" class="headerlink" title="一. requests 模块"></a>一. requests 模块</h1><h2 id="A-基本概念"><a href="#A-基本概念" class="headerlink" title="(A) 基本概念"></a>(A) 基本概念</h2><h3 id="a-HTTP-协议"><a href="#a-HTTP-协议" class="headerlink" title="(a) HTTP 协议"></a>(a) HTTP 协议</h3><ul>
+<li>HTTP 协议 (Hypertext Transfer Protocol) 是一种用于在网络上发送和接收 HTML 页面或其他内容的协议，是基于客户端-服务器模型，客户端发起 HTTP 请求，服务器响应请求并返回相应的内容。<br>HTTP 协议使用 URL(Uniform Resource Locator) 来标识互联网上的资源，如网页、图片、视频等。客户端通过发送 HTTP 请求来获取特定 URL 对应的资源，请求包括请求方法 (如GET、POST)、头部信息 (如浏览器类型、请求资源类型等) 和可选的请求体 (如表单数据、请求参数等)。</li>
+<li>HTTP 协议是在互联网上进行数据传输和通信的基础协议，它为客户端和服务器之间提供了一种简单、开放的通信方式，使得互联网上的信息交流和资源访问变得更加便捷和高效。其主要作用是：<ol>
+<li>传输数据：HTTP 协议是一种用于传输数据的协议，它可以在客户端和服务器之间传输各种类型的数据，如 HTML 页面、图片、视频、音频等。通过 HTTP，用户可以在浏览器中访问网页，下载文件，发送和接收数据等。</li>
+<li>客户端和服务器通信：HTTP 协议定义了客户端和服务器之间的通信规则。客户端发送 HTTP 请求到服务器，服务器解析请求并发送 HTTP 响应回客户端。这种通信模式使得客户端可以请求特定资源，服务器可以根据请求进行处理并返回相应的内容。</li>
+<li>资源定位和标识：HTTP 协议使用 URL 来定位和标识互联网上的资源。URL 由协议类型、服务器地址、资源路径等组成，通过 URL 可以唯一确定一个资源的位置。</li>
+<li>无状态协议：HTTP 协议是无状态的，即服务器不会保留与客户端之间的任何状态信息。每个 HTTP 请求都是独立的，服务器只处理请求并返回相应的响应，不会对之前的请求进行记忆。这种无状态的设计使得 HTTP 协议具有简单、可扩展的特性。</li>
+<li>安全性：HTTP 协议本身是明文传输的，数据在传输过程中可能会被窃听或篡改。为了保障通信的安全性，可以使用 HTTPS(HTTP Secure) 协议，它在 HTTP 协议之上添加了 SSL/TLS 加密层，对数据进行加密和认证。</li>
+</ol>
+</li>
+</ul>
+<h3 id="b-Get-请求"><a href="#b-Get-请求" class="headerlink" title="(b) Get 请求"></a>(b) Get 请求</h3><p>GET 请求是 HTTP 协议中的一种请求方法，用于从服务器获取资源。它是最常见和最简单的请求方法之一。<br>GET 请求中的请求参数会暴露在 URL 中，因此，不应将敏感信息通过 GET 请求传递。对于传输敏感信息 (例如：用户、密码) 或需要修改服务器上资源状态的请求，应使用 POST 请求或其他更安全的请求方法。</p>
+<ul>
+<li><p>get 请求的特点</p>
+<ol>
+<li>请求参数通过URL中的查询字符串传递，如：<code>http://www.baidu.com/path?param1=value1&amp;param2=value2</code></li>
+<li>GET 请求对请求参数的长度有限制，因为 URL 的长度是有限制的，不适合传输大量的数据。</li>
+<li>GET 请求是幂等的，即多次重复发送同样的 GET 请求，不会对服务器产生副作用，也不会修改服务器上的资源状态。</li>
+<li>GET 请求可以被缓存，如果相同的 GET 请求被发送多次，中间的请求可以通过缓存直接返回响应结果。</li>
+</ol>
+</li>
+<li><p>get 请求的优点</p>
+<ol>
+<li>简单和直观：GET 请求是 HTTP 协议中最简单的请求方法，只需要通过 URL 进行请求信息的传递，易于理解和实现。</li>
+<li>可缓存：GET 请求可以被缓存，如果相同的 GET 请求被重复发送，中间的请求可以通过缓存直接返回响应结果，减少了服务器的负载和网络传输时间。</li>
+<li>可书签化：由于 GET 请求的参数附加在 URL 中，因此可以将带有 GET 请求的 URL 添加到书签中，方便用户保存和分享特定的资源。</li>
+<li>可见性：GET 请求的参数和请求信息都会暴露在 URL 中，可以直观地看到请求的内容，方便调试和问题排查。</li>
+</ol>
+</li>
+<li><p>get 请求的缺点</p>
+<ol>
+<li>长度限制：GET 请求的请求参数通过 URL 的查询字符串传递，URL 的长度是有限制的，所以对于大量数据的传输不合适，存在长度限制问题。</li>
+<li>安全性问题：GET 请求中的请求参数暴露在 URL 中，可能被其他人在网络传输过程中截获或记录，存在安全风险。敏感信息 (如密码) 不应通过 GET 请求传递。</li>
+<li>副作用问题：GET 请求属于幂等请求，即多次发送同样的 GET 请求不会对服务器产生副作用。但对于涉及修改服务器资源状态或产生其他副作用的请求 (如增、删、改等操作)，不应该使用 GET 请求。</li>
+</ol>
+</li>
+</ul>
+<h3 id="c-Post-请求"><a href="#c-Post-请求" class="headerlink" title="(c) Post 请求"></a>(c) Post 请求</h3><p>POST 请求是 HTTP 协议中的一种请求方法，用于向服务器提交数据，并请求服务器处理该数据。与 GET 请求相比，POST 请求常用于发送较大量的数据、修改服务器上的资源状态以及进行敏感操作等。<br>POST 请求不仅可以传输表单数据，也可以传输其他类型的数据，如 JSON、XML 等。使用 POST 请求时，需要根据具体的场景和需求，将数据格式化和编码成对应的请求体数据类型。</p>
+<ul>
+<li><p>post 请求的特点</p>
+<ol>
+<li>数据传输较安全：相对于 GET 请求将数据暴露在 URL 中，POST 请求将数据放在消息体中发送，对于敏感信息更为安全。</li>
+<li>请求参数长度无限制：POST 请求中的参数和数据不会受到 URL 长度限制，能够传输较大量的数据。</li>
+<li>不可缓存：由于 POST 请求需要向服务器提交数据，每次请求的数据都可能不同，所以大部分情况下不能被缓存，需要实时重新请求。</li>
+<li>非幂等性：POST 请求可能对服务器资源产生副作用，即每次发送相同的 POST 请求，可能会对服务器资源状态进行修改。</li>
+</ol>
+</li>
+<li><p>post 请求的优点</p>
+<ol>
+<li>数据安全性更高：相对于 GET 请求，POST 请求将数据放在请求的消息体中传输，而不是直接附加在 URL 中，因此对于敏感信息的传输更加安全，减少了数据被恶意拦截或篡改的风险。</li>
+<li>容量大小无限制：POST 请求传输的数据没有 URL 长度限制，可以传输较大的数据量，适合上传文件或传输大量文本数据。</li>
+<li>更好的请求语义：POST 请求用于向服务器提交数据并请求处理，适合于对服务器资源进行修改、创建等操作，具有更好的请求语义。使用 POST 请求可以清晰地表达意图，使服务器能够更好地处理和响应请求。</li>
+<li>支持多种数据格式：POST 请求可以使用不同的 Content-Type 来指定数据格式，可以传输多种类型的数据，如表单数据、JSON 数据、XML 数据等，具有更大的灵活性。</li>
+</ol>
+</li>
+<li><p>post 请求的缺点</p>
+<ol>
+<li>非幂等性：POST 请求可能对服务器资源产生副作用，即每次发送相同的 POST 请求，都可能会对服务器资源状态进行修改，而不仅仅是获取资源。这意味着相同的 POST 请求不能重复执行，可能会导致不可预料的结果。</li>
+<li>不可缓存：由于 POST 请求中往往包含了对服务器资源的修改，为了保证数据的一致性，POST 请求通常不能被缓存，需要实时重新请求，增加了服务器的负载和网络传输时间。</li>
+<li>请求复杂度相对较高：相对于 GET 请求，POST 请求在构造和发送上相对复杂一些，需要将数据放入请求的消息体中，并设置合适的 Content-Type、Content-Length 等请求头部信息。</li>
+</ol>
+</li>
+</ul>
+<h3 id="d-Get-和-Post-区别"><a href="#d-Get-和-Post-区别" class="headerlink" title="(d) Get 和 Post 区别"></a>(d) Get 和 Post 区别</h3><p>GET 请求适用于获取资源、查询或浏览数据等操作，传输的数据量较小且不涉及敏感信息。<br>POST 请求适用于向服务器提交数据、修改资源状态等操作，支持传输较大量的数据和敏感信息的安全传输。</p>
+<ul>
+<li><p>参数位置和传输方式</p>
+<p>GET 请求：参数通过 URL 的查询字符串传递，附加在 URL 的末尾，以 ? 开头，多个参数之间使用 &amp; 分隔，例如：<code>http://www.baidu.com/path?param1=value1&amp;param2=value2</code>。数据可以通过 URL 进行传输，也可以通过请求头的字段进行传输。<br>POST 请求：参数和数据放在请求的消息体中，通过请求头部的 Content-Type 字段来指定数据的类型，常见的有 application/x-www-form-urlencoded、multipart/form-data、application/json 等。</p>
+</li>
+<li><p>数据传输安全性</p>
+<p>GET 请求：参数和数据暴露在 URL 中，容易被拦截、篡改或记录，不适合传输敏感信息。<br>POST 请求：参数和数据放在请求的消息体中传输，对于敏感信息的安全性更高。</p>
+</li>
+<li><p>请求语义和副作用</p>
+<p>GET 请求：主要用于从服务器获取资源，获取数据的语义明确，是幂等的，多次请求结果相同，不会对服务器产生副作用。<br>POST 请求：主要用于向服务器提交数据，请求可能对服务器产生副作用，常用于修改、创建资源等操作，不具备幂等性。</p>
+</li>
+<li><p>URL 长度限制</p>
+<p>GET 请求：由于参数在 URL 中传递，URL 的长度存在限制 (不同浏览器和服务器对URL长度的限制不同)，不适合传输大量数据。<br>POST 请求：没有 URL 长度限制，可以传输较大量的数据。</p>
+</li>
+<li><p>缓存</p>
+<p>GET 请求：可以被缓存，如果相同的 GET 请求被重复发送，中间的请求可以通过缓存直接返回响应结果，减少了服务器的负载和网络传输时间。<br>POST 请求：通常不会被缓存，因为 POST 请求可能对服务器资源产生副作用，需要实时重新请求。</p>
+</li>
+</ul>
+<h3 id="e-接口请求方式"><a href="#e-接口请求方式" class="headerlink" title="(e) 接口请求方式"></a>(e) 接口请求方式</h3><p>接口请求的八种常见方式：</p>
+<ol>
+<li>get：向特定资源发出请求 (请求指定页面信息，并返回实体主体)</li>
+<li>post：向指定资源提交数据进行处理请求 (提交表单，上传文件)，又可能导致新的资源资源的建立或原有资源的修改</li>
+<li>put：向指定资源位置上上传其最新内容 (从客户端向服务器传送的数据取代指定文档的内容)</li>
+<li>head：与服务器索与 get 请求一致的响应，响应体不回返回，获取包含在小信息头中的原有信息 (与 get 请求类似，返回的响应中没有具体内容，用于获取报头)</li>
+<li>delete：请求服务器删除 request-url 所表示的资源 (如：请求服务器删除页面)</li>
+<li>trace：回显服务器收到的请求，用于测试和诊断</li>
+<li>options：一种预检请求，主要作用是检查服务器和客户端对跨域资源的访问是否符合安全策略。</li>
+<li>connect：http/1.1 协议中能够将连接改为管道方式的代理服务器</li>
+</ol>
+<h2 id="B-requests-发送请求"><a href="#B-requests-发送请求" class="headerlink" title="(B) requests 发送请求"></a>(B) requests 发送请求</h2><h3 id="a-发送-get-请求"><a href="#a-发送-get-请求" class="headerlink" title="(a) 发送 get 请求"></a>(a) 发送 get 请求</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">requests.get(</span><br><span class="line">    url           <span class="comment">#必选参数，指定URL地址</span></span><br><span class="line">    params=<span class="literal">None</span>   <span class="comment">#可选参数，用于指定查询参数，可以是一个字典或一个字符串。</span></span><br><span class="line">    **kwargs      <span class="comment">#可选参数，用于传递其他参数，例如请求头、超时时间等。</span></span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line">**kwargs 可以是：</span><br><span class="line">    headers：设置请求头信息</span><br><span class="line">    timeout：设置请求的超时时间(单位：秒)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送一个简单的 get 请求示例</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 发送get请求</span></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打印状态码</span></span><br><span class="line">print(response)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打印内容</span></span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Response [<span class="number">200</span>]&gt;  <span class="comment">#状态码</span></span><br><span class="line">&lt;!DOCTYPE html&gt;  <span class="comment">#内容</span></span><br><span class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; ······ &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送带查询参数的 get 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">params = &#123;<span class="string">&#x27;key1&#x27;</span>: <span class="string">&#x27;value1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>: <span class="string">&#x27;value2&#x27;</span>&#125;</span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>, params=params)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送 GET 请求并加入其它参数 (设置请求头和请求超时时间)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0&#x27;</span>&#125;</span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>, headers=headers, timeout=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-发送-post-请求"><a href="#b-发送-post-请求" class="headerlink" title="(b) 发送 post 请求"></a>(b) 发送 post 请求</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">requests.post(</span><br><span class="line">    url            <span class="comment">#必选参数，指定URL地址。</span></span><br><span class="line">    data=<span class="literal">None</span>      <span class="comment">#可选参数，传递表单数据。可以是一个字典、字符串或二进制数据。</span></span><br><span class="line">    json=<span class="literal">None</span>      <span class="comment">#可选参数，传递JSON数据。将自动将数据编码为JSON格式并设置请求头部的Content-Type为application/json。</span></span><br><span class="line">    headers=<span class="literal">None</span>   <span class="comment">#可选参数，指定HTTP请求的头部信息。可以通过字典形式传递。</span></span><br><span class="line">    cookies=<span class="literal">None</span>   <span class="comment">#可选参数，传递Cookie信息。可以是字典或CookieJar对象。</span></span><br><span class="line">    auth=<span class="literal">None</span>      <span class="comment">#可选参数，用于身份验证，可以是身份验证相关的对象，如HTTPBasicAuth或HTTPDigestAuth等。</span></span><br><span class="line">    timeout=<span class="literal">None</span>   <span class="comment">#可选参数，设置请求的超时时间(单位：秒)</span></span><br><span class="line">    allow_redirects  <span class="comment">#可选参数，用于设置是否允许重定向(默认True)。</span></span><br><span class="line">    **kwargs       <span class="comment">#可选参数，用于传递其他参数，例如proxies、verify（SSL验证）等。</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送一个简单的 post 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 发送post请求</span></span><br><span class="line">response = requests.post(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打印状态码</span></span><br><span class="line">print(response)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打印内容</span></span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Response [<span class="number">302</span>]&gt;  <span class="comment">#状态码302表示临时重定向</span></span><br><span class="line">&lt;html&gt;  <span class="comment">#内容</span></span><br><span class="line">······</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送 json 数据的 post 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line">url = <span class="string">&#x27;https://www.baidu.com/&#x27;</span></span><br><span class="line">data = &#123;<span class="string">&#x27;key&#x27;</span>: <span class="string">&#x27;value&#x27;</span>&#125;</span><br><span class="line">headers = &#123;<span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span>&#125;</span><br><span class="line">response = requests.post(url, json=json.dumps(data), headers=headers)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送带有请求头和超时时间的 post 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&#x27;https://www.baidu.com/&#x27;</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0&#x27;</span>&#125;</span><br><span class="line">response = requests.post(url , headers=headers, timeout=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送带有身份验证的 post 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> requests.auth <span class="keyword">import</span> HTTPBasicAuth</span><br><span class="line"> </span><br><span class="line">url = <span class="string">&#x27;https://www.baidu.com/&#x27;</span></span><br><span class="line">auth = HTTPBasicAuth(<span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">response = requests.post(url, auth=auth)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送带有 cookie 的 post 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&#x27;https://www.baidu.com/&#x27;</span></span><br><span class="line">cookies = &#123;<span class="string">&#x27;session_id&#x27;</span>: <span class="string">&#x27;123456&#x27;</span>&#125;</span><br><span class="line">response = requests.post(url, cookies=cookies)</span><br></pre></td></tr></table></figure>
+
+<h3 id="c-发送-put-请求"><a href="#c-发送-put-请求" class="headerlink" title="(c) 发送 put 请求"></a>(c) 发送 put 请求</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">requests.put(</span><br><span class="line">    url            <span class="comment">#必选参数，指定URL地址。</span></span><br><span class="line">    data=<span class="literal">None</span>      <span class="comment">#可选参数，传递表单数据。可以是一个字典、字符串或二进制数据。</span></span><br><span class="line">    json=<span class="literal">None</span>      <span class="comment">#可选参数，传递JSON数据。将自动将数据编码为JSON格式并设置请求头部的Content-Type为application/json。</span></span><br><span class="line">    headers=<span class="literal">None</span>   <span class="comment">#可选参数，指定HTTP请求的头部信息。可以通过字典形式传递。</span></span><br><span class="line">    cookies=<span class="literal">None</span>   <span class="comment">#可选参数，传递Cookie信息。可以是字典或CookieJar对象。</span></span><br><span class="line">    auth=<span class="literal">None</span>      <span class="comment">#可选参数，用于身份验证，可以是身份验证相关的对象，如HTTPBasicAuth或HTTPDigestAuth等。</span></span><br><span class="line">    timeout=<span class="literal">None</span>   <span class="comment">#可选参数，设置请求的超时时间(单位：秒)</span></span><br><span class="line">    allow_redirects  <span class="comment">#可选参数，用于设置是否允许重定向(默认True)。</span></span><br><span class="line">    **kwargs       <span class="comment">#可选参数，用于传递其他参数，例如proxies、verify（SSL验证）等。</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送一个简单的 put 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发送put请求</span></span><br><span class="line">response = requests.put(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印状态码</span></span><br><span class="line">print(response)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印内容</span></span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Response [<span class="number">302</span>]&gt;  <span class="comment">#状态码302表示临时重定向</span></span><br><span class="line">&lt;html&gt;  <span class="comment">#内容</span></span><br><span class="line">······</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-发送-delete-请求"><a href="#d-发送-delete-请求" class="headerlink" title="(d) 发送 delete 请求"></a>(d) 发送 delete 请求</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">requests.delete(</span><br><span class="line">    url            <span class="comment">#必选参数，指定URL地址。</span></span><br><span class="line">    params=<span class="literal">None</span>    <span class="comment">#可选参数，传递URL查询参数。可以是一个字典或字符串。</span></span><br><span class="line">    headers=<span class="literal">None</span>   <span class="comment">#可选参数，指定HTTP请求的头部信息。可以通过字典形式传递。</span></span><br><span class="line">    cookies=<span class="literal">None</span>   <span class="comment">#可选参数，传递Cookie信息。可以是字典或CookieJar对象。</span></span><br><span class="line">    auth=<span class="literal">None</span>      <span class="comment">#可选参数，用于身份验证，可以是身份验证相关的对象，如HTTPBasicAuth或HTTPDigestAuth等。</span></span><br><span class="line">    timeout=<span class="literal">None</span>   <span class="comment">#可选参数，设置请求的超时时间(单位：秒)</span></span><br><span class="line">    allow_redirects  <span class="comment">#可选参数，用于设置是否允许重定向(默认True)。</span></span><br><span class="line">    **kwargs       <span class="comment">#可选参数，用于传递其他参数，例如proxies、verify（SSL验证）等。</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送一个简单的 delete 请求</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发送delete请求</span></span><br><span class="line">response = requests.delete(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印状态码</span></span><br><span class="line">print(response)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印内容</span></span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Response [<span class="number">302</span>]&gt;  <span class="comment">#状态码302表示临时重定向</span></span><br><span class="line">&lt;html&gt;  <span class="comment">#内容</span></span><br><span class="line">······</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="C-处理响应"><a href="#C-处理响应" class="headerlink" title="(C) 处理响应"></a>(C) 处理响应</h2><h3 id="a-获取响应内容"><a href="#a-获取响应内容" class="headerlink" title="(a) 获取响应内容"></a>(a) 获取响应内容</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">response.text    <span class="comment">#以字符串形式返回响应内容。</span></span><br><span class="line">response.content <span class="comment">#以字节形式返回响应内容。</span></span><br><span class="line">response.json()  <span class="comment">#以JSON解析并返回响应内容。如果响应内容不是有效的JSON格式，则会抛出JSONDecodeError异常。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实例</li>
+</ul>
+<p>以 “字符串” 形式返回响应内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;!--STATUS OK--&gt;&lt;html&gt;······</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-获取响应状态"><a href="#b-获取响应状态" class="headerlink" title="(b) 获取响应状态"></a>(b) 获取响应状态</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">response.status_code  <span class="comment">#返回响应的状态码。</span></span><br><span class="line">response.ok           <span class="comment">#返回布尔值，表示请求是否成功（2xx响应码）。</span></span><br><span class="line">response.raise_for_status()  <span class="comment">#如果响应状态码表明请求不成功，则抛出HTTPError异常。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实例</li>
+</ul>
+<p>获取响应的”状态码“</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.status_code)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">200</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="c-获取响应头部信息"><a href="#c-获取响应头部信息" class="headerlink" title="(c) 获取响应头部信息"></a>(c) 获取响应头部信息</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.headers  <span class="comment">#返回响应头部的字典形式。</span></span><br><span class="line">response.headers[<span class="string">&#x27;header_name&#x27;</span>]  <span class="comment">#返回指定头部字段的值。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实例</li>
+</ul>
+<p>(1) 以“字典形式“返回响应头部的全部信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.headers)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;Cache-Control&#x27;</span>: <span class="string">&#x27;private, no-cache, no-store, proxy-revalidate, no-transform&#x27;</span>, <span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;keep-alive&#x27;</span>, <span class="string">&#x27;Content-Encoding&#x27;</span>: <span class="string">&#x27;gzip&#x27;</span>, ······&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 返回指定头部“字段的值”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.headers[<span class="string">&#x27;Date&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sun, <span class="number">08</span> Oct <span class="number">2023</span> <span class="number">09</span>:<span class="number">46</span>:<span class="number">45</span> GMT</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-处理重定向"><a href="#d-处理重定向" class="headerlink" title="(d) 处理重定向"></a>(d) 处理重定向</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.history  <span class="comment">#返回一个包含重定向历史的列表，每个元素是一个Response对象。</span></span><br><span class="line">response.url      <span class="comment">#返回最终响应的URL。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实例</li>
+</ul>
+<p>(1) 返回一个包含”重定向历史“的列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.history)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]  <span class="comment">#没有重定向</span></span><br></pre></td></tr></table></figure>
+
+<p>(2) 返回最终响应的“URL”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.url)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="e-获取其他响应信息"><a href="#e-获取其他响应信息" class="headerlink" title="(e) 获取其他响应信息"></a>(e) 获取其他响应信息</h3><ul>
+<li>语法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.encoding   <span class="comment">#返回响应使用的字符编码。</span></span><br><span class="line">response.cookies    <span class="comment">#返回响应的Cookies信息，可以进行进一步操作。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实例</li>
+</ul>
+<p>(1) 返回响应的“字符编码”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.encoding)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ISO<span class="number">-8859</span><span class="number">-1</span></span><br></pre></td></tr></table></figure>
+
+<p>(2) 返回响应的“cookies信息”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line">print(response.cookies)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;RequestsCookieJar[&lt;Cookie BDORZ=<span class="number">27315</span> <span class="keyword">for</span> .baidu.com/&gt;]&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="f-指定内容字符集"><a href="#f-指定内容字符集" class="headerlink" title="(f) 指定内容字符集"></a>(f) 指定内容字符集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取结果</span></span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按内容展示</span></span><br><span class="line">html = response.text</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定内容的字符集</span></span><br><span class="line">html = response.content.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line">print(html)</span><br></pre></td></tr></table></figure>
+
+<h2 id="D-会话管理和-Cookie"><a href="#D-会话管理和-Cookie" class="headerlink" title="(D) 会话管理和 Cookie"></a>(D) 会话管理和 Cookie</h2><h3 id="a-会话管理"><a href="#a-会话管理" class="headerlink" title="(a) 会话管理"></a>(a) 会话管理</h3><ul>
+<li>发送多个相关请求时，使用会话 (Session) 对象来管理这些请求，以便在多个请求之间共享状态、Cookie 和身份验证等信息。实例</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建会话对象</span></span><br><span class="line">session = requests.Session()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 设置会话级别的头部信息(可选)</span></span><br><span class="line">session.headers.update(&#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0&#x27;</span>&#125;)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 第一个请求(使用post请求登录)</span></span><br><span class="line">response1 = session.post(<span class="string">&#x27;http://xxx.com/login&#x27;</span>, data=login_data)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 第二个请求(登录以后的其他操作1)</span></span><br><span class="line">response2 = session.get(<span class="string">&#x27;http://xxx.com/xxx1&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 第三个请求(登录以后的其他操作2)</span></span><br><span class="line">response3 = session.get(<span class="string">&#x27;http://xxx.com/xxx2&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 关闭会话</span></span><br><span class="line">session.close()</span><br></pre></td></tr></table></figure>
+
+<p>创建一个会话对象后，身份信息和 cookie 都可以共享，适用于多个相关联的请求。</p>
+<ul>
+<li>使用会话对象的优点<ol>
+<li>自动管理 Cookie：会话对象会自动在请求中发送和更新 Cookie 信息，无需手动处理。</li>
+<li>共享会话级别信息：会话对象可用于共享头部信息、身份验证等。这避免了在每个请求中单独设置这些信息的麻烦。</li>
+<li>连接重用：会话对象会自动重用连接，提高请求性能。</li>
+</ol>
+</li>
+</ul>
+<h3 id="b-Cookie-操作"><a href="#b-Cookie-操作" class="headerlink" title="(b) Cookie 操作"></a>(b) Cookie 操作</h3><h4 id="1-添加-cookie"><a href="#1-添加-cookie" class="headerlink" title="(1) 添加 cookie"></a>(1) 添加 cookie</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">url = <span class="string">&#x27;http://xxx.com&#x27;</span></span><br><span class="line">cookies = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;value&#x27;</span>&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 请求中添加cookie值</span></span><br><span class="line">response = requests.get(url, cookies=cookies)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-获取-cookie-值"><a href="#2-获取-cookie-值" class="headerlink" title="(2) 获取 cookie 值"></a>(2) 获取 cookie 值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 直接打印cookie全部信息</span></span><br><span class="line">print(response.cookies)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 通过name和value获取名称和值</span></span><br><span class="line"><span class="keyword">for</span> cookie <span class="keyword">in</span> response.cookies:</span><br><span class="line">    print(cookie.name, cookie.value)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;RequestsCookieJar[&lt;Cookie BDORZ=<span class="number">27315</span> <span class="keyword">for</span> .baidu.com/&gt;]&gt;</span><br><span class="line">BDORZ <span class="number">27315</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-删除-cookie"><a href="#3-删除-cookie" class="headerlink" title="(3) 删除 cookie"></a>(3) 删除 cookie</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">response = requests.get(<span class="string">&#x27;https://www.baidu.com/&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 删除名称为&#x27;BDORZ&#x27;的 Cookie</span></span><br><span class="line">response.cookies.pop(<span class="string">&#x27;BDORZ&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 删除所有Cookie</span></span><br><span class="line">response.cookies.clear()</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-添加-cookie-到会话"><a href="#4-添加-cookie-到会话" class="headerlink" title="(4) 添加 cookie 到会话"></a>(4) 添加 cookie 到会话</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建一个会话</span></span><br><span class="line">session = requests.Session()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 添加Cookie到会话</span></span><br><span class="line">cookies = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;value&#x27;</span>&#125;</span><br><span class="line">session.cookies.update(cookies)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用包含Cookie的会话发送请求</span></span><br><span class="line">response = session.get(url)  </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 清除所有Cookie</span></span><br><span class="line">session.cookies.clear()  </span><br></pre></td></tr></table></figure>
+
+<h2 id="E-异常处理"><a href="#E-异常处理" class="headerlink" title="(E) 异常处理"></a>(E) 异常处理</h2><h3 id="a-捕获所有异常"><a href="#a-捕获所有异常" class="headerlink" title="(a) 捕获所有异常"></a>(a) 捕获所有异常</h3><p>RequestException 是所有异常的基类，可以用于捕获所有的异常情况。当发生网络请求错误时，例如连接超时、DNS 解析失败等，可以使用该异常来捕获并处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.exceptions.RequestException</span><br></pre></td></tr></table></figure>
+
+<p>实例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> RequestException</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = requests.get(<span class="string">&#x27;https://www.ba.com/&#x27;</span>)  <span class="comment">#不存在的url</span></span><br><span class="line">    print(<span class="string">&#x27;响应正常，执行下一步&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> RequestException <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;请求发生异常:&quot;</span>, str(e))</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-捕获状态码异常"><a href="#b-捕获状态码异常" class="headerlink" title="(b) 捕获状态码异常"></a>(b) 捕获状态码异常</h3><p>HTTPError 表示 HTTP 错误状态码 (4xx 或 5xx) 的响应。可以使用响应对象的 <code>.raise_for_status()</code> 方法来引发该异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.exceptions.HTTPError</span><br></pre></td></tr></table></figure>
+
+<p>实例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> HTTPError</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    url= <span class="string">&#x27;https://www.baidu.com/&#x27;</span></span><br><span class="line">    response = requests.get(url)</span><br><span class="line">    response.raise_for_status()</span><br><span class="line">    print(<span class="string">&#x27;响应正常，执行下一步&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> HTTPError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;HTTP错误:&quot;</span>, str(e))</span><br></pre></td></tr></table></figure>
+
+<h3 id="c-捕获连接失败异常"><a href="#c-捕获连接失败异常" class="headerlink" title="(c) 捕获连接失败异常"></a>(c) 捕获连接失败异常</h3><p>ConnectionError 用于捕获请求连接失败的异常，例如：无法连接到目标服务器，或者网络连接中断。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.exceptions.ConnectionError</span><br></pre></td></tr></table></figure>
+
+<p>实例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> ConnectionError</span><br><span class="line"> </span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    url= <span class="string">&#x27;https://www.baidu.com/&#x27;</span></span><br><span class="line">    response = requests.get(url)</span><br><span class="line">    print(<span class="string">&#x27;响应正常，执行下一步&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">except</span> ConnectionError <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;连接错误:&quot;</span>, str(e))</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-捕获请求超时异常"><a href="#d-捕获请求超时异常" class="headerlink" title="(d) 捕获请求超时异常"></a>(d) 捕获请求超时异常</h3><p>Timeout 用于捕获请求超时的异常</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.exceptions.Timeout</span><br></pre></td></tr></table></figure>
+
+<p>实例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> Timeout</span><br><span class="line"> </span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    url= <span class="string">&#x27;https://www.baidu.com/&#x27;</span></span><br><span class="line">    response = requests.get(url, timeout=<span class="number">5</span>)</span><br><span class="line">    print(<span class="string">&#x27;响应正常，执行下一步&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">except</span> Timeout <span class="keyword">as</span> e:</span><br><span class="line">    print(<span class="string">&quot;请求超时:&quot;</span>, str(e))</span><br></pre></td></tr></table></figure>
+
+<h2 id="F-其他方法"><a href="#F-其他方法" class="headerlink" title="(F) 其他方法"></a>(F) 其他方法</h2><h3 id="a-文件上传"><a href="#a-文件上传" class="headerlink" title="(a) 文件上传"></a>(a) 文件上传</h3><p>语法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">requests.post(</span><br><span class="line">    url    <span class="comment">#必选参数，指定URL地址</span></span><br><span class="line">    files  <span class="comment">#可选参数，指定文件名</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>(1) 发送单个文件</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">url = <span class="string">&#x27;http://xxx.com/&#x27;</span></span><br><span class="line">file_path = <span class="string">&#x27;./file.txt&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 读取文件</span></span><br><span class="line"><span class="keyword">with</span> open(file_path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="comment"># 将读取的二进制信息赋值为字典</span></span><br><span class="line">    files = &#123;<span class="string">&#x27;file&#x27;</span>: file&#125;</span><br><span class="line">    <span class="comment"># 通过字典发送post请求</span></span><br><span class="line">    response = requests.post(url, files=files)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取响应信息</span></span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p><strong>(2) 发送多个文件 (方法同上，多个文件使用遍历方式)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">url = <span class="string">&#x27;http://xxx.com/&#x27;</span></span><br><span class="line">file_paths = &#123;</span><br><span class="line">    <span class="string">&#x27;file1&#x27;</span>: <span class="string">&#x27;./file1.txt&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;file2&#x27;</span>: <span class="string">&#x27;./file2.txt&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">uploaded_files = &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 通过循环方式读取多个文件</span></span><br><span class="line"><span class="keyword">for</span> field_name, file_path <span class="keyword">in</span> file_paths.items():</span><br><span class="line">    <span class="keyword">with</span> open(file_path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        files = &#123;field_name: file&#125;</span><br><span class="line">        response = requests.post(url, files=files)</span><br><span class="line">        uploaded_files[field_name] = response.text</span><br><span class="line"> </span><br><span class="line">print(uploaded_files)</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-代理设置"><a href="#b-代理设置" class="headerlink" title="(b) 代理设置"></a>(b) 代理设置</h3><ul>
+<li>在计算机网络中，代理 (Proxy) 是一种充当中间人的服务器，它在客户端和目标服务器之间起到转发和代理的作用。当客户端发送请求时，代理服务器接收请求并将其转发给目标服务器。然后，代理服务器接收来自目标服务器的响应，并将其转发回客户端。</li>
+<li>在使用 requests 库发送 HTTP 请求时，代理 (Proxy) 可以用于访问被限制或无法直接访问的网站、隐藏真实的 IP 地址、实现访问控制等功能。通过配置代理，请求将通过代理服务器，而不是直接与目标服务器通信。这样，目标服务器会认为请求来自代理服务器，而不是真实的客户端。</li>
+</ul>
+<p><strong>(1) 通过 proxies 参数设置全局代理</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 设置服务器地址和端口</span></span><br><span class="line">proxies = &#123;</span><br><span class="line">    <span class="string">&#x27;http&#x27;</span>: <span class="string">&#x27;http://xxx.com:8080&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;https&#x27;</span>: <span class="string">&#x27;https://xxx.com:8080&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 通过proxies发送</span></span><br><span class="line">url = <span class="string">&#x27;http://xxx.com/&#x27;</span></span><br><span class="line">response = requests.get(url, proxies=proxies)</span><br></pre></td></tr></table></figure>
+
+<p><strong>(2) 使用环境变量设置代理</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 通过os获取本地变量去设置代理</span></span><br><span class="line">os.environ[<span class="string">&#x27;HTTP_PROXY&#x27;</span>] = <span class="string">&#x27;http://xxx.com:8080&#x27;</span></span><br><span class="line">os.environ[<span class="string">&#x27;HTTPS_PROXY&#x27;</span>] = <span class="string">&#x27;https://xxx.com:8080&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 发送请求时，自动在环境变量中读取代理设置</span></span><br><span class="line">url = <span class="string">&#x27;http://xxx.com/&#x27;</span></span><br><span class="line">response = requests.get(url)</span><br></pre></td></tr></table></figure>
+
+<p><strong>(3) 环境变量中读取代理设置</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 定义代理的地址和端口</span></span><br><span class="line">proxy = <span class="string">&#x27;http://xxx.com:8080&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建一个会话</span></span><br><span class="line">session = requests.Session()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 设置代理</span></span><br><span class="line">session.proxies = &#123;<span class="string">&#x27;http&#x27;</span>: proxy, <span class="string">&#x27;https&#x27;</span>: proxy&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 发送请求</span></span><br><span class="line">url = <span class="string">&#x27;http://xxx.com/&#x27;</span></span><br><span class="line">response = session.get(url)</span><br></pre></td></tr></table></figure>
+
+<p><strong>(4) 代理中设置用户、密码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">proxies = &#123;</span><br><span class="line">    <span class="comment"># 设置用户 : 密码 @ 地址 : 端口</span></span><br><span class="line">    <span class="string">&#x27;http&#x27;</span>: <span class="string">&#x27;http://username:password@xxx.com:8080&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;https&#x27;</span>: <span class="string">&#x27;https://username:password@xxx.com:8080&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 通过设置的代理，发送请求</span></span><br><span class="line">url = <span class="string">&#x27;http://xxx.com/&#x27;</span></span><br><span class="line">response = requests.get(url, proxies=proxies)</span><br></pre></td></tr></table></figure>
+
+<h3 id="c-快速读取多个地址信息"><a href="#c-快速读取多个地址信息" class="headerlink" title="(c) 快速读取多个地址信息"></a>(c) 快速读取多个地址信息</h3><p>实例 (简单读取某地址信息)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_html</span>(<span class="params">url</span>):</span></span><br><span class="line">    response = requests.get(url)</span><br><span class="line">    <span class="keyword">if</span> response.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">return</span> response.text</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    urls = [</span><br><span class="line">        <span class="string">&#x27;https://www.xxx1.com/&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;https://www.xxx2.com/&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;https://www.xxx3.com/&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        html = get_html(url)</span><br><span class="line">        print(html)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h1 id="二-logging-模块"><a href="#二-logging-模块" class="headerlink" title="二. logging 模块"></a>二. logging 模块</h1><p>在 python3 中，内置了 logging 模块，用于进行日志相关的处理。这里整理了一下 logging 模块的基本用法及进阶用法。</p>
+<h2 id="A-基本使用"><a href="#A-基本使用" class="headerlink" title="(A) 基本使用"></a>(A) 基本使用</h2><h3 id="a-日志级别及对应函数"><a href="#a-日志级别及对应函数" class="headerlink" title="(a) 日志级别及对应函数"></a>(a) 日志级别及对应函数</h3><p>logging 模块默认定义了 6 个日志级别</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">print(logging._nameToLevel)</span><br><span class="line"><span class="comment"># &#123;&#x27;CRITICAL&#x27;: 50, &#x27;FATAL&#x27;: 50, &#x27;ERROR&#x27;: 40, &#x27;WARN&#x27;: 30, &#x27;WARNING&#x27;: 30, &#x27;INFO&#x27;: 20, &#x27;DEBUG&#x27;: 10, &#x27;NOTSET&#x27;: 0&#125;</span></span><br><span class="line">print(logging._levelToName)</span><br><span class="line"><span class="comment"># &#123;50: &#x27;CRITICAL&#x27;, 40: &#x27;ERROR&#x27;, 30: &#x27;WARNING&#x27;, 20: &#x27;INFO&#x27;, 10: &#x27;DEBUG&#x27;, 0: &#x27;NOTSET&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>日志优先级：<code>CRIRICAL &gt; ERROR &gt; WARNING &gt; INFO &gt; DEBUG</code> 。当日志级别设置为某个级别时，则低于该级别的日志将不输出。如日志级别设置为 INFO，则 DEBUG 级别的日志将不输出。</p>
+<table>
+<thead>
+<tr>
+<th>级别名称</th>
+<th>级别数值</th>
+<th>函数</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NOTSET</td>
+<td>0</td>
+<td>无</td>
+<td>确切来说它不算日志级别</td>
+</tr>
+<tr>
+<td>DEBUG</td>
+<td>10</td>
+<td>logging.debug(msg, *args, **kwargs)</td>
+<td>通常在开发调试阶段使用，用来定位问题或显示程序细节</td>
+</tr>
+<tr>
+<td>INFO</td>
+<td>20</td>
+<td>logging.info(msg, *args, **kwargs)</td>
+<td>通常用来输出一般信息，或确认程序能正常工作</td>
+</tr>
+<tr>
+<td>WARNING / WARN</td>
+<td>30</td>
+<td>logging.warning(msg, *args, **kwargs)</td>
+<td>用来输出一些警告信息，但通常这些警告信息不影响程序正常运行</td>
+</tr>
+<tr>
+<td>ERROR</td>
+<td>40</td>
+<td>logging.error(msg, *args, **kwargs)</td>
+<td>用来输出程序的报错信息，表明程序的某些功能已不可用</td>
+</tr>
+<tr>
+<td>CRITICAL / FATAL</td>
+<td>50</td>
+<td>logging.critical(msg, *args, **kwargs)</td>
+<td>用来输出严重的错误信息，表明程序已不能继续执行</td>
+</tr>
+</tbody></table>
+<p>注：WARN 和 WARNING 等效，但较新的 python 版本不再使用 WARN，推荐用 WARNING；CRITICAL 和 FATAL等效，通常用 CRITICAL。</p>
+<p><strong>实例</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根日志器默认日志级别为WARNING，这里将其重置，以保证debug、info级别的日志也能输出</span></span><br><span class="line">logging.basicConfig(level=logging.NOTSET)</span><br><span class="line"></span><br><span class="line">logging.debug(<span class="string">&quot;This is a %s message.&quot;</span>,logging.getLevelName(logging.DEBUG))</span><br><span class="line">logging.info(<span class="string">&quot;This is an %s message.&quot;</span>,logging.getLevelName(logging.INFO))</span><br><span class="line">logging.warning(<span class="string">&quot;This is a %s message.&quot;</span>,logging.getLevelName(logging.WARNING))</span><br><span class="line">logging.error(<span class="string">&quot;This is an %s message.&quot;</span>,logging.getLevelName(logging.ERROR))</span><br><span class="line">logging.critical(<span class="string">&quot;This is a %s message.&quot;</span>,logging.getLevelName(logging.CRITICAL))</span><br><span class="line"></span><br><span class="line">logging.log(logging.INFO,<span class="string">&quot;This ia a message from logging.log().&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DEBUG:root:This <span class="keyword">is</span> a DEBUG message.</span><br><span class="line">INFO:root:This <span class="keyword">is</span> an INFO message.</span><br><span class="line">WARNING:root:This <span class="keyword">is</span> a WARNING message.</span><br><span class="line">ERROR:root:This <span class="keyword">is</span> an ERROR message.</span><br><span class="line">CRITICAL:root:This <span class="keyword">is</span> a CRITICAL message.</span><br><span class="line">INFO:root:This ia a message <span class="keyword">from</span> logging.log().</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-logging-basicConfig-kwargs"><a href="#b-logging-basicConfig-kwargs" class="headerlink" title="(b) logging.basicConfig(**kwargs)"></a>(b) logging.basicConfig(**kwargs)</h3><p>该函数可以对根日志记录器进行配置，支持以下关键字参数</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>filename</td>
+<td>使用指定的文件名创建 FileHandler，该参数缺省则使用 StreamHandler</td>
+</tr>
+<tr>
+<td>filemode</td>
+<td>指定何种方式打开 filename 指定的文件，默认为 a 追加模式</td>
+</tr>
+<tr>
+<td>format</td>
+<td>指定处理器使用的格式字符串，根日志器的默认格式字符串为：<code>%(levelname)s:%(name)s:%(message)s</code></td>
+</tr>
+<tr>
+<td>datefmt</td>
+<td>使用指定的日期/时间格式来替换 <code>%(asctime)s</code> 的默认格式 <code>%Y-%m-%d %H:%M:%S,uuu</code>，其中 uuu 部分是毫秒值，其他字母根据与 <code>time.strftime()</code> 所接受的格式相同</td>
+</tr>
+<tr>
+<td>style</td>
+<td>如果指定了 format，将为格式字符串使用此风格。 <code>&#39;%&#39;</code>, <code>&#39;&#123;&#39;</code> 或 <code>&#39;$&#39;</code> 分别对应于 printf 风格, str.format() 或 string.Template。 默认为 <code>&#39;%&#39;</code></td>
+</tr>
+<tr>
+<td>level</td>
+<td>设置根日志器的级别，根记录器默认的日志级别为：<code>logging.WARNING</code></td>
+</tr>
+<tr>
+<td>stream</td>
+<td>使用指定的流初始化 StreamHandler，该流可以是 <code>open(filename, mode)</code> 创建的，也可以是 <code>sys.stdout</code>、<code>sys.stderr</code> 等，需要注意 StreamHandler 不会关闭 <code>open(filename, mode)</code> 创建的流。<br />stream 不能与 filename/filemode 同时出现</td>
+</tr>
+<tr>
+<td>handlers</td>
+<td>如果指定了，这应该是一个已经创建的处理程序的可迭代对象，它将被添加到根处理程序中。列表中任何未分配格式化器的处理程序将被分配在此函数中创建的格式化器。<br/>handlers 不能与 filename/filemode 同时出现<br/>handlers 不能与 stream 同时出现</td>
+</tr>
+</tbody></table>
+<p><strong>实例 1</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(</span><br><span class="line">    level=logging.NOTSET,</span><br><span class="line">    format=<span class="string">&#x27;&#123;asctime&#125;.&#123;msecs:.0f&#125; - &#123;levelname&#125; - &#123;name&#125; - &#123;message&#125;&#x27;</span>,</span><br><span class="line">    datefmt=<span class="string">&quot;%a, %d %b %Y %H:%M:%S&quot;</span>,</span><br><span class="line">    style=<span class="string">&quot;&#123;&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">logging.info(logging.StrFormatStyle.asctime_format)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Thu, <span class="number">17</span> Aug <span class="number">2023</span> <span class="number">10</span>:<span class="number">12</span>:<span class="number">32.093</span> - INFO - root - &#123;asctime&#125;</span><br><span class="line"><span class="comment"># style 参数指定 format 格式字符串所使用的格式方式为 StrFormatStyle，即 &#123;var&#125; 形式</span></span><br><span class="line"><span class="comment"># &#123;msecs:03.0f&#125; 中，: 后面跟的字符串是对 msecs 进行格式控制的，</span></span><br><span class="line"><span class="comment"># 如 03.0f 是指保留msecs的整数部分，且整数部分保留3位，不足3位在前面补零。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>实例 2</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(</span><br><span class="line">    level=logging.NOTSET,</span><br><span class="line">    format=<span class="string">&#x27;%(asctime)s - %(levelname)s - %(name)s - %(message)s&#x27;</span>,</span><br><span class="line">    filename=<span class="string">&#x27;./default.log&#x27;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">logging.info(<span class="string">&quot;This is a INFO message.&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &gt;&gt;&gt;</span></span><br><span class="line"><span class="comment"># 将日志输出到 default.log 文件中，如果没有文件则会自动创建一个 </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="B-进阶使用"><a href="#B-进阶使用" class="headerlink" title="(B) 进阶使用"></a>(B) 进阶使用</h2><p>日志库采用模块化方法，并提供几类组件：记录器、处理程序、过滤器和格式化程序。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>实例化</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>记录器</td>
+<td>logging.getLogger()</td>
+<td>暴露了应用程序代码直接使用的接口</td>
+</tr>
+<tr>
+<td>处理程序</td>
+<td>logging.FileHandler()<br/>logging.StreamHandler()<br/>logging.NullHandler()</td>
+<td>将日志记录(由记录器创建)发送到适当的目标</td>
+</tr>
+<tr>
+<td>过滤器</td>
+<td>logging.Filter()</td>
+<td>提供了更精细的附加功能，用于确定要输出的日志记录</td>
+</tr>
+<tr>
+<td>格式化程序</td>
+<td>logging.Formatter()</td>
+<td>指定最终输出中日志记录的样式</td>
+</tr>
+</tbody></table>
+<p><strong>实例</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建日志器</span></span><br><span class="line">logger = logging.getLogger(<span class="string">&quot;test&quot;</span>)</span><br><span class="line"><span class="comment"># 为日志器设置日志等级，如果这里不设置，将会使用其父级日志器的等日志等级</span></span><br><span class="line"><span class="comment"># 这里它的父日志器是root，root的默认日志级别是 logging.WARNING</span></span><br><span class="line">logger.setLevel(logging.INFO)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建文件处理程序</span></span><br><span class="line">fh = logging.FileHandler(filename=<span class="string">&quot;./test.log&quot;</span>,encoding=<span class="string">&quot;utf8&quot;</span>)</span><br><span class="line"><span class="comment"># 创建流处理程序</span></span><br><span class="line">sh = logging.StreamHandler()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为文件处理程序设置日志等级</span></span><br><span class="line">fh.setLevel(logging.ERROR)</span><br><span class="line"><span class="comment"># 为流处理程序设置日志等级</span></span><br><span class="line">sh.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建格式化程序</span></span><br><span class="line">ffmt = logging.Formatter(</span><br><span class="line">    fmt = <span class="string">&quot;%(asctime)s - %(levelname)s - %(name)s - %(filename)s:%(lineno)d - %(message)s&quot;</span>,</span><br><span class="line">    datefmt = <span class="string">&quot;%Y/%m/%d %H:%M:%S&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 创建格式化程序</span></span><br><span class="line">sfmt = logging.Formatter(</span><br><span class="line">    fmt = <span class="string">&quot;%(asctime)s - %(levelname)s - %(name)s - %(filename)s:%(lineno)d - %(message)s&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 ffmt 格式化程序应用到 fh 文件处理程序</span></span><br><span class="line">fh.setFormatter(ffmt)</span><br><span class="line"><span class="comment"># 将 sfmt 格式化程序应用到 sh 流处理程序</span></span><br><span class="line">sh.setFormatter(sfmt)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件处理程序应用到logger日志器</span></span><br><span class="line">logger.addHandler(fh)</span><br><span class="line"><span class="comment"># 将流处理程序应用到logger日志器</span></span><br><span class="line">logger.addHandler(sh)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 记录日志信息</span></span><br><span class="line">logger.debug(<span class="string">&quot;This is a DEBUG log.&quot;</span>)</span><br><span class="line">logger.info(<span class="string">&quot;This is an INFO log.&quot;</span>)</span><br><span class="line">logger.warning(<span class="string">&quot;This is a WARNING log.&quot;</span>)</span><br><span class="line">logger.error(<span class="string">&quot;This is an ERROR log.&quot;</span>)</span><br><span class="line">logger.critical(<span class="string">&quot;This is a CRITICAL log.&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>控制台输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2023</span><span class="number">-11</span><span class="number">-02</span> <span class="number">21</span>:<span class="number">44</span>:<span class="number">09</span>,<span class="number">647</span> - INFO - test - test1.py:<span class="number">41</span> - This <span class="keyword">is</span> an INFO log.</span><br><span class="line"><span class="number">2023</span><span class="number">-11</span><span class="number">-02</span> <span class="number">21</span>:<span class="number">44</span>:<span class="number">09</span>,<span class="number">647</span> - WARNING - test - test1.py:<span class="number">42</span> - This <span class="keyword">is</span> a WARNING log.</span><br><span class="line"><span class="number">2023</span><span class="number">-11</span><span class="number">-02</span> <span class="number">21</span>:<span class="number">44</span>:<span class="number">09</span>,<span class="number">647</span> - ERROR - test - test1.py:<span class="number">43</span> - This <span class="keyword">is</span> an ERROR log.</span><br><span class="line"><span class="number">2023</span><span class="number">-11</span><span class="number">-02</span> <span class="number">21</span>:<span class="number">44</span>:<span class="number">09</span>,<span class="number">647</span> - CRITICAL - test - test1.py:<span class="number">44</span> - This <span class="keyword">is</span> a CRITICAL log.</span><br></pre></td></tr></table></figure>
+
+<p>test.log 文件输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2023</span>/<span class="number">11</span>/<span class="number">02</span> <span class="number">21</span>:<span class="number">44</span>:<span class="number">09</span> - ERROR - test - test1.py:<span class="number">43</span> - This <span class="keyword">is</span> an ERROR log.</span><br><span class="line"><span class="number">2023</span>/<span class="number">11</span>/<span class="number">02</span> <span class="number">21</span>:<span class="number">44</span>:<span class="number">09</span> - CRITICAL - test - test1.py:<span class="number">44</span> - This <span class="keyword">is</span> a CRITICAL log.</span><br></pre></td></tr></table></figure>
+
+<p>解释：</p>
+<p>使用 <code>sh.setLevel(logging.DEBUG)</code> 对流处理程序重新设置了日志级别，但是输出中并没有 debug 级别的日志信息。而使用 <code>fh.setLevel(logging.ERROR)</code> 对文件处理程序重新设置的日志级别，文件输出中过滤掉了 ERROR 以下级别的消息。因此说明了，为处理程序设置日志级别时，如果该级别低于日志器的日志级别时，则是无效设置。</p>
+<h1 id="三-pyinstaller-及-email"><a href="#三-pyinstaller-及-email" class="headerlink" title="三. pyinstaller 及 email"></a>三. pyinstaller 及 email</h1><h2 id="A-pyinstaller-打包程序"><a href="#A-pyinstaller-打包程序" class="headerlink" title="(A) pyinstaller 打包程序"></a>(A) pyinstaller 打包程序</h2><p>PyInstaller 是一个用于将 Python 脚本打包成独立可执行文件的工具。它的原理是将 Python 脚本及其依赖的库、资源文件等打包成一个单独的可执行文件，使得在其他机器上运行时不需要安装 Python 解释器和相关库，即可直接运行。</p>
+<h3 id="a-安装-pyinstaller"><a href="#a-安装-pyinstaller" class="headerlink" title="(a) 安装 pyinstaller"></a>(a) 安装 pyinstaller</h3><p>直接 pip 在线安装</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyinstaller</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-指令介绍"><a href="#b-指令介绍" class="headerlink" title="(b) 指令介绍"></a>(b) 指令介绍</h3><p>常用指令</p>
+<table>
+<thead>
+<tr>
+<th>-h，-help</th>
+<th>查看该模块的帮助信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-F，-onefile</td>
+<td>产生单个的可执行文件</td>
+</tr>
+<tr>
+<td>-D，-onedir</td>
+<td>产生一个目录 (包含多个文件) 作为可执行程序</td>
+</tr>
+<tr>
+<td>-w，-windowed</td>
+<td>指定程序运行时不显示命令行窗口 (仅对 windows 有效)</td>
+</tr>
+</tbody></table>
+<p>一般情况下，无特殊需求时，用 <code>-D</code>，即在脚本目录下开启 cmd，然后输入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -D your_script.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="c-实例"><a href="#c-实例" class="headerlink" title="(c) 实例"></a>(c) 实例</h3><p><strong>(1) 建立 main.py 程序，为了让控制台窗口不一闪而过，加上等待 5s</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">print(<span class="string">&#x27;Hello World&#x27;</span>)</span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>(2) 打包</strong></p>
+<p>在脚本目录下开启 cmd，然后输入<code>pyinstallr -D main.py</code></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4201.jpg"></p>
+<p>会生成以下文件</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4202.jpg"></p>
+<p>在 dist 文件中会生成 main 文件夹，其中包含可执行文件 main.exe，需要拷贝至其他电脑时，要拷贝整个 main 文件夹。</p>
+<h2 id="B-python-发送电子邮件"><a href="#B-python-发送电子邮件" class="headerlink" title="(B) python 发送电子邮件"></a>(B) python 发送电子邮件</h2><p><strong>前言</strong></p>
+<p>在某些情形下我们可以使用脚本发送消息，比如监控电脑性能，满足条件后发送短信或者邮箱通知我们，但是短信门槛高且有费用，所以邮箱更方便。<br>python 发送邮件主要使用 smtplib 和 email 这两个内置库，它们分别用于登录邮箱账号和构建邮件内容(因为邮件内容包含了主题、发件人、收件人、正文等，所以需要 email 来构建邮箱内容)。</p>
+<h3 id="a-账号准备"><a href="#a-账号准备" class="headerlink" title="(a) 账号准备"></a>(a) 账号准备</h3><p><strong>(1) 注册并设置账号</strong></p>
+<p>首先我们注册一个 126 邮箱，然后进行以下设置。<br>打开设置(网页版)中的 POP3/SMTP/IMAP 设置，开启 POP3/SMTP 服务，如果开启了会给出一串授权密码，请牢记。开启后 POP3/SMTP 会显示已开启状态。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4203.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4204.jpg"></p>
+<p><strong>(2) 获取服务器信息</strong></p>
+<p>在设置页面的底端我们可以获取服务器信息。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4205.jpg"></p>
+<p>于是我们已经掌握了 python 登录邮箱的所需信息</p>
+<table>
+<thead>
+<tr>
+<th>服务器地址</th>
+<th><a href="mailto:&#115;&#x6d;&#x74;&#112;&#64;&#49;&#50;&#x36;&#46;&#x63;&#111;&#109;">&#115;&#x6d;&#x74;&#112;&#64;&#49;&#50;&#x36;&#46;&#x63;&#111;&#109;</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>服务器端口号</td>
+<td>25</td>
+</tr>
+<tr>
+<td>邮箱账号</td>
+<td>你的邮箱名 <a href="mailto:&#120;&#x78;&#120;&#x40;&#49;&#x32;&#54;&#46;&#99;&#x6f;&#109;">&#120;&#x78;&#120;&#x40;&#49;&#x32;&#54;&#46;&#99;&#x6f;&#109;</a></td>
+</tr>
+<tr>
+<td>邮箱密码</td>
+<td>16位授权码</td>
+</tr>
+</tbody></table>
+<h3 id="b-发送纯文本邮件"><a href="#b-发送纯文本邮件" class="headerlink" title="(b) 发送纯文本邮件"></a>(b) 发送纯文本邮件</h3><p>这里给出模板</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoSendEmail</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,toid=<span class="string">&#x27;receiver@foxmail.com&#x27;</span></span>):</span></span><br><span class="line">        self.toaddr = toid  <span class="comment">#收件人邮箱</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send_Email</span>(<span class="params">self,msg</span>):</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            smtp = smtplib.SMTP()</span><br><span class="line">            <span class="comment"># 连接（connect）指定服务器</span></span><br><span class="line">            smtp.connect(<span class="string">&quot;smtp.126.com&quot;</span>, port=<span class="number">25</span>)</span><br><span class="line">            <span class="comment"># 登录，需要：登录邮箱和授权码</span></span><br><span class="line">            smtp.login(user=<span class="string">&quot;sender@126.com&quot;</span>, password=<span class="string">&quot;16x&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 构造MIMEText对象，参数为：正文，MIME的subtype，编码方式</span></span><br><span class="line">            message = MIMEText(msg, <span class="string">&#x27;plain&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment">#这里msg位正文文本</span></span><br><span class="line">            message[<span class="string">&#x27;From&#x27;</span>] = Header(<span class="string">&quot;RobotPowerCycle&quot;</span>, <span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 发件人的昵称</span></span><br><span class="line">            message[<span class="string">&#x27;To&#x27;</span>] = Header(<span class="string">&quot;PowerCycle User&quot;</span>, <span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 收件人的昵称</span></span><br><span class="line">            message[<span class="string">&#x27;Subject&#x27;</span>] = Header(<span class="string">&#x27;Running Error&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 定义主题内容</span></span><br><span class="line">            print(message)</span><br><span class="line"></span><br><span class="line">            smtp.sendmail(from_addr=<span class="string">&quot;sender@126.com&quot;</span>, to_addrs=self.toaddr, msg=message.as_string())</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> msg_error:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    msg = <span class="string">&#x27;This is a test&#x27;</span></span><br><span class="line">    auto = AutoSendEmail()</span><br><span class="line">    auto.send_Email(msg)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4206.jpg"></p>
+<h3 id="c-发送带附件邮件"><a href="#c-发送带附件邮件" class="headerlink" title="(c) 发送带附件邮件"></a>(c) 发送带附件邮件</h3><p>这里给出模板</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.application <span class="keyword">import</span> MIMEApplication</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置邮箱服务器信息</span></span><br><span class="line">mail_host = <span class="string">&quot;smtp.126.com&quot;</span>  <span class="comment"># 设置服务器</span></span><br><span class="line">mail_user = <span class="string">&quot;user_name&quot;</span>  <span class="comment"># 用户名</span></span><br><span class="line">mail_pass = <span class="string">&quot;16x&quot;</span>  <span class="comment"># 口令是授权码，不是邮箱密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置发件人、收件人信息</span></span><br><span class="line">sender = <span class="string">&#x27;sender@126.com&#x27;</span>  <span class="comment"># 发件人邮箱</span></span><br><span class="line">receivers = [<span class="string">&#x27;receiver@foxmail.com&#x27;</span>]  <span class="comment"># 接收邮件，可设置为多个邮箱</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">message_config</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    配置邮件信息</span></span><br><span class="line"><span class="string">    :return: 消息对象</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 第三方 SMTP 服务</span></span><br><span class="line">    content = MIMEText(<span class="string">&#x27;测试数据,注意查收&#x27;</span>)</span><br><span class="line">    message = MIMEMultipart()  <span class="comment"># 多个MIME对象</span></span><br><span class="line">    message.attach(content)  <span class="comment"># 添加内容</span></span><br><span class="line">    message[<span class="string">&#x27;From&#x27;</span>] = Header(<span class="string">&quot;白云&quot;</span>, <span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 发件人</span></span><br><span class="line">    message[<span class="string">&#x27;To&#x27;</span>] = Header(<span class="string">&quot;黑土&quot;</span>, <span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 收件人</span></span><br><span class="line">    message[<span class="string">&#x27;Subject&#x27;</span>] = Header(<span class="string">&#x27;测试数据&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)  <span class="comment"># 主题</span></span><br><span class="line">    <span class="comment"># 添加Excel类型附件</span></span><br><span class="line">    file_name = <span class="string">&#x27;output.xlsx&#x27;</span>  <span class="comment"># 文件名</span></span><br><span class="line">    file_path = os.path.join(file_name)  <span class="comment"># 文件路径</span></span><br><span class="line">    xlsx = MIMEApplication(open(file_path, <span class="string">&#x27;rb&#x27;</span>).read())  <span class="comment"># 打开Excel,读取Excel文件</span></span><br><span class="line">    xlsx[<span class="string">&quot;Content-Type&quot;</span>] = <span class="string">&#x27;application/octet-stream&#x27;</span>  <span class="comment"># 设置内容类型</span></span><br><span class="line">    xlsx.add_header(<span class="string">&#x27;Content-Disposition&#x27;</span>, <span class="string">&#x27;attachment&#x27;</span>, filename=file_name)  <span class="comment"># 添加到header信息</span></span><br><span class="line">    message.attach(xlsx)</span><br><span class="line">    <span class="comment"># jpg类型的附件</span></span><br><span class="line">    <span class="comment"># jpgpart = MIMEApplication(open(&#x27;beauty.jpg&#x27;, &#x27;rb&#x27;).read())</span></span><br><span class="line">    <span class="comment"># jpgpart.add_header(&#x27;Content-Disposition&#x27;, &#x27;attachment&#x27;, filename=&#x27;beauty.jpg&#x27;)</span></span><br><span class="line">    <span class="comment"># message.attach(jpgpart)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># mp3类型的附件</span></span><br><span class="line">    <span class="comment"># mp3part = MIMEApplication(open(&#x27;kenny.mp3&#x27;, &#x27;rb&#x27;).read())</span></span><br><span class="line">    <span class="comment"># mp3part.add_header(&#x27;Content-Disposition&#x27;, &#x27;attachment&#x27;, filename=&#x27;kenny.mp3&#x27;)</span></span><br><span class="line">    <span class="comment"># message.attach(mp3part)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pdf类型附件</span></span><br><span class="line">    <span class="comment"># part = MIMEApplication(open(&#x27;foo.pdf&#x27;, &#x27;rb&#x27;).read())</span></span><br><span class="line">    <span class="comment"># part.add_header(&#x27;Content-Disposition&#x27;, &#x27;attachment&#x27;, filename=&quot;foo.pdf&quot;)</span></span><br><span class="line">    <span class="comment"># message.attach(part)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> message</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span>(<span class="params">message</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    发送邮件</span></span><br><span class="line"><span class="string">    :param message: 消息对象</span></span><br><span class="line"><span class="string">    :return: None</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        smtpObj = smtplib.SMTP_SSL(mail_host)  <span class="comment"># 使用SSL连接邮箱服务器</span></span><br><span class="line">        smtpObj.login(mail_user, mail_pass)  <span class="comment"># 登录服务器</span></span><br><span class="line">        smtpObj.sendmail(sender, receivers, message.as_string())  <span class="comment"># 发送邮件</span></span><br><span class="line">        print(<span class="string">&quot;邮件发送成功&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(e)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    print(<span class="string">&quot;开始执行&quot;</span>)</span><br><span class="line">    message = message_config()  <span class="comment"># 调用配置方法</span></span><br><span class="line">    send_mail(message)  <span class="comment"># 发送邮件</span></span><br><span class="line">    print(<span class="string">&quot;执行结束&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4207.jpg"></p>
+<h1 id="四-脚本拾遗"><a href="#四-脚本拾遗" class="headerlink" title="四. 脚本拾遗"></a>四. 脚本拾遗</h1><p><strong>(1) 使用 OpenCV 模块将图片变模糊</strong></p>
+<p>本例子旨在提醒读者学习 OpenCV 模块以了解图像处理知识。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">img1 = cv2.imread(<span class="string">r&#x27;E:\CodeChen\B1.jpg&#x27;</span>)  <span class="comment"># 读取图像</span></span><br><span class="line">cv2.namedWindow(<span class="string">&quot;awindow&quot;</span>)  <span class="comment"># 创建窗口</span></span><br><span class="line">img1_1 = cv2.resize(img1, dsize=<span class="literal">None</span>, fx=<span class="number">0.5</span>, fy=<span class="number">0.5</span>)  <span class="comment"># 调整大小</span></span><br><span class="line">img_gray0 = cv2.cvtColor(img1_1, cv2.COLOR_BGR2GRAY)  <span class="comment"># 对图像进行灰度处理</span></span><br><span class="line">cv2.imshow(<span class="string">&quot;awindow&quot;</span>, img_gray0)  <span class="comment"># 显示图像</span></span><br><span class="line">cv2.waitKey(delay=<span class="number">0</span>)  <span class="comment"># 等待</span></span><br><span class="line"></span><br><span class="line">img_gray = np.random.randint(<span class="number">0</span>, <span class="number">256</span>, size=[<span class="number">600</span>, <span class="number">480</span>], dtype=np.uint8)  <span class="comment"># 生成随机灰度图，注意需调整size数值，使img_gray和img1_1像素大小相同</span></span><br><span class="line">cv2.namedWindow(<span class="string">&quot;gray&quot;</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;gray&quot;</span>, img_gray)</span><br><span class="line">print(img_gray.shape)  <span class="comment"># 读取灰度图属性</span></span><br><span class="line">cv2.waitKey(delay=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">final_img = cv2.addWeighted(img_gray0, <span class="number">0.8</span>, img_gray, <span class="number">0.2</span>, <span class="number">0</span>)  <span class="comment"># 将两个图相加，要求两幅图像大小和通道数相同</span></span><br><span class="line">cv2.namedWindow(<span class="string">&quot;windowfinal&quot;</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;windowfinal&quot;</span>, final_img)</span><br><span class="line">cv2.waitKey(delay=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>(2) python 实现 telnet 登录</strong></p>
+<p>python 中提供了 telnetlib 模块，进行 telnet 相关操作。实例如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> telnetlib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 配置选项</span></span><br><span class="line">Host = <span class="string">&#x27;192.168.73.176&#x27;</span> <span class="comment"># Telnet服务器IP</span></span><br><span class="line">username = <span class="string">&#x27;z&#x27;</span>   <span class="comment"># 登录用户名</span></span><br><span class="line">password = <span class="string">&#x27;z&#x27;</span>  <span class="comment"># 登录密码</span></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 连接Telnet服务器</span></span><br><span class="line">tn = telnetlib.Telnet(Host)</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 输入登录用户名</span></span><br><span class="line">tn.read_until(<span class="string">b&#x27;login:&#x27;</span>)</span><br><span class="line">tn.write(username.encode(<span class="string">&#x27;ascii&#x27;</span>) + <span class="string">b&quot;\n&quot;</span>)</span><br><span class="line"><span class="comment"># 输入登录密码</span></span><br><span class="line">tn.read_until(<span class="string">b&#x27;Password:&#x27;</span>)</span><br><span class="line">tn.write(password.encode(<span class="string">&#x27;ascii&#x27;</span>) + <span class="string">b&quot;\n&quot;</span>)</span><br><span class="line">print(<span class="string">&#x27;成功登录到设备：&#x27;</span>+Host)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录完毕后，执行ls命令</span></span><br><span class="line">tn.read_until(<span class="string">b&#x27;:~$ &#x27;</span>)</span><br><span class="line">print(<span class="string">&quot;执行pwd&quot;</span>)</span><br><span class="line">tn.write(<span class="string">b&#x27;pwd\n&#x27;</span>)</span><br><span class="line">time.sleep(<span class="number">1</span>)</span><br><span class="line">output=tn.read_very_eager().decode(<span class="string">&#x27;ascii&#x27;</span>)</span><br><span class="line">print(output)</span><br><span class="line">  </span><br><span class="line"><span class="comment"># ls命令执行完毕后，终止Telnet连接（或输入exit退出）</span></span><br><span class="line">tn.read_until(<span class="string">b&#x27;:~$ &#x27;</span>)</span><br><span class="line">tn.close() <span class="comment"># tn.write(&#x27;exit\n&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>(3) 构造客制化 html 文件</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createHtml</span>():</span></span><br><span class="line">    main_path = os.path.dirname(os.path.abspath(__file__)) + <span class="string">r&#x27;\testInfo&#x27;</span></span><br><span class="line">    isExists = os.path.exists(main_path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isExists:</span><br><span class="line">        os.makedirs(main_path)</span><br><span class="line">    html_path = main_path + <span class="string">r&#x27;\test_info.html&#x27;</span></span><br><span class="line">    <span class="keyword">with</span> open(html_path,<span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">        msg_a = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        f1.write(msg_a)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bugHtml</span>(<span class="params">jsonList,localFile</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    color设置黑色字体，width比例100%自适应页面，border-collapse表格边框线合并，text-align表格内容显示居中</span></span><br><span class="line"><span class="string">    background-color蓝色背景，padding内边距，border-color蓝色边框；</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="comment">#&lt;style&gt;定义table全局格式</span></span><br><span class="line">    table_head=<span class="string">&quot;&lt;!DOCTYPE html&gt;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;&lt;html&gt;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;&lt;head&gt;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;&lt;meta charset=&#x27;UTF-8&#x27;&gt;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;&lt;title&gt;2023年测试组&lt;/title&gt;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;&lt;style type=&#x27;text/css&#x27;&gt;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;table &#123;color:#333333; width:100%; border-collapse:collapse; text-align:center;&#125;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;table th &#123;background-color:#97CEFA; padding:8px; border-color:#97CEFA;&#125;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;table td &#123;padding:8px; border-color:#97CEFA;&#125;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;&lt;/style&gt;\n&quot;</span> \</span><br><span class="line">               <span class="string">&quot;&lt;/head&gt;\n&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#处理表头格式</span></span><br><span class="line">    table_th=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> title <span class="keyword">in</span> jsonList[<span class="number">0</span>]:</span><br><span class="line">        table_th = table_th + <span class="string">&#x27;&lt;th&gt;&#x27;</span>+ str(title) + <span class="string">&#x27;&lt;/th&gt;&#x27;</span></span><br><span class="line">    table_th=<span class="string">&#x27;&lt;tr&gt;&#x27;</span> + table_th + <span class="string">&#x27;&lt;/tr&gt;\n&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#处理行格式</span></span><br><span class="line">    table_tr = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(jsonList)):</span><br><span class="line">        <span class="keyword">for</span> n,m <span class="keyword">in</span> enumerate(jsonList[i]):</span><br><span class="line">            <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">                <span class="comment">#行首单独处理&lt;tr&gt;</span></span><br><span class="line">                jsonList[i][m] = <span class="string">&#x27;&lt;tr&gt;&lt;td&gt;&#x27;</span> + str(jsonList[i][m])</span><br><span class="line">            table_tr = table_tr + str(jsonList[i][m]) + <span class="string">&#x27;&lt;/td&gt;&lt;td&gt;&#x27;</span></span><br><span class="line">        <span class="comment">#行尾单独处理&lt;/tr&gt;</span></span><br><span class="line">        table_tr = table_tr[<span class="number">0</span>:<span class="number">-3</span>] + <span class="string">&#x27;/tr&gt;\n&#x27;</span></span><br><span class="line">    table_body = <span class="string">&quot;&lt;body&gt;\n&quot;</span> \</span><br><span class="line">                 <span class="string">&quot;&lt;table border=&#x27;1&#x27;&gt;\n&quot;</span> \</span><br><span class="line">                 <span class="string">&quot;&lt;caption&gt;测试组本周未解决Bug&lt;/caption&gt;\n&quot;</span></span><br><span class="line">    table_body=table_body+table_th+table_tr+<span class="string">&#x27;&lt;/table&gt;\n&lt;/body&gt;\n&#x27;</span></span><br><span class="line">    <span class="comment">#将整个html代码组合起来</span></span><br><span class="line">    tableCode = table_head + table_body + <span class="string">&#x27;&lt;/html&gt;&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#将html代码写入文件</span></span><br><span class="line">    <span class="keyword">with</span> open(file=localFile, mode=<span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&quot;UTF-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(tableCode)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># html_write=open(localFile,&quot;w&quot;,encoding=&quot;utf-8&quot;)</span></span><br><span class="line">    <span class="comment"># html_write.write(tableCode)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment">#jsonList是json数组</span></span><br><span class="line">    jsonList=[&#123;<span class="string">&#x27;BugID&#x27;</span>: <span class="number">21457</span>,<span class="string">&#x27;Bug标题&#x27;</span>: <span class="string">&#x27;新增报错&#x27;</span>,<span class="string">&#x27;创建人&#x27;</span>: <span class="string">&#x27;小A&#x27;</span>&#125;,</span><br><span class="line">              &#123;<span class="string">&#x27;BugID&#x27;</span>: <span class="number">21484</span>,<span class="string">&#x27;Bug标题&#x27;</span>: <span class="string">&#x27;删除报错&#x27;</span>, <span class="string">&#x27;创建人&#x27;</span>: <span class="string">&#x27;小B&#x27;</span>,&#125;,</span><br><span class="line">              &#123;<span class="string">&#x27;BugID&#x27;</span>: <span class="number">21607</span>,<span class="string">&#x27;Bug标题&#x27;</span>: <span class="string">&#x27;修改报错&#x27;</span>, <span class="string">&#x27;创建人&#x27;</span>: <span class="string">&#x27;小C&#x27;</span>&#125;,</span><br><span class="line">              &#123;<span class="string">&#x27;BugID&#x27;</span>: <span class="number">21626</span>,<span class="string">&#x27;Bug标题&#x27;</span>: <span class="string">&#x27;查询报错&#x27;</span>, <span class="string">&#x27;创建人&#x27;</span>: <span class="string">&#x27;小D&#x27;</span>&#125;]</span><br><span class="line"></span><br><span class="line">    main_path = os.path.dirname(os.path.abspath(__file__)) + <span class="string">r&#x27;\testInfo&#x27;</span></span><br><span class="line">    createHtml()</span><br><span class="line">    localFile = main_path + <span class="string">r&#x27;\test_info.html&#x27;</span></span><br><span class="line">    bugHtml(jsonList, localFile)</span><br></pre></td></tr></table></figure>
+
+<p>结果为</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP02/A4208.jpg"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/16/Security_Monitor/" rel="prev" title="安防产品概述">
+      <i class="fa fa-chevron-left"></i> 安防产品概述
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minwei Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
