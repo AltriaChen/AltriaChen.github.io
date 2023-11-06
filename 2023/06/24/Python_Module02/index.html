@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP03/A4321.jpg">
 <meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/TP-LINK/TP03/A4322.jpg">
 <meta property="article:published_time" content="2023-06-24T02:42:20.000Z">
-<meta property="article:modified_time" content="2023-11-05T05:46:55.453Z">
+<meta property="article:modified_time" content="2023-11-06T12:48:06.922Z">
 <meta property="article:author" content="Minwei Chen">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -312,7 +312,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-05 13:46:55" itemprop="dateModified" datetime="2023-11-05T13:46:55+08:00">2023-11-05</time>
+                <time title="修改时间：2023-11-06 20:48:06" itemprop="dateModified" datetime="2023-11-06T20:48:06+08:00">2023-11-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -525,7 +525,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r_pkts = rdpcap(<span class="string">&#x27;test.pcap&#x27;</span>)</span><br><span class="line">r_pkts = rdpcapng(<span class="string">&#x27;test.pcapng&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p><strong>将报文保存为 pcap/pcapng 文件</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrpcap(<span class="string">&quot;test.pcap&quot;</span>, package)  <span class="comment">#将报文package保存为test.pcap文件</span></span><br><span class="line">wrpcap(<span class="string">&quot;test.pcapng&quot;</span>, package)  <span class="comment">#将报文package保存为test.pcapng文件</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wrpcap(<span class="string">&quot;test.pcap&quot;</span>, package)  <span class="comment">#将报文package保存为test.pcap文件</span></span><br><span class="line">wrpcapng(<span class="string">&quot;test.pcapng&quot;</span>, package)  <span class="comment">#将报文package保存为test.pcapng文件</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="d-sniff-抓包"><a href="#d-sniff-抓包" class="headerlink" title="(d) sniff 抓包"></a>(d) sniff 抓包</h3><p><strong>语法</strong></p>
 <p>scapy 的 sniff 函数与 wireshark、tcpdump 工具类似，能够捕获指定接口或类型的报文并进行解析。sniff() 函数语法及参数如下，参考 help(sniff):</p>
