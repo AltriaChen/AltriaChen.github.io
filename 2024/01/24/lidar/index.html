@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="如今新能源汽车强势崛起，搭载于其上的激光雷达也成为一个极具潜力的赛道。本篇以禾赛科技、速腾聚创、图达通三家公司的主力产品为蓝本，介绍了激光雷达的原理与结构。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="激光雷达原理与结构">
+<meta property="og:url" content="http://yoursite.com/2024/01/24/lidar/index.html">
+<meta property="og:site_name" content="Cross Code">
+<meta property="og:description" content="如今新能源汽车强势崛起，搭载于其上的激光雷达也成为一个极具潜力的赛道。本篇以禾赛科技、速腾聚创、图达通三家公司的主力产品为蓝本，介绍了激光雷达的原理与结构。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4701.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4702.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4703.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4704.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4705.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4706.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4707.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4708.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4709.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4710.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4711.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4712.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4713.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4714.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4715.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4716.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4717.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4718.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4719.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4720.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4721.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4722.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4723.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4724.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4725.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4726.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4727.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4728.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4729.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4730.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4731.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4732.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4733.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4734.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4735.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4736.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4737.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4738.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4739.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4740.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4741.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4742.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4743.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4744.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4745.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4746.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4747.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4748.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4749.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4750.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4751.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4752.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4753.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4754.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4755.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4756.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4757.jpg">
+<meta property="og:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4758.jpg">
+<meta property="article:published_time" content="2024-01-24T12:46:10.000Z">
+<meta property="article:modified_time" content="2024-03-04T14:06:54.449Z">
+<meta property="article:author" content="Minwei Chen">
+<meta property="article:tag" content="科研">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4701.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2024/01/24/lidar/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>激光雷达原理与结构 | Cross Code</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+  <script type="text/javascript" src="/js/my_js/clicklove.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cross Code</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">There is only one heroism in the world: to see the world as it is and to love it</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E5%8E%9F%E7%90%86"><span class="nav-text">一. 激光雷达原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E6%A6%82%E8%BF%B0"><span class="nav-text">(A) 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">(a) 工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E7%BB%93%E6%9E%84%E7%B1%BB%E5%9E%8B"><span class="nav-text">(b) 结构类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-%E7%A6%BE%E8%B5%9B-AT128"><span class="nav-text">二. 禾赛 AT128</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-AT128-%E6%8B%86%E6%9C%BA"><span class="nav-text">(A) AT128 拆机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%94%B6%E5%8F%91%E6%A8%A1%E5%9D%97"><span class="nav-text">(a) 收发模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%8F%91%E5%B0%84%E6%A8%A1%E5%9D%97"><span class="nav-text">(1) 发射模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%8E%A5%E6%94%B6%E6%A8%A1%E5%9D%97"><span class="nav-text">(2) 接收模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%89%AB%E6%8F%8F%E6%A8%A1%E5%9D%97"><span class="nav-text">(b) 扫描模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97"><span class="nav-text">(c) 信号处理模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E4%B8%BB%E8%A6%81%E5%8E%82%E5%95%86%E5%AF%B9%E6%AF%94"><span class="nav-text">(B) 主要厂商对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B-M1"><span class="nav-text">三. 速腾聚创 M1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-M1-%E6%8B%86%E6%9C%BA"><span class="nav-text">(A) M1 拆机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%8F%91%E5%B0%84%E6%A8%A1%E5%9D%97"><span class="nav-text">(a) 发射模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%8E%A5%E6%94%B6%E6%A8%A1%E5%9D%97"><span class="nav-text">(b) 接收模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97-1"><span class="nav-text">(c) 信号处理模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%80%BB%E7%BB%93"><span class="nav-text">(B) 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-%E5%9B%BE%E8%BE%BE%E9%80%9A%E7%8C%8E%E9%B9%B0"><span class="nav-text">四. 图达通猎鹰</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E7%8C%8E%E9%B9%B0%E6%8B%86%E6%9C%BA"><span class="nav-text">(A) 猎鹰拆机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%8F%91%E5%B0%84%E6%A8%A1%E5%9D%97-1"><span class="nav-text">(a) 发射模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%8E%A5%E6%94%B6%E6%A8%A1%E5%9D%97-1"><span class="nav-text">(b) 接收模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%80%BB%E7%BB%93-1"><span class="nav-text">(B) 总结</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Minwei Chen"
+      src="/images/theme_pic.jpg">
+  <p class="site-author-name" itemprop="name">Minwei Chen</p>
+  <div class="site-description" itemprop="description">Cross the surface, get to the reality. Welcome to Cross Code!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AltriaChen" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AltriaChen" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mwchennju@foxmail.com" title="E-Mail → mailto:mwchennju@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/01/24/lidar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/theme_pic.jpg">
+      <meta itemprop="name" content="Minwei Chen">
+      <meta itemprop="description" content="Cross the surface, get to the reality. Welcome to Cross Code!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cross Code">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          激光雷达原理与结构
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-24 20:46:10" itemprop="dateCreated datePublished" datetime="2024-01-24T20:46:10+08:00">2024-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-04 22:06:54" itemprop="dateModified" datetime="2024-03-04T22:06:54+08:00">2024-03-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>如今新能源汽车强势崛起，搭载于其上的激光雷达也成为一个极具潜力的赛道。本篇以禾赛科技、速腾聚创、图达通三家公司的主力产品为蓝本，介绍了激光雷达的原理与结构。</p>
+<a id="more"></a>
+
+<h1 id="一-激光雷达原理"><a href="#一-激光雷达原理" class="headerlink" title="一. 激光雷达原理"></a>一. 激光雷达原理</h1><p><strong>Pay attention</strong></p>
+<p>本文所述的”最新“、“到目前为止”等表述均指截至 2024 年 1 月。</p>
+<h2 id="A-概述"><a href="#A-概述" class="headerlink" title="(A) 概述"></a>(A) 概述</h2><h3 id="a-工作原理"><a href="#a-工作原理" class="headerlink" title="(a) 工作原理"></a>(a) 工作原理</h3><p>激光雷达 (Laser Light Detection and Ranging)，是激光探测及测距系统的简称，是以发射激光束探测目标的位置、速度等特征量的雷达系统。其工作原理是向目标发射探测信号 (激光束)，然后将接收到的从目标反射回来的信号 (目标回波) 与发射信号进行比较，做适当处理后，就可获得目标的有关信息，如目标距离、方位、高度、速度、姿态、甚至形状等参数，从而对飞机、导弹等目标进行探测、跟踪和识别。它由激光发射机、光学接收机、转台和信息处理系统等组成，激光器将电脉冲变成光脉冲发射出去，光接收机再把从目标反射回来的光脉冲还原成电脉冲，送到显示器。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4701.jpg"></p>
+<h3 id="b-结构类型"><a href="#b-结构类型" class="headerlink" title="(b) 结构类型"></a>(b) 结构类型</h3><p>激光雷达的结构类型，按照主流方式，可分为三个类型：机械式、固态式和混合固态式。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4702.jpg"></p>
+<p><strong>(1) 机械式</strong></p>
+<p>机械式激光雷达，形状看起来就像”头上顶个塔“，一般用在 L4 级别的无人驾驶 Robotaxi 上比较多。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4703.jpg"></p>
+<p>它里面有个旋转结构，通过电机带动实现 360 度旋转，对四周环境进行扫描。但是这种机械转动的结构，不仅贵，而且容易坏，所以量产车上基本不用。</p>
+<p><strong>(2) 固态</strong></p>
+<p>固态激光雷达。固态，就是没有机械扫描的结构，发射方式类似于 LED 手电筒那样，进行面光的发射，也就是 Flash技术，可在短时间内发射出覆盖一片区域的激光。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4704.jpg"></p>
+<p>真正的全固态雷达，其实也有量产，比如禾赛的 FT120。但是现在技术还不成熟，发射功率和探测距离都比较低，所以一般用作补盲雷达。</p>
+<p><strong>(3) 混合固态</strong></p>
+<p>混合固态介于固态和机械式之间。禾赛 AT128、速腾 M1、图达通猎鹰，这三款激光雷达都属于混合固态激光雷达。这类激光雷达的特点是内部激光的收发装置保持不动，通过机械的光学扫描结构实现一定范围内的物体探测。</p>
+<h1 id="二-禾赛-AT128"><a href="#二-禾赛-AT128" class="headerlink" title="二. 禾赛 AT128"></a>二. 禾赛 AT128</h1><h2 id="A-AT128-拆机"><a href="#A-AT128-拆机" class="headerlink" title="(A) AT128 拆机"></a>(A) AT128 拆机</h2><p>我们以广受期待的激光雷达第一股“禾赛科技”的明星产品 AT128 为例，说明车载激光雷达的内部结构。和速腾 M1、图达通猎鹰一样，禾赛的 AT128 也是由信号的收发模块、扫描模块、信号处理模块三个部分组成。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4705.jpg"></p>
+<h3 id="a-收发模块"><a href="#a-收发模块" class="headerlink" title="(a) 收发模块"></a>(a) 收发模块</h3><p>首先是收发模块，该模块用来产生激光、引导光路，用时接收返回光。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4706.jpg"></p>
+<p>相比另外两块雷达，AT128 的集成度做得非常棒，充分利用了雷达内部平面方向的空间，将两条光路和对应的芯片模组分开。更具体地，右侧是发射光路，左侧是接收光路。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4707.jpg"></p>
+<p>光源方面，禾赛和速腾一样，用的都是 905 纳米，但 AT128 用的是集成度更高的 VCSEL 激光器。VCSEL 激光器光源从衬底的垂直的垂直方向射出来，相比于 EEL 边缘发射，光斑更加集中。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4708.jpg"></p>
+<p>VCSEL 的光斑更接近正圆，相邻光束相对不容易受到干扰，所以很适合在一个方向做成阵列的形式。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4709.jpg"></p>
+<h4 id="1-发射模块"><a href="#1-发射模块" class="headerlink" title="(1) 发射模块"></a>(1) 发射模块</h4><p>AT128 发射模块的中间，纵横错落排布了 16 个激光发射模组组成阵列。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4710.jpg"></p>
+<p>两侧是激光器驱动芯片，是禾赛自研的。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4711.jpg"></p>
+<p>驱动芯片提供电激励信号，控制激光发射。每一个驱动芯片单独控制两个发射模组，每个发射模组上有 8 个发射通道。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4712.jpg"></p>
+<p>16 乘以 8 等于 128，每个发射通道都是一个独立的激光发射器，故而总共发出 128 根激光光束。如果我们把这张图方法仔细看，同一行的两排发射模组在垂直方向恰好错开一点距离，上下两排模组在垂直方向是连续的。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4713.jpg"></p>
+<p>从上到下，在垂直方向上，正好形成 128 个物理通道，这也是禾赛 AT128 真 128 线的由来。</p>
+<p>我们把芯片再放大</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4714.jpg"></p>
+<p>可以清楚看到，每一个通道都是一个独立的芯片，这就是 VCSEL 芯片，来自 iPhone 的同款供应商 Lumentum。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4715.jpg"></p>
+<p>这是全球第一款面向车载远距离激光雷达的量产 VCSEL 芯片，每一片芯片都有两根极细的导线相连。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4716.jpg"></p>
+<p>这是正极和负极，两侧的驱动芯片控制电流给正负极通电，通电后 VCSEL 芯片工作发射出红外激光。严格意义上来说，每一个激光通道并不是同时发射的，而是按照一定的序列依次点亮。单个通道的点亮时间只有十几个纳秒，须知 10 纳秒以光速也仅能走 3 米。要做到这么精确的控制，对于驱动芯片的性能，甚至电路板上线路的长度，都有一定的要求。</p>
+<h4 id="2-接收模块"><a href="#2-接收模块" class="headerlink" title="(2) 接收模块"></a>(2) 接收模块</h4><p>128 个通道发出去的激光，打在物体上反射回来，会通过转镜回到光路，到达接收模块。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4717.jpg"></p>
+<p>由于用的是 905 纳米的激光，这个波长段可以被硅感应，所以禾赛 AT128 采用了速腾 M1 同一种类别的 SiPM (硅基光电倍增管)，来接收返回光。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4718.jpg"></p>
+<p>我们把接收芯片放大并拿掉上面的滤光片</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4719.jpg"></p>
+<p>这就是 SiPM 密密麻麻的阵列。相比图达通的 APD (雪崩光电二极管) 方案，SiPM 在弱光下的探测灵敏度更高。</p>
+<p>接收模块上有 16 块探测模组，刚好对应 16 块发射模组的位置。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4720.jpg"></p>
+<p>模组在水平方向上错开，以补偿发射模组间的水平角度差。</p>
+<p>把接收模块翻过来，这里和发射模块一样，同样有 8 块芯片。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4721.jpg"></p>
+<p>这是用来对探测器接收到的光信号进行读取、解析、放大的模拟前端芯片，据说也是禾赛自研的。</p>
+<h3 id="b-扫描模块"><a href="#b-扫描模块" class="headerlink" title="(b) 扫描模块"></a>(b) 扫描模块</h3><p>往下是扫描模块</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4722.jpg"></p>
+<p>由三面玻璃和一个小电机组成的转镜，通过与模组一一对应的 16 个孔，</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4723.jpg"></p>
+<p>再经过反射和准直镜的校正，最终投射到这个三面转镜上。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4724.jpg"></p>
+<p>平行的激光束通过转镜反射，再从视窗玻璃射出。通道 1 最高，与水平面的夹角是 +12.9 度，通道 128 最低，夹角是 -12.5 度，在垂直方向，形成了一个 25.4 度的覆盖面。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4725.jpg"></p>
+<p>这个转镜被电机带动着不停地旋转，完成激光束水平方向的扫描，从而实现水平 120 度，垂直 25.4 度的视场角。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4726.jpg"></p>
+<p>在角分辨率这个参数上，因为 128 个激光器的夹角是物理位置决定的，所以在垂直方向的分辨率是固定的 0.2 度 (25.4/128=0.2)，水平方向的分辨率则是由转镜的转速和激光器的发射频率决定。</p>
+<p>三面的转镜旋转一圈，相当于水平方向扫描 3 次。在最常用的 10Hz 模式，每秒钟水平方向扫描 10 次，也就是每秒刷新 10 帧画面。每一帧的水平方向有 1200 个像素点，用水平视角 120 度除以 1200，水平分辨率刚好是 0.1 度。</p>
+<p>相比起来，速腾 M1 用一块 MEMS 振镜负责两个方向的扫描，快轴负责水平方向，慢轴负责垂直方向。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4727.jpg"></p>
+<p>图达通猎鹰用一个五边形转镜负责水平方向，一个机械振镜负责垂直方向。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4728.jpg"></p>
+<p>禾赛 AT128 的 128 个激光器同时工作，负责垂直方向的扫描，功能等同于 MEMS 的慢轴和图达通的振镜。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4729.jpg"></p>
+<p>AT128 用一个三角形的转镜负责水平方向的扫描，相当于 MEMS 的快轴和图达通的五棱转镜。如果计算每一秒雷达发射的激光点数，也就是电频，图达通猎鹰大约是 80-100 万，速腾 M1 是 75 万，禾赛 AT128 是 153.6 万，AT128 可以说是遥遥领先。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4730.jpg"></p>
+<h3 id="c-信号处理模块"><a href="#c-信号处理模块" class="headerlink" title="(c) 信号处理模块"></a>(c) 信号处理模块</h3><p>点频这个参数决定了激光雷达能够接收到的视觉信息量，这需要强大的信号处理能力。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4731.jpg"></p>
+<p>信号处理模块功能是把激光接收模块接收到的光电信号完成计算处理，转化成智驾芯片能识别的点云数据，主控芯片用的依旧是 AMD 赛灵思的 FPGA，型号 XAZU3EG。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4732.jpg"></p>
+<p>目前主流的激光雷达用的基本上都是这个，性能没得说，就是有点贵。</p>
+<p>信号处理模块和雷达背板之间是通信模块，负责把主控芯片输出的点云数据，通过这个接口输出给智驾控制器。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4733.jpg"></p>
+<p>这里是转镜电机的驱动电路</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4734.jpg"></p>
+<p>通过一条扁扁的可以插拔的 FPC 线束与通信模块相连，用来控制三角转镜的运动。FPC 线束用在低压线路里代替传统的细导线，走线更加规整。</p>
+<p>每一层电路板的主要芯片背面都涂上了用来散热的硅脂，靠近外壳的部分，都布置了海绵材料用来隔绝振动。激光雷达装在汽车上，不仅要忍受得了高温曝晒，还有无时无刻的高频低频振动，不然很难达到车规级的要求。</p>
+<p>总的来说，禾赛的整块激光雷达在空间上布置得相当紧凑，主要核心的收发模块实现了完全的芯片化。光路的反射模块和转镜占据了绝大部分空间，收发芯片和信号处理模块以及转镜的控制模块，见缝插针，巧妙地布置在了壳体边缘。单从机械设计的角度来说，禾赛 AT128 要比另外两个国产竞品更加精巧紧凑。</p>
+<h2 id="B-主要厂商对比"><a href="#B-主要厂商对比" class="headerlink" title="(B) 主要厂商对比"></a>(B) 主要厂商对比</h2><p>到目前为止，市面上的三款主流激光雷达是：速腾 M1，图达通猎鹰，禾赛 AT128。它们的参数对比总体情况如下</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4735.jpg"></p>
+<p>稍微总结一下，在激光光源上，禾赛 AT128 和速腾 M1 都用了 905 纳米波长的方案。此前 1550 纳米的方案在探测距离上有优势，但现在最新的 905 纳米提升非常快，已经赶上了 1550 纳米。而 1550 纳米的缺点主要是产业链比较小，技术提升就相对比较慢，现在主流的激光雷达基本上都统一到 905 纳米的阵营。蔚来搭载的图达通猎鹰用的是 1550 纳米，显得有些小众，但是工艺难度更高，也就是成本会更贵。</p>
+<p><strong>(1) 收发模块</strong></p>
+<p>其次禾赛和速腾虽然都是 905 纳米，但是发射原理并不相同。速腾 M1 用的是 EEL 方案，激光从半导体衬底的边缘发射。EEL 技术比较成熟，但光斑形状是个椭圆，在垂直方向做成阵列，容易重叠在一起，所以速腾用了五组独立的激光器分别负责五个方向。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4736.jpg"></p>
+<p>禾赛的 AT128 用的是垂直面发射的 VCSEL 方案，这样的光斑会更加接近一个正圆，能量更加集中，适合做成阵列，在电路板上也更容易实现芯片化。</p>
+<p>接收模块和发射模块需要相呼应，同样是 905 纳米的速腾和禾赛，都采用了硅基的光电倍增管，直接把光信号转化成芯片可以识别的电信号。不同的是，速腾在五组独立的收发模块里放了五个接收芯片，而禾赛采用自研的多通道芯片，集成到了同一块电路板上。</p>
+<p><strong>(2) 扫描模块</strong></p>
+<p>扫描模块禾赛 AT128 用了 128 线激光器，完成垂直方向的扫描，一维转镜完成水平方向的扫描；速腾 M1 用一个二维转镜，同时实现五路水平方向的并联扫描；图达通猎鹰更加简单粗暴，一个振镜负责垂直，一个转镜负责水平，一个激光器包打天下。类似禾赛这种一维扫描的方案，在可靠性方面优势比较明显，首先振动频率的快慢直接跟可靠性相关，振动或者转动的越快，零件越容易老化。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4737.jpg"></p>
+<p>三款产品相比，禾赛转动频率最慢，只有每秒 3 转多一点。图达通的转镜大概要 75 转，而速腾 M1 要振动 600 多次。</p>
+<p>其次同样是每秒百万级的点频，禾赛平均到 128 个激光器上，压力均摊。而速腾 M1 是 5 个，图达通只有一个。分担到每个激光器的频率、工作时长以及发热量，都相差了几十上百倍，这会直接影响到可靠性和寿命。而且从失效的概率来看，128 个独立的激光器，即使偶尔有一两个失效，也不影响正常使用。这种方案在过去比较难实现，最大的问题是，激光雷达在垂直方向要做到多少线就必须要有多少个激光器。如果激光的发射模块集成度不高，类似速腾这种独立的发射器，在有限的空间内，激光的线数自然没法做上去，要么降低线数，要么用二维转镜，或者一个振镜加一个转镜。</p>
+<p>为了解决这个问题，禾赛采用了 VCSEL 面发射光源，两排之间相互错开，相邻两根激光距离更加紧凑，降低了激光器的 Z 向高度。通过这种芯片化的布置方案，禾赛最终实现了 128 线在垂直方向上的集成。如果用简单的比喻来形容，图达通走的是土豪路线，为了更远的探测距离，上来就是 1550 纳米光源。配套激光器、收发模块，成本都不小，整机的尺寸也是三个里面最大的，作为同样土豪路线的蔚来的御用，也是合情合理。速腾 M1 走的是前期暴兵的路线，把降本摆到第一位，收发模块用的都是成熟的方案，集中技术力量专攻 MEMS 振镜，水平扫描速度不够，那就用数量来凑。五个模块并联，简单粗暴。用一块二维振镜解决两个方向的扫描。凭借着成本优势，收获了最多的车企定点。禾赛 AT128 则更像是理工直男，既要性能，又要成本，下大力气投入芯片自研。虽然前期的投入巨大，一旦量产的飞轮转起来，后期降本堆量的潜力也会更大。</p>
+<h1 id="三-速腾聚创-M1"><a href="#三-速腾聚创-M1" class="headerlink" title="三. 速腾聚创 M1"></a>三. 速腾聚创 M1</h1><h2 id="A-M1-拆机"><a href="#A-M1-拆机" class="headerlink" title="(A) M1 拆机"></a>(A) M1 拆机</h2><h3 id="a-发射模块"><a href="#a-发射模块" class="headerlink" title="(a) 发射模块"></a>(a) 发射模块</h3><p>速腾聚创 M1 分为发射、接收、扫描、处理四个模块。激光的发射组件由五组平行的 EEL 半导体边发射激光器构成，</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4738.jpg"></p>
+<p>发射波长为 905 纳米的点光源，通过准直透镜把点光源的发散光束变成平行方向。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4739.jpg"></p>
+<p>然后通过分光组件进入前面的反射镜，经过第一次反射精准地投射到上面的振镜上。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4740.jpg"></p>
+<p>经过第二次反射，透过最前面的特制的激光视窗玻璃照射到外面去。整个激光雷达里最核心也是技术难度最高的部分就是扫描模块，也就是 MEMS 振镜。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4741.jpg"></p>
+<p>平时要高速、高频地绕着水平和垂直两个方向产生振动，把激光朝着各个方向发散出去。汽车在路上每时每刻也在不规则地振动，要是振镜安装得不牢靠，探测的精度和可靠性都会受到影响。我们来看里面最重要的振镜。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4742.jpg"></p>
+<p>直接和镜片相连的是控制水平维度的快轴。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4743.jpg"></p>
+<p>和外围框架相连的是控制垂直维度的慢轴。</p>
+<p>镜片后面有永磁体和电磁感应的线圈，可以激发电磁场。在水平和垂直两个维度上的频率和振幅都是精确控制的，和背后的发射接收模块精密配合，把激光散布到它要看到的每一个角落。通过多通道联合扫描的技术，在水平方向，将五组激光发射的光束在振镜上拼接起来，每组激光分别负责大约 25 度的水平范围。最终实现了水平方向 120 度和垂直方向 25 度的视场角，成功解决了 MEMS 振镜方案扫描角度太小的问题。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4744.jpg"></p>
+<h3 id="b-接收模块"><a href="#b-接收模块" class="headerlink" title="(b) 接收模块"></a>(b) 接收模块</h3><p>接收模块 M1 采用的是同轴收发，也就是怎么发出去的光就怎么收回来。从环境中反射回来的返回光通过前面的窗口到达振镜，经过第一次反射，分别回到这五个发射器的反射镜片中，再经过第二次反射，到达中间的分光模块。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4745.jpg"></p>
+<p>在这里再经过两次反射到达激光发射器上方的探测器。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4746.jpg"></p>
+<p>探测器使用了可以实现单光子探测的硅光电倍增管 (SiPM) 方案，相比 APD 方案，SiPM 在弱光下探测灵敏度更高，也弥补了 SPAD 方案在强光环境下容易失效的问题。</p>
+<h3 id="c-信号处理模块-1"><a href="#c-信号处理模块-1" class="headerlink" title="(c) 信号处理模块"></a>(c) 信号处理模块</h3><p>最后是信号处理模块，PCB板上有密密麻麻的元器件。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4747.jpg"></p>
+<p>DRAM 选用了北京君正的 3*8G 的 DDR4，ADDA 芯片主要采用了 ADI 的方案</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4748.jpg"></p>
+<p>这里是更偏向于信号处理的内容，不做深入研究。</p>
+<h2 id="B-总结"><a href="#B-总结" class="headerlink" title="(B) 总结"></a>(B) 总结</h2><p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4749.jpg"></p>
+<p>速腾聚创 M1，首先使用了主流的 905 纳米光源，探测距离能够做到最远 200 米，在参数上还不错。第二，采用了二维的 MEMS 微振镜方式，整体的尺寸非常紧凑，其次 MEMS 微振镜动的幅度很小，速腾 M1 通过多个光学模组组合拼接，解决了 MEMS 探测范围窄的问题。最后每个光学通道都采用了模组化的设计，整机的主要零件只有 20 个左右，降低了装配难度，提高了生产效率和一致性。<br>但是发射模块采用的是传统的 EEL 边发射激光器，接收模块又采用的是比较先进的硅光电倍增管，多少有点 V12 发动机加 92 汽油的味道了。二来振镜尺寸比较小，只有 5 毫米，收光的效率稍微低一些，理论上镜子的尺寸可以做大一点，探测能力还可以提高。但镜子一大，对 MEMS 驱动能力、耐久性的考验就更大了。</p>
+<h1 id="四-图达通猎鹰"><a href="#四-图达通猎鹰" class="headerlink" title="四. 图达通猎鹰"></a>四. 图达通猎鹰</h1><h2 id="A-猎鹰拆机"><a href="#A-猎鹰拆机" class="headerlink" title="(A) 猎鹰拆机"></a>(A) 猎鹰拆机</h2><h3 id="a-发射模块-1"><a href="#a-发射模块-1" class="headerlink" title="(a) 发射模块"></a>(a) 发射模块</h3><p>图达通猎鹰和速腾 M1 采用了完全不同的设计思路，打开盖子，最显眼的是中间这个很大的五边形转镜。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4750.jpg"></p>
+<p>在它的前面还有一面小镜子，叫振镜。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4751.jpg"></p>
+<p>转镜负责水平方向的扫描，转镜每转过一个面，就相当于点云扫过一行。前面这个由电机带动的机械振镜负责垂直方向的扫描，振镜和转镜两者精密配合，从上到下，一行一行让点云扫过这个画幅。转镜加振镜，两面镜子体积就很大，再加上驱动它们的电机，所占用体积就会很大。</p>
+<p>图达通猎鹰用的是 1550 纳米波长的光源，源头只有一个光纤发射器。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4752.jpg"></p>
+<p>通过集束光纤把光源集中到雷达中央的这个小透镜上。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4753.jpg"></p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4754.jpg"></p>
+<h3 id="b-接收模块-1"><a href="#b-接收模块-1" class="headerlink" title="(b) 接收模块"></a>(b) 接收模块</h3><p>在接收模块使用的是相对成熟的 APD，即雪崩光电二极管技术。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4755.jpg"></p>
+<p>直观点说就是效率很高的光伏板利用光电效用，把反射回来的激光信号转化成电流。APD 可以把能量很微弱的光子放大成非常可观的可以测量的电流，再通过集成的 FPGA 芯片，完成进一步的信号处理和计算。</p>
+<h2 id="B-总结-1"><a href="#B-总结-1" class="headerlink" title="(B) 总结"></a>(B) 总结</h2><p>正是由于发射、扫描模块的原理完全不同，所以让这两款雷达的体积和外形完全不一样。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4756.jpg"></p>
+<p>决定激光雷达性能的参数一般有这么几个。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4757.jpg"></p>
+<p>这里比较下二者的区别。首先，决定探测距离的主要是光源的波长。激光雷达的世界里，905 纳米波长的光源是最主流的方案，速腾 M1、禾赛 AT128 和大部分厂家都采用这种路线，而 1550 纳米相对来说比较小众，只有图达通猎鹰和 Luminar 在采用。</p>
+<p><img src="https://mwchen.oss-cn-hangzhou.aliyuncs.com/MyBlog/seek_job/lidar/A4758.jpg"></p>
+<p>这两种光的主要区别在于，1550 纳米波长的光更容易被水吸收，眼球晶状体里的水就能吸收它，对视网膜来讲更加安全，所以要达到同样安全标准，1550 纳米发光功率可以更大，功率大了探测距离就更长。但是 1550 纳米目前只能使用光纤激光器，具有体积大、价格贵、效率低等缺点，以电光转化效率而言，半导体激光器大概是 40%，而产生 1550 纳米的光纤激光器一般只有 10%，损耗掉的能量都变成热量耗散掉了。故而采用 1550 纳米波长光源的激光雷达，其内部零件不能排列得非常紧凑，并且在热管理方面要进行更多的考虑。<br>光看得远还没用，远处的东西你还得看得清，而这就是角分辨率。分辨率或者换一个说法叫像素，而角分辨率说白了就是密密麻麻的点云里，相邻两个点的夹角。而这里涉及到另一个参数，也就是线数，图达通猎鹰虽然只有一个激光器，但依靠机械振镜往复运动，在垂直方向模拟出 300 行激光，这叫等效线数。</p>
+<p>总结一下，蔚来搭载的图达通猎鹰，走的是高端定制路线，用上了成本更高的 1550 纳米波长方案，功率更大，实现了更远探测距离。扫描部分使用的是振镜加转镜的组合，技术相对更成熟，结构也更稳定。扫描模块体积大，是个大问题，那价格自然也不会低。速腾聚创 M1 走的是经济适用的路线，用成本更低的 905 纳米，把 MEMS 做到了车规级，减小了体积也降低了成本，可以适配更多的车型，也可以兼容更多的安装方案。其实不同的技术路线不能简单地用好或者坏来进行比较，而是围绕着成本、性能、可靠性这些参数进行螺旋上升的发展。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A7%91%E7%A0%94/" rel="tag"># 科研</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/04/git-study/" rel="prev" title="Git使用指南">
+      <i class="fa fa-chevron-left"></i> Git使用指南
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minwei Chen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
